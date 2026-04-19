@@ -1,0 +1,80 @@
+---
+title: Quick start
+description: Go from zero to a working Pillbox setup in under five minutes.
+sidebar:
+  order: 3
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This page takes you from a fresh install to a working Pillbox setup — binary installed, MCP connected, and your first bottle registered.
+
+## Prerequisites
+
+- `pillbox` binary installed ([installation guide](/getting-started/installation/))
+- Claude Code or another MCP-compatible AI assistant
+
+## Setup
+
+<Steps>
+1. Initialize a bottle in your project directory
+
+   ```bash
+   cd your-project
+   pillbox bottle init
+   ```
+
+   The wizard asks for a display name and scope (`local` or `global`). Choose `global` if you want this project's knowledge accessible from anywhere.
+
+2. Install the MCP server
+
+   ```bash
+   pillbox mcp install
+   ```
+
+   This installs the Node.js MCP server to `~/.pillbox/mcp/` and configures Claude Code automatically.
+
+3. Install the agent skill
+
+   ```bash
+   pillbox skill install
+   ```
+
+   This installs the Pillbox skill to `~/.claude/skills/pillbox/`, which guides Claude to use Pillbox tools correctly.
+
+4. Restart Claude Code
+
+   Run `/mcp` to confirm `pillbox` is connected and its tools are listed.
+
+5. Verify everything works
+
+   ```bash
+   pillbox status
+   ```
+
+   You should see the binary, global DB, MCP server, and skill all reported as active.
+</Steps>
+
+## Your first session
+
+Once setup is complete, Claude uses Pillbox automatically. At the start of a new session it calls `pill_context` to restore recent history. As it works, it saves pills for decisions and discoveries. At the end, it saves a session summary.
+
+You don't need to do anything — the skill handles the workflow.
+
+## Review what your agent saved
+
+Start the web UI to browse pills, capsules, and prescriptions:
+
+```bash
+pillbox serve start
+```
+
+Then open `http://localhost:4242` in your browser.
+
+The UI is a supervision layer — use it to spot entries that are redundant, wrong, or poorly written and correct them. The agent handles all writes during normal work.
+
+## Next steps
+
+- [Concepts](/concepts/overview/) — understand bottles, prescriptions, pills, and capsules
+- [MCP setup](/guides/mcp-setup/) — configure other MCP clients or verify tool access
+- [CLI reference](/reference/cli/) — all commands explained

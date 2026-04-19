@@ -1,29 +1,28 @@
-# CLI Reference
-
-The `pillbox` CLI is designed primarily for human operators and for setup tasks. The agent interacts with Pillbox via the MCP server, not the CLI.
-
 ---
+title: CLI reference
+description: All Pillbox CLI commands — serve, bottle, prescription, MCP, skill, and language.
+sidebar:
+  order: 30
+---
+
+The `pillbox` CLI is designed for human operators and setup tasks. The agent interacts with Pillbox via the MCP server, not the CLI.
 
 ## `pillbox status`
 
 Shows global status: binary path, global and local databases, active bottle, HTTP server, MCP server, and skill.
 
----
-
 ## Serve commands
 
 ### `pillbox serve start [--port N]`
 
-Starts the HTTP server as a background daemon. Default port: 4242.
+Starts the HTTP server as a background process. Default port: 4242.
 
 ```bash
 pillbox serve start
 pillbox serve start --port 8080
 ```
 
-If startup fails, the error is written to `~/.pillbox/pillbox.log`.
-
-Publishes `pillbox._http._tcp.local.` via mDNS for local network discovery. The web UI is available at `http://localhost:<port>`.
+The web UI is available at `http://localhost:<port>`.
 
 ### `pillbox serve stop`
 
@@ -33,34 +32,24 @@ Stops the background server.
 
 Shows whether the server is running and on which port.
 
----
-
 ## Bottle commands
 
 ### `pillbox bottle init`
 
 Interactive wizard to initialize a bottle in the current directory.
 
-**What it does:**
 1. Prompts for a display name (default: directory name)
 2. Prompts for scope: `local` or `global`
 3. Creates the database and runs migrations
-4. If local and in a git repo: offers to add `.pillbox/` to `.gitignore` (default: No)
-5. If local: registers the bottle in the global DB
-
----
+4. If local and in a git repo: offers to add `.pillbox/` to `.gitignore`
 
 ### `pillbox bottle status`
 
 Status of the bottle in the current directory.
 
----
-
 ### `pillbox bottle list`
 
 Lists all bottles registered in the global database.
-
----
 
 ### `pillbox bottle migrate [--reverse] [--capsules]`
 
@@ -70,18 +59,6 @@ Migrates a bottle between the local and global databases using upsert by `sync_i
 pillbox bottle migrate              # local → global
 pillbox bottle migrate --reverse    # global → local
 ```
-
-See [docs/migration.md](migration.md) for details.
-
----
-
-## Pills commands
-
-### `pillbox pills list`
-
-Lists all pills in the current bottle, ordered by creation date (newest first).
-
----
 
 ## Prescription commands
 
@@ -95,8 +72,6 @@ pillbox prescription open "Implement OAuth login"
 
 Fails if there is already an open prescription — close it first with `pillbox prescription close`.
 
----
-
 ### `pillbox prescription list [-l N]`
 
 Lists the most recent prescriptions for the current bottle.
@@ -106,41 +81,35 @@ pillbox prescription list
 pillbox prescription list -l 25
 ```
 
-| Flag | Default | Description |
-|---|---|---|
-| `-l, --limit N` | 10 | Maximum prescriptions to show |
-
----
-
 ### `pillbox prescription close`
 
 Closes the open prescription for the current bottle.
 
----
+## Pills commands
+
+### `pillbox pills list`
+
+Lists all pills in the current bottle, ordered by creation date (newest first).
 
 ## MCP commands
 
 ### `pillbox mcp install`
 
-Downloads the MCP server from the latest GitHub release (`kevinsillo/pillbox-mcp`) and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18. Automatically registers the entry in `~/.claude.json`.
+Downloads the MCP server from the latest GitHub release and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18. Automatically registers the entry in `~/.claude.json`.
 
 ### `pillbox mcp uninstall`
 
 Removes the MCP server directory and its entry from `~/.claude.json`.
 
----
-
 ## Skill commands
 
 ### `pillbox skill install`
 
-Downloads the Claude Code skill from the latest GitHub release (`kevinsillo/pillbox-skills`) and installs it to `~/.claude/skills/pillbox/`.
+Downloads the Claude Code skill from the latest GitHub release and installs it to `~/.claude/skills/pillbox/`.
 
 ### `pillbox skill uninstall`
 
 Removes the skill directory.
-
----
 
 ## Language commands
 
@@ -149,10 +118,10 @@ Removes the skill directory.
 Shows the current language and available options.
 
 ```
-Idioma actual: Español (es)
+Current language: English (en)
 
-es    Español  ● activo
-en    English
+es    Español
+en    English  ● active
 de    Deutsch
 it    Italiano
 pt    Português
@@ -170,24 +139,11 @@ pillbox lang set de
 
 Supported codes: `es`, `en`, `de`, `it`, `pt`, `fr`.
 
-Language detection order:
-1. `~/.pillbox/lang` (set by `pillbox lang set`)
-2. `PILLBOX_LANG` environment variable
-3. System locale (native detection on Windows, macOS, and Linux)
-4. Fallback: `es`
-
----
+Language detection order: `~/.pillbox/lang` → `PILLBOX_LANG` env var → system locale → fallback `es`.
 
 ## `pillbox uninstall`
 
-Interactive removal of Pillbox components. Prompts before each step:
-
-- Remove the MCP server
-- Remove the Claude Code skill
-- Remove the global database (all memories lost)
-- Remove the binary
-
----
+Interactive removal of Pillbox components. Prompts before each step: MCP server, skill, global database, binary.
 
 ## Environment variables
 
@@ -197,12 +153,3 @@ Interactive removal of Pillbox components. Prompts before each step:
 | `PILLBOX_VERSION` | Version to install (used by `install.sh`) |
 | `PILLBOX_INSTALL_DIR` | Install directory for the binary |
 | `RUST_LOG` | Log level for the server (e.g. `RUST_LOG=info pillbox serve start`) |
-
----
-
-## Hidden commands
-
-These commands are used internally and hidden from `--help`:
-
-- `pillbox exec` — JSON stdin/stdout dispatcher used by the MCP server
-- `pillbox --init-global` — creates the global database; called by `install.sh`

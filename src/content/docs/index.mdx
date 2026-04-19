@@ -1,0 +1,57 @@
+---
+title: Pillbox
+description: The persistent memory layer for AI agents — structured, searchable, and built in Rust.
+template: splash
+hero:
+  title: Pillbox
+  tagline: The persistent memory layer for AI agents — structured, searchable, and built in Rust.
+  image:
+    alt: Pillbox logo
+    file: ../../assets/pillbox-logo.png
+
+  actions:
+    - text: Get started
+      link: /getting-started/introduction/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub
+      link: https://github.com/Kevinsillo/pillbox
+      icon: external
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Persistent memory" icon="open-book">
+    Pills and capsules survive across sessions — your agent picks up where it left off, every time.
+  </Card>
+  <Card title="Fuzzy search" icon="magnifier">
+    FTS5 full-text search with Jaro-Winkler fuzzy matching finds context even with typos or partial terms.
+  </Card>
+  <Card title="Web UI" icon="laptop">
+    Review and correct what your agents saved from a local interface. No cloud, no account.
+  </Card>
+  <Card title="Built in Rust" icon="seti:rust">
+    Single binary, zero runtime dependencies. Works on Linux and macOS.
+  </Card>
+</CardGrid>
+
+## How it works
+
+Pillbox organizes knowledge in four layers:
+
+- **Bottles** — one per project. Maps a directory to a database.
+- **Prescriptions** — work sessions within a bottle. One open at a time.
+- **Pills** — project-specific knowledge saved during a session. Searchable.
+- **Capsules** — personal, cross-project knowledge. Conventions, preferences, context.
+
+Your agent opens a prescription when it starts work, saves pills as it makes decisions and fixes bugs, and closes the prescription with a summary when done. Next session, it calls `pill_context` to restore everything.
+
+## Quick install
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash
+```
+
+Then follow the [getting started guide](/getting-started/introduction/).

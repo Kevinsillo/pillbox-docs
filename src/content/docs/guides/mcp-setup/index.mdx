@@ -1,0 +1,45 @@
+---
+title: Setup
+description: Connect Pillbox to your AI assistant via the Model Context Protocol.
+sidebar:
+  order: 20
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+Pillbox exposes its tools to AI agents via the [Model Context Protocol](https://modelcontextprotocol.io). The MCP server is a Node.js process that communicates with the `pillbox` binary over stdin/stdout.
+
+## How it works
+
+The MCP server does not access the database directly. It communicates with the `pillbox` binary via `pillbox exec`:
+
+1. The MCP server receives a tool call from the agent.
+2. It spawns `pillbox exec` as a subprocess.
+3. It writes a JSON payload to stdin: `{ "tool": "pill_take", "input": { ... } }`.
+4. It reads the JSON response from stdout.
+5. It returns the response to the agent.
+
+The MCP server is stateless. All persistence is handled by the Rust core.
+
+## Choose your client
+
+<CardGrid>
+  <Card title="Claude Code" icon="puzzle">
+    [Setup →](/guides/mcp-setup/claude-code/)
+  </Card>
+  <Card title="Claude Desktop" icon="puzzle">
+    [Setup →](/guides/mcp-setup/claude-desktop/)
+  </Card>
+  <Card title="OpenCode" icon="puzzle">
+    [Setup →](/guides/mcp-setup/opencode/)
+  </Card>
+  <Card title="Cursor" icon="puzzle">
+    [Setup →](/guides/mcp-setup/cursor/)
+  </Card>
+  <Card title="Windsurf" icon="puzzle">
+    [Setup →](/guides/mcp-setup/windsurf/)
+  </Card>
+  <Card title="Zed" icon="puzzle">
+    [Setup →](/guides/mcp-setup/zed/)
+  </Card>
+</CardGrid>
