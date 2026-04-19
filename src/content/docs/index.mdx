@@ -7,8 +7,8 @@ hero:
   tagline: The persistent memory layer for AI agents — structured, searchable, and built in Rust.
   image:
     alt: Pillbox logo
-    file: ../../assets/pillbox-logo-light.png
-
+    dark: ../../assets/pillbox-logo-light.png
+    light: ../../assets/pillbox-logo-dark.png
   actions:
     - text: Get started
       link: /getting-started/introduction/
@@ -20,7 +20,7 @@ hero:
       variant: secondary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components'
 
 <CardGrid stagger>
   <Card title="Persistent memory" icon="open-book">
@@ -37,6 +37,16 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
   </Card>
 </CardGrid>
 
+## Quick install
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash
+```
+
+Then follow the [getting started guide](/getting-started/introduction/).
+
+<div class="spacer" />
+
 ## How it works
 
 Pillbox organizes knowledge in four layers:
@@ -47,11 +57,3 @@ Pillbox organizes knowledge in four layers:
 - **Capsules** — personal, cross-project knowledge. Conventions, preferences, context.
 
 Your agent opens a prescription when it starts work, saves pills as it makes decisions and fixes bugs, and closes the prescription with a summary when done. Next session, it calls `pill_context` to restore everything.
-
-## Quick install
-
-```bash
-curl -fsSL https://get.pillbox.dev | bash
-```
-
-Then follow the [getting started guide](/getting-started/introduction/).

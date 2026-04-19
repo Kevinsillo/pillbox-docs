@@ -6,3 +6,7 @@
 .sl-markdown-content {
 	font-size: var(--sl-text-body);
 }
+
+.spacer {
+	margin-bottom: 4rem;
+}
