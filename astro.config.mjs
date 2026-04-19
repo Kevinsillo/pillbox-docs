@@ -20,8 +20,8 @@ export default defineConfig({
 			customCss: ['./src/styles/custom.css'],
 			title: 'Pillbox',
 			logo: {
-				light: './src/assets/pillbox-logo-dark.png',
-				dark: './src/assets/pillbox-logo.png',
+				light: './src/assets/pillbox-logo.png',
+				dark: './src/assets/pillbox-logo-dark.png',
 				replacesTitle: true,
 			},
 			favicon: '/favicon.svg',
