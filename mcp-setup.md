@@ -267,7 +267,7 @@ The MCP server does not access the database directly. It communicates with the `
 
 1. The MCP server receives a tool call from the agent.
 2. It spawns `pillbox exec` as a subprocess.
-3. It writes a JSON payload to stdin: `{ "op": "pill_take", "params": { ... } }`.
+3. It writes a JSON payload to stdin: `{ "tool": "pill_take", "input": { ... } }`.
 4. It reads the JSON response from stdout.
 5. It returns the response to the agent.
 

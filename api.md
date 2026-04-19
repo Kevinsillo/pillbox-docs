@@ -350,7 +350,11 @@ Returns recent prescriptions and pills as Markdown — same as `pill_context` in
 ```json
 {
   "ok": true,
-  "data": "## Recent context for my-project\n\n### [2026-04-14] Implement OAuth login\n\n..."
+  "data": {
+    "context": [ { "id": 42, "title": "Use JWT for session tokens", ... } ],
+    "prescription_count": 3,
+    "pill_count": 12
+  }
 }
 ```
 

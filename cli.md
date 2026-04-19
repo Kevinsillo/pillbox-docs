@@ -122,11 +122,11 @@ Closes the open prescription for the current bottle.
 
 ### `pillbox mcp install`
 
-Extracts the MCP server (embedded in the binary) to `~/.pillbox/mcp/`. Requires Node.js ≥ 18.
+Downloads the MCP server from the latest GitHub release (`kevinsillo/pillbox-mcp`) and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18. Automatically registers the entry in `~/.claude.json`.
 
 ### `pillbox mcp uninstall`
 
-Removes the MCP server directory.
+Removes the MCP server directory and its entry from `~/.claude.json`.
 
 ---
 
@@ -134,11 +134,11 @@ Removes the MCP server directory.
 
 ### `pillbox skill install`
 
-Extracts the Claude Code skill (embedded in the binary) to `~/.claude/skills/pillbox/`.
+Downloads the Claude Code skill from the latest GitHub release (`kevinsillo/pillbox-skills`) and installs it to `~/.claude/skills/pillbox/`.
 
 ### `pillbox skill uninstall`
 
-Removes the skill.
+Removes the skill directory.
 
 ---
 
