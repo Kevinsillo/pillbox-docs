@@ -22,13 +22,13 @@ All responses use a uniform JSON envelope:
 
 ### `GET /bottles`
 
-Returns all registered bottles, merging local and global databases and deduplicating by directory.
+Returns all registered bottles from the global registry.
 
 **Response**: array of `Bottle` objects.
 
 ### `POST /bottles`
 
-Registers a new bottle.
+Registers a new bottle and adds it to the global registry.
 
 **Request body**:
 
@@ -43,13 +43,19 @@ Registers a new bottle.
 
 **Response**: `201 Created` with the created `Bottle` object.
 
-### `GET /bottles/:id`
+### `GET /bottles/:bottle_id`
 
-Returns a single bottle by integer ID.
+Returns a single bottle by UUID v7.
 
 **Response**: `Bottle` object or `404`.
 
-### `GET /bottles/:id/prescriptions`
+---
+
+## Prescriptions
+
+Prescriptions are nested under their bottle.
+
+### `GET /bottles/:bottle_id/prescriptions`
 
 Returns the prescription history for a bottle.
 
@@ -59,11 +65,7 @@ Returns the prescription history for a bottle.
 
 **Response**: array of `Prescription` objects.
 
----
-
-## Prescriptions
-
-### `POST /prescriptions`
+### `POST /bottles/:bottle_id/prescriptions`
 
 Opens a new prescription for a bottle.
 
@@ -71,7 +73,6 @@ Opens a new prescription for a bottle.
 
 ```json
 {
-  "bottle_id": 1,
   "title": "Implement OAuth login"
 }
 ```
@@ -79,35 +80,37 @@ Opens a new prescription for a bottle.
 **Response**: `201 Created` with the `Prescription` object.  
 **Error**: `409 Conflict` with the currently open prescription if one already exists.
 
-### `GET /prescriptions/:id`
+### `GET /bottles/:bottle_id/prescriptions/:rx_id`
 
-Returns a prescription by UUID v7 ID.
+Returns a prescription by UUID v7.
 
 **Response**: `Prescription` object or `404`.
 
-### `PATCH /prescriptions/:id`
+### `PATCH /bottles/:bottle_id/prescriptions/:rx_id`
 
 Closes an open prescription (sets `ended_at` to now).
 
 **Response**: updated `Prescription` object or `404`.
 
-### `DELETE /prescriptions/:id`
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id`
 
 Soft-deletes a prescription.
 
 **Response**: `{ "discarded": true }` or `404`.
 
-### `GET /prescriptions/:id/pills`
+---
+
+## Pills
+
+Pills are nested under their prescription, which is nested under their bottle.
+
+### `GET /bottles/:bottle_id/prescriptions/:rx_id/pills`
 
 Returns all pills attached to a prescription.
 
 **Response**: array of `Pill` objects or `404` if the prescription does not exist.
 
----
-
-## Pills
-
-### `POST /pills`
+### `POST /bottles/:bottle_id/prescriptions/:rx_id/pills`
 
 Creates a new pill.
 
@@ -115,7 +118,6 @@ Creates a new pill.
 
 ```json
 {
-  "prescription_id": "01HXYZ...",
   "title": "Switched to JWT auth",
   "content": "Replaced express-session with jsonwebtoken...",
   "compound": "decision",
@@ -125,13 +127,13 @@ Creates a new pill.
 
 **Response**: `201 Created` with the `Pill` object.
 
-### `GET /pills/:id`
+### `GET /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id`
 
 Returns a pill by integer ID.
 
 **Response**: `Pill` object or `404`.
 
-### `PATCH /pills/:id`
+### `PATCH /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id`
 
 Updates a pill's title, content, or compound. All fields are optional.
 
@@ -147,7 +149,7 @@ Updates a pill's title, content, or compound. All fields are optional.
 
 **Response**: updated `Pill` object or `404`.
 
-### `DELETE /pills/:id`
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id`
 
 Soft-deletes a pill.
 
@@ -155,16 +157,42 @@ Soft-deletes a pill.
 
 ### `GET /pills/search`
 
-Full-text search over pills.
+Full-text search over pills across all bottles.
 
 | Query param | Type | Description |
 |---|---|---|
 | `query` | string | Search query (required) |
-| `bottle_id` | integer | Restrict to a specific bottle |
+| `bottle_id` | string (UUID v7) | Restrict to a specific bottle |
 | `compound` | string | Filter by compound type |
 | `limit` | integer | Max results (default: 20) |
 
 **Response**: array of `SearchResult` objects with `id`, `title`, `snippet`, `rank`, `compound`, `prescription_id`, and `bottle_id`.
+
+---
+
+## Context
+
+### `GET /bottles/:bottle_id/context`
+
+Returns a formatted context summary for a bottle — useful for populating an agent's system prompt.
+
+| Query param | Type | Description |
+|---|---|---|
+| `prescription_limit` | integer | Max prescriptions to include (default: 5) |
+| `pill_limit` | integer | Max pills to include (default: 30) |
+
+**Response**:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "context": "...",
+    "prescription_count": 12,
+    "pill_count": 87
+  }
+}
+```
 
 ---
 
@@ -237,33 +265,6 @@ Full-text search over capsules.
 | `limit` | integer | Max results (default: 20) |
 
 **Response**: array of `SearchResult` objects.
-
----
-
-## Context
-
-### `GET /context`
-
-Returns a formatted context summary for a bottle — useful for populating an agent's system prompt.
-
-| Query param | Type | Description |
-|---|---|---|
-| `bottle_id` | integer | Bottle to summarise (required) |
-| `prescription_limit` | integer | Max prescriptions to include (default: 5) |
-| `pill_limit` | integer | Max pills to include (default: 30) |
-
-**Response**:
-
-```json
-{
-  "ok": true,
-  "data": {
-    "context": "...",
-    "prescription_count": 12,
-    "pill_count": 87
-  }
-}
-```
 
 ---
 

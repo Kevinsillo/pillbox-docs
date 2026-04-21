@@ -76,7 +76,7 @@ Full-text search over pills using FTS5 prefix matching and Jaro-Winkler fuzzy sc
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `query` | string | yes | Search query |
-| `bottle_id` | integer | no | Restrict to a specific bottle |
+| `bottle_id` | string (UUID v7) | no | Restrict to a specific bottle |
 | `compound` | string | no | Filter by compound type |
 | `limit` | integer | no | Max results (default: 20) |
 
@@ -88,7 +88,7 @@ Returns a formatted context string summarising the most recent activity in a bot
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `bottle_id` | integer | yes | Bottle to summarise |
+| `bottle_id` | string (UUID v7) | yes | Bottle to summarise |
 | `prescription_limit` | integer | no | Max prescriptions to include (default: 5) |
 | `pill_limit` | integer | no | Max pills to include (default: 30) |
 
@@ -202,7 +202,7 @@ Opens a new prescription for a bottle.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `bottle_id` | integer | yes | Bottle to open the prescription in |
+| `bottle_id` | string (UUID v7) | yes | Bottle to open the prescription in |
 | `title` | string (1–255) | yes | Descriptive title for the session |
 
 Returns the created `Prescription` object. Returns a `prescription_already_open` error if the bottle already has an open prescription.
@@ -260,7 +260,7 @@ Returns the created `Bottle` object.
 
 Lists all registered bottles. No parameters.
 
-Returns an array of `Bottle` objects with `id`, `name`, `display_name`, `directory`, `scope`, `created_at`, and `last_seen_at`.
+Returns an array of `Bottle` objects with `id` (UUID v7), `name`, `display_name`, `directory`, `scope`, `created_at`, and `last_seen_at`.
 
 ---
 
