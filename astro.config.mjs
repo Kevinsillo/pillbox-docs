@@ -74,6 +74,7 @@ export default defineConfig({
 						{ slug: 'reference/cli' },
 						{ slug: 'reference/mcp-tools' },
 						{ slug: 'reference/http-api' },
+						{ slug: 'reference/credits' },
 					],
 				},
 			],
