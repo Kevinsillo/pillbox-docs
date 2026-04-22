@@ -5,11 +5,14 @@ sidebar:
   order: 31
 ---
 
-All MCP tools are exposed by the Pillbox MCP server and consumed by AI agents (Claude, Cursor, etc.). The server responds with a uniform JSON envelope:
+All MCP tools are served by the Pillbox MCP server and consumed by AI agents (Claude, Cursor, etc.). Responses are plain structured text — not JSON — so the LLM can read them directly without parsing.
 
-```json
-{ "ok": true, "data": { ... } }
-{ "ok": false, "error": "not_found", "message": "..." }
+Successful responses are tool-specific text (see each tool below). Errors follow a uniform format:
+
+```
+error: <code>
+message: <human-readable description>
+<field>: <value>     ← additional fields when relevant
 ```
 
 Pills and prescriptions belong to a **bottle** (project-local database). Capsules are stored in the **global database** (`~/.pillbox/pillbox.db`).
@@ -34,7 +37,10 @@ Creates a new pill.
 | `author_name` | string | no | Author name |
 | `author_email` | string | no | Author email |
 
-Returns the created `Pill` object.
+```
+Pill created
+id: 42
+```
 
 ### `pill_read`
 
@@ -44,7 +50,14 @@ Retrieves a pill by integer ID.
 |---|---|---|---|
 | `id` | integer | yes | Pill ID |
 
-Returns the `Pill` object or a `not_found` error.
+```
+# Title [compound]
+id: 42 | prescription: 019d... | created: 2026-04-22
+
+Full content of the pill...
+```
+
+Returns a `not_found` error if the pill does not exist.
 
 ### `pill_revise`
 
@@ -57,7 +70,12 @@ Updates a pill's title, content, or compound.
 | `content` | string (1–5000) | no | New content |
 | `compound` | string | no | New compound |
 
-Returns the updated `Pill` object.
+```
+Pill updated
+id: 42
+compound: decision
+title: Updated title
+```
 
 ### `pill_discard`
 
@@ -67,7 +85,11 @@ Soft-deletes a pill (the record is marked deleted, not removed).
 |---|---|---|---|
 | `id` | integer | yes | Pill ID |
 
-Returns the deleted `Pill` object.
+```
+Pill discarded
+id: 42
+deleted_at: 2026-04-22 21:00:00
+```
 
 ### `pill_search`
 
@@ -80,11 +102,21 @@ Full-text search over pills using FTS5 prefix matching and Jaro-Winkler fuzzy sc
 | `compound` | string | no | Filter by compound type |
 | `limit` | integer | no | Max results (default: 20) |
 
-Returns an array of `SearchResult` objects with `id`, `title`, `snippet`, `rank`, `compound`, `prescription_id`, and `bottle_id`.
+```
+Found 3 pills
+
+[decision] Title of result (id: 5, rx: 019db730...)
+Snippet with the matching ...text... highlighted
+
+[bugfix] Another result (id: 8, rx: 019db730...)
+Snippet with the matching ...text... highlighted
+```
+
+Returns `No pills found.` when the query matches nothing.
 
 ### `pill_context`
 
-Returns a formatted context string summarising the most recent activity in a bottle — recent prescriptions and pills. Use this at session start to orient the agent.
+Returns a Markdown summary of the most recent activity in a bottle — recent prescriptions and their pills. Use at session start to orient the agent.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -92,13 +124,33 @@ Returns a formatted context string summarising the most recent activity in a bot
 | `prescription_limit` | integer | no | Max prescriptions to include (default: 5) |
 | `pill_limit` | integer | no | Max pills to include (default: 30) |
 
-Returns `{ context: string, prescription_count: integer, pill_count: integer }`.
+```
+## Recent Prescriptions
+
+- **Session title** (2026-04-22, closed) [3 pills]
+
+## Recent Pills
+
+- [decision] **Title**: content preview...
+- [bugfix] **Title**: content preview...
+
+---
+prescriptions: 5 | pills: 30
+```
 
 ### `pill_compounds`
 
 Lists all valid compound types for pills. No parameters.
 
-Returns an array of `{ id, description, prompt_hint }`:
+```
+decision
+  Architectural or implementation decision
+  <prompt hint with formatting instructions>
+
+bugfix
+  Bug found and fixed
+  <prompt hint>
+```
 
 | id | Description |
 |---|---|
@@ -128,7 +180,10 @@ Creates a new capsule in the global database.
 | `content` | string (1–5000) | yes | Full content of the capsule |
 | `compound` | string | yes | Category — see [capsule compounds](#capsule_compounds) |
 
-Returns the created `Capsule` object.
+```
+Capsule created
+id: 7
+```
 
 ### `capsule_read`
 
@@ -138,7 +193,14 @@ Retrieves a capsule by integer ID.
 |---|---|---|---|
 | `id` | integer | yes | Capsule ID |
 
-Returns the `Capsule` object or a `not_found` error.
+```
+# Title [convention]
+id: 7 | created: 2026-04-22
+
+Full content of the capsule...
+```
+
+Returns a `not_found` error if the capsule does not exist.
 
 ### `capsule_revise`
 
@@ -150,7 +212,12 @@ Updates a capsule's title or content.
 | `title` | string (1–255) | no | New title |
 | `content` | string (1–5000) | no | New content |
 
-Returns the updated `Capsule` object.
+```
+Capsule updated
+id: 7
+compound: convention
+title: Updated title
+```
 
 ### `capsule_discard`
 
@@ -160,7 +227,11 @@ Soft-deletes a capsule.
 |---|---|---|---|
 | `id` | integer | yes | Capsule ID |
 
-Returns the deleted `Capsule` object.
+```
+Capsule discarded
+id: 7
+deleted_at: 2026-04-22 21:00:00
+```
 
 ### `capsule_search`
 
@@ -172,13 +243,31 @@ Full-text search over capsules.
 | `compound` | string | no | Filter by compound type |
 | `limit` | integer | no | Max results (default: 20) |
 
-Returns an array of `SearchResult` objects.
+```
+Found 2 capsules
+
+[convention] Title (id: 3)
+Snippet with the matching ...text... highlighted
+
+[feedback] Another title (id: 7)
+Snippet with the matching ...text... highlighted
+```
+
+Returns `No capsules found.` when the query matches nothing.
 
 ### `capsule_compounds`
 
 Lists all valid compound types for capsules. No parameters.
 
-Returns an array of `{ id, description, prompt_hint }`:
+```
+convention
+  Coding or project convention
+  <prompt hint>
+
+workflow
+  Step-by-step process or procedure
+  <prompt hint>
+```
 
 | id | Description |
 |---|---|
@@ -205,7 +294,14 @@ Opens a new prescription for a bottle.
 | `bottle_id` | string (UUID v7) | yes | Bottle to open the prescription in |
 | `title` | string (1–255) | yes | Descriptive title for the session |
 
-Returns the created `Prescription` object. Returns a `prescription_already_open` error if the bottle already has an open prescription.
+```
+Prescription opened
+id: 019db730-46ad-7a71-aa30-cf4111989cad
+title: Refactor auth middleware
+started_at: 2026-04-22 21:54:47
+```
+
+Returns a `prescription_already_open` error if the bottle already has an open prescription. The error includes the existing prescription's `id`, `title`, `started_at`, and `pill_count` — use that `id` directly instead of opening a new one.
 
 ### `prescription_close`
 
@@ -215,7 +311,13 @@ Closes an open prescription (sets `ended_at`).
 |---|---|---|---|
 | `id` | string (UUID v7) | yes | Prescription ID |
 
-Returns the updated `Prescription` object with `ended_at` populated.
+```
+Prescription closed
+id: 019db730-46ad-7a71-aa30-cf4111989cad
+title: Refactor auth middleware
+started_at: 2026-04-22 21:54:47
+ended_at: 2026-04-22 23:10:00
+```
 
 ### `prescription_read`
 
@@ -225,17 +327,26 @@ Retrieves a prescription by ID.
 |---|---|---|---|
 | `id` | string (UUID v7) | yes | Prescription ID |
 
-Returns the `Prescription` object or a `not_found` error.
+```
+id: 019db730-46ad-7a71-aa30-cf4111989cad
+title: Refactor auth middleware
+started_at: 2026-04-22 21:54:47
+ended_at: 2026-04-22 23:10:00
+```
+
+Returns a `not_found` error if the prescription does not exist.
 
 ### `prescription_discard`
 
-Soft-deletes a prescription.
+Soft-deletes a prescription and all its pills in cascade.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `id` | string (UUID v7) | yes | Prescription ID |
 
-Returns `{ discarded: true }`.
+```
+Prescription discarded.
+```
 
 ---
 
@@ -254,13 +365,30 @@ Registers a new bottle.
 | `directory` | string | yes | Absolute path to the project directory |
 | `scope` | `local` \| `global` | yes | Whether to use a local or global database |
 
-Returns the created `Bottle` object.
+```
+Bottle created
+id: 019db257-47b6-7473-a8b7-77c66bae09c6
+name: my-project
+display_name: My Project
+directory: /home/user/my-project
+scope: local
+```
 
 ### `bottle_list`
 
 Lists all registered bottles. No parameters.
 
-Returns an array of `Bottle` objects with `id` (UUID v7), `name`, `display_name`, `directory`, `scope`, `created_at`, and `last_seen_at`.
+```
+Bottles (2)
+
+● My Project [local] 019db257-47b6-7473-a8b7-77c66bae09c6
+  /home/user/my-project
+
+○ Old Project [global] 019da000-0000-7000-0000-000000000000 [unlinked]
+  /home/user/old-project
+```
+
+`●` means the bottle's database is accessible. `○` with `[unlinked]` means the database file no longer exists on disk.
 
 ---
 
@@ -270,6 +398,7 @@ Returns an array of `Bottle` objects with `id` (UUID v7), `name`, `display_name`
 |---|---|
 | `not_found` | The requested resource does not exist |
 | `prescription_already_open` | A prescription is already open for this bottle |
+| `prescription_required` | The provided `prescription_id` does not exist or is already closed |
 | `validation_error` | One or more input fields failed validation |
-| `invalid_input` | The input JSON could not be parsed |
+| `invalid_input` | The input could not be parsed |
 | `internal_error` | Unexpected server error |
