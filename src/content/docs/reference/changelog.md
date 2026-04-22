@@ -10,6 +10,10 @@ sidebar:
 ### 🚀 Features
 
 - *(webui)* Añadir tema claro/oscuro y mejorar consistencia visual
+
+### ⚙️ Miscellaneous Tasks
+
+- *(release)* V0.6.0
 ## [0.5.0] - 2026-04-22
 
 ### 🚀 Features
