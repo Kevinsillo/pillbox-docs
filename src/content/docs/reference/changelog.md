@@ -5,6 +5,31 @@ sidebar:
   order: 35
 ---
 
+## [0.7.0] - 2026-04-24
+
+### 🚀 Features
+
+- *(cli)* Añadir comandos bottle delete y bottle repair
+- *(server)* Añadir endpoint GET /bottles/:id/stats
+- *(webui)* Añadir PillsActivityChart y estadísticas en dashboard
+- *(webui)* ConfirmDialog personalizado y migrar ElMessageBox
+
+### 🐛 Bug Fixes
+
+- *(webui)* Resaltar nombres en confirmaciones de borrado
+
+### 🎨 Styling
+
+- *(webui)* Rediseñar indicadores de estado en bottles y prescriptions
+
+### ⚙️ Miscellaneous Tasks
+
+- Añadir cliff.toml con salto de línea entre releases
+- Regenerar CHANGELOG.md con saltos de línea entre releases
+- *(core)* Traducir mensajes de error internos a inglés
+- Actualizar install.sh — pasar --install-dir como argumento
+- *(core)* Formatear error.rs
+
 ## [0.6.0] - 2026-04-22
 
 ### 🚀 Features
@@ -14,6 +39,7 @@ sidebar:
 ### ⚙️ Miscellaneous Tasks
 
 - *(release)* V0.6.0
+
 ## [0.5.0] - 2026-04-22
 
 ### 🚀 Features
@@ -28,6 +54,7 @@ sidebar:
 ### ⚙️ Miscellaneous Tasks
 
 - *(release)* V0.5.0
+
 ## [0.4.1] - 2026-04-21
 
 ### 🐛 Bug Fixes
@@ -52,6 +79,7 @@ sidebar:
 
 - Reorganizar estructura multirepo y actualizar assets
 - *(release)* V0.4.1
+
 ## [0.4.0] - 2026-04-19
 
 ### 🚀 Features
@@ -112,3 +140,4 @@ sidebar:
 - Añadir autoformato con cargo fmt y prettier
 - *(webui)* Añadir scaffold Vue + lockfile MCP
 - *(release)* V0.4.0
+
