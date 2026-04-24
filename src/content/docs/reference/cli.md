@@ -60,6 +60,26 @@ pillbox bottle migrate              # local → global
 pillbox bottle migrate --reverse    # global → local
 ```
 
+### `pillbox bottle delete <slug>`
+
+Removes a bottle from the global registry. Requires typing the slug to confirm — the operation cannot be undone.
+
+```bash
+pillbox bottle delete my-project
+```
+
+The command shows the bottle's name, slug, and database path before prompting for confirmation.
+
+### `pillbox bottle repair <slug>`
+
+Updates the database path of an unlinked bottle — one whose `.pillbox/pillbox.db` file no longer exists at the registered location (for example, after moving a project to a new directory).
+
+```bash
+pillbox bottle repair my-project
+```
+
+Prompts for the new absolute path to the `pillbox.db` file. The path must exist and be a file; if it does not, the command exits with an error and makes no changes.
+
 ## Prescription commands
 
 ### `pillbox prescription open "<title>"`
