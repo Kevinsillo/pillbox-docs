@@ -1,0 +1,107 @@
+---
+title: Instalación
+description: Instala el binario de Pillbox en Linux o macOS.
+sidebar:
+  order: 2
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Pillbox corre como un binario único en Linux y macOS. El instalador configura el binario, el servidor MCP y la skill de Claude Code en un solo paso.
+
+## Instalación en una línea
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash
+```
+
+El instalador:
+
+1. Detecta tu plataforma (Linux/macOS, x86_64/aarch64)
+2. Descarga el binario `pillbox` desde GitHub Releases
+3. Lo instala en `~/.local/bin` (Linux) o `/usr/local/bin` (macOS)
+4. Instala el servidor MCP en `~/.pillbox/mcp/`
+5. Instala la skill de Claude Code en `~/.claude/skills/pillbox/`
+6. Crea la base de datos global en `~/.pillbox/pillbox.db`
+
+### Opciones
+
+Instalar una versión específica:
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash -s -- --version 0.4.0
+```
+
+Directorio de instalación personalizado:
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash -s -- --install-dir /usr/local/bin
+```
+
+## Instalación manual
+
+Descarga el binario para tu plataforma desde [GitHub Releases](https://github.com/Kevinsillo/pillbox/releases):
+
+| Plataforma | Binario |
+|---|---|
+| Linux x86_64 | `pillbox-linux-x86_64` |
+| Linux aarch64 | `pillbox-linux-aarch64` |
+| macOS arm64 | `pillbox-darwin-aarch64` |
+| macOS x86_64 | `pillbox-darwin-x86_64` |
+
+Luego sigue estos pasos:
+
+<Steps>
+
+1. Colócalo en tu `$PATH` y hazlo ejecutable:
+
+   ```bash
+   chmod +x pillbox
+   mv pillbox ~/.local/bin/
+   ```
+
+2. Instala el servidor MCP:
+
+   ```bash
+   pillbox mcp install
+   ```
+
+   Requiere Node.js ≥ 18.
+
+3. Instala la skill de Claude Code:
+
+   ```bash
+   pillbox skill install
+   ```
+
+</Steps>
+
+## Verificar la instalación
+
+```bash
+pillbox status
+```
+
+Muestra la ruta del binario, base de datos global, servidor MCP y estado de la skill.
+
+## Compilar desde el código fuente
+
+Requiere Rust 1.75+ y Node.js 20+.
+
+```bash
+git clone https://github.com/Kevinsillo/pillbox
+cd pillbox
+make build-full
+./core/target/release/pillbox mcp install
+./core/target/release/pillbox skill install
+```
+
+## Plataformas soportadas
+
+| Plataforma | Estado |
+|---|---|
+| Linux x86_64 | Soportado |
+| Linux aarch64 | Soportado |
+| macOS arm64 (Apple Silicon) | Soportado |
+| macOS x86_64 | Soportado |
+| Windows | No soportado |

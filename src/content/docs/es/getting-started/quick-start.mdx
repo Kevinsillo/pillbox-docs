@@ -1,0 +1,80 @@
+---
+title: Inicio rápido
+description: De cero a una configuración de Pillbox funcionando en menos de cinco minutos.
+sidebar:
+  order: 3
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Esta página te lleva de una instalación nueva a una configuración de Pillbox funcionando — binario instalado, MCP conectado y tu primer bottle registrado.
+
+## Prerequisitos
+
+- Binario `pillbox` instalado ([guía de instalación](/es/getting-started/installation/))
+- Claude Code u otro asistente IA compatible con MCP
+
+## Configuración
+
+<Steps>
+1. Inicializa un bottle en el directorio de tu proyecto
+
+   ```bash
+   cd tu-proyecto
+   pillbox bottle init
+   ```
+
+   El asistente pregunta por un nombre para mostrar y el alcance (`local` o `global`). Elige `global` si quieres que el conocimiento de este proyecto sea accesible desde cualquier lugar.
+
+2. Instala el servidor MCP
+
+   ```bash
+   pillbox mcp install
+   ```
+
+   Instala el servidor MCP de Node.js en `~/.pillbox/mcp/` y configura Claude Code automáticamente.
+
+3. Instala la skill del agente
+
+   ```bash
+   pillbox skill install
+   ```
+
+   Instala la skill de Pillbox en `~/.claude/skills/pillbox/`, que guía a Claude para usar las herramientas de Pillbox correctamente.
+
+4. Reinicia Claude Code
+
+   Ejecuta `/mcp` para confirmar que `pillbox` está conectado y sus herramientas aparecen en la lista.
+
+5. Verifica que todo funciona
+
+   ```bash
+   pillbox status
+   ```
+
+   Deberías ver el binario, la DB global, el servidor MCP y la skill reportados como activos.
+</Steps>
+
+## Tu primera sesión
+
+Una vez completada la configuración, Claude usa Pillbox automáticamente. Al inicio de una nueva sesión llama a `pill_context` para restaurar el historial reciente. Mientras trabaja, guarda pills con las decisiones y descubrimientos. Al final, guarda un resumen de sesión.
+
+No necesitas hacer nada — la skill gestiona el flujo de trabajo.
+
+## Revisa lo que guardó tu agente
+
+Inicia la interfaz web para explorar pills, cápsulas y prescriptions:
+
+```bash
+pillbox serve start
+```
+
+Luego abre `http://localhost:4242` en tu navegador.
+
+La UI es una capa de supervisión — úsala para detectar entradas redundantes, incorrectas o mal redactadas y corregirlas. El agente gestiona todas las escrituras durante el trabajo normal.
+
+## Próximos pasos
+
+- [Conceptos](/es/concepts/overview/) — entiende bottles, prescriptions, pills y capsules
+- [Configuración MCP](/es/guides/mcp-setup/) — configura otros clientes MCP o verifica el acceso a las herramientas
+- [Referencia CLI](/es/reference/cli/) — todos los comandos explicados

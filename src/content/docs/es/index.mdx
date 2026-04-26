@@ -1,0 +1,65 @@
+---
+title: Pillbox
+description: La capa de memoria persistente para agentes IA — estructurada, buscable y construida en Rust.
+template: splash
+hero:
+  title: Pillbox
+  tagline: La capa de memoria persistente para agentes IA — estructurada, buscable y construida en Rust.
+  image:
+    alt: Pillbox logo
+    dark: ../../../assets/pillbox-logo-light.png
+    light: ../../../assets/pillbox-logo-dark.png
+  actions:
+    - text: Comenzar
+      link: /es/getting-started/introduction/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub
+      link: https://github.com/Kevinsillo/pillbox
+      icon: external
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+<CardGrid stagger>
+  <Card title="Memoria persistente" icon="open-book">
+    Las píldoras y cápsulas sobreviven entre sesiones — tu agente retoma donde lo dejó, siempre.
+  </Card>
+  <Card title="Búsqueda difusa" icon="magnifier">
+    Búsqueda de texto completo FTS5 con Jaro-Winkler encuentra contexto aunque haya errores tipográficos o términos parciales.
+  </Card>
+  <Card title="Interfaz web" icon="laptop">
+    Revisa y corrige lo que guardaron tus agentes desde una interfaz local. Sin nube, sin cuenta.
+  </Card>
+  <Card title="Construido en Rust" icon="seti:rust">
+    Binario único, sin dependencias de runtime. Funciona en Linux y macOS.
+  </Card>
+  <Card title="Compatible con Git" icon="pencil">
+    La base de datos local vive dentro del directorio de tu proyecto. Haz commit de `.pillbox/` en git y todos los miembros del equipo comparten la misma memoria del proyecto.
+  </Card>
+  <Card title="6 idiomas" icon="translate">
+    CLI e interfaz web completamente localizados en inglés, español, francés, alemán, italiano y portugués. Detectado automáticamente desde el idioma del sistema.
+  </Card>
+</CardGrid>
+
+## Instalación rápida
+
+```bash
+curl -fsSL https://get.pillbox.dev | bash
+```
+
+Luego sigue la [guía de primeros pasos](/es/getting-started/introduction/).
+
+<div class="spacer" />
+
+## Cómo funciona
+
+Pillbox organiza el conocimiento en cuatro capas:
+
+- **Bottles** — uno por proyecto. Mapea un directorio a una base de datos.
+- **Prescriptions** — sesiones de trabajo dentro de un bottle. Una abierta a la vez.
+- **Pills** — conocimiento específico del proyecto guardado durante una sesión. Buscable.
+- **Capsules** — conocimiento personal, entre proyectos. Convenciones, preferencias, contexto.
+
+Tu agente abre una prescription al comenzar, guarda pills con las decisiones y los bugs que resuelve, y cierra la prescription con un resumen al terminar. En la siguiente sesión, llama a `pill_context` para restaurar todo.

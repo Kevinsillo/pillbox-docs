@@ -19,6 +19,17 @@ export default defineConfig({
 			plugins: [starlightThemeNext()],
 			customCss: ['./src/styles/custom.css'],
 			title: 'Pillbox',
+			defaultLocale: 'root',
+			locales: {
+				root: {
+					label: 'English',
+					lang: 'en',
+				},
+				es: {
+					label: 'Español',
+					lang: 'es',
+				},
+			},
 			logo: {
 				light: './src/assets/pillbox-logo-dark.png',
 				dark: './src/assets/pillbox-logo-light.png',
@@ -40,6 +51,7 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: 'Getting Started',
+					translations: { es: 'Primeros pasos' },
 					items: [
 						{ slug: 'getting-started/introduction' },
 						{ slug: 'getting-started/installation' },
@@ -48,10 +60,15 @@ export default defineConfig({
 				},
 				{
 					label: 'Concepts',
-					items: [{ slug: 'concepts/overview' }],
+					translations: { es: 'Conceptos' },
+					items: [
+						{ slug: 'concepts/overview' },
+						{ slug: 'concepts/philosophy' },
+					],
 				},
 				{
 					label: 'Guides',
+					translations: { es: 'Guías' },
 					items: [
 						{
 							label: 'MCP',
@@ -70,11 +87,12 @@ export default defineConfig({
 				},
 				{
 					label: 'Reference',
+					translations: { es: 'Referencia' },
 					items: [
 						{ slug: 'reference/cli' },
 						{ slug: 'reference/mcp-tools' },
 						{ slug: 'reference/http-api' },
-						{ slug: 'reference/credits' },
+{ slug: 'reference/credits' },
 					],
 				},
 			],
