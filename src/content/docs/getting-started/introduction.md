@@ -15,9 +15,9 @@ AI agents forget everything between sessions. If you ask an agent to implement a
 
 Pillbox runs as a local binary. It provides an MCP server that exposes memory tools to your agent. The agent calls these tools during its work:
 
-- `pill_take` — saves a piece of knowledge (a decision, a bug fix, an architecture note)
+- `pill_store` — saves a piece of knowledge (a decision, a bug fix, an architecture note)
 - `pill_context` — retrieves recent session history at the start of a new session
-- `capsule_take` — saves personal, cross-project knowledge (conventions, preferences)
+- `capsule_store` — saves personal, cross-project knowledge (conventions, preferences)
 
 All data is stored in a local SQLite database. Nothing leaves your machine.
 

@@ -16,9 +16,9 @@ Reinicia Claude Code después de instalar. Ejecuta `/mcp` para verificar que el 
 ```
 pillbox (connected)
   Tools: prescription_open, prescription_close, prescription_read,
-         prescription_discard, bottle_list, pill_take, pill_find,
+         prescription_discard, bottle_list, pill_store, pill_find,
          pill_context, pill_read, pill_revise, pill_discard,
-         capsule_take, capsule_find, capsule_read, capsule_revise,
+         capsule_store, capsule_find, capsule_read, capsule_revise,
          capsule_discard, stats
 ```
 

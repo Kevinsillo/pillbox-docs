@@ -23,7 +23,7 @@ Las pills y prescriptions pertenecen a un **bottle** (base de datos local del pr
 
 Las pills son entradas de memoria estructuradas vinculadas a una prescription (sesión de trabajo) dentro de un bottle.
 
-### `pill_take`
+### `pill_store`
 
 Crea una nueva pill.
 
@@ -160,7 +160,7 @@ Lista todos los tipos de compound válidos para pills. Sin parámetros.
 
 Las capsules son entradas de memoria global — convenciones, flujos de trabajo y contexto de entorno compartidos entre todos los proyectos.
 
-### `capsule_take`
+### `capsule_store`
 
 Crea una nueva capsule en la base de datos global.
 

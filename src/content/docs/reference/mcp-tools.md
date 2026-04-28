@@ -23,7 +23,7 @@ Pills and prescriptions belong to a **bottle** (project-local database). Capsule
 
 Pills are structured memory entries attached to a prescription (work session) inside a bottle.
 
-### `pill_take`
+### `pill_store`
 
 Creates a new pill.
 
@@ -170,7 +170,7 @@ bugfix
 
 Capsules are global memory entries — conventions, workflows, and environment context shared across all projects.
 
-### `capsule_take`
+### `capsule_store`
 
 Creates a new capsule in the global database.
 

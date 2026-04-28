@@ -80,8 +80,8 @@ Directorio del proyecto
 **Flujo de trabajo típico del agente:**
 
 1. **Inicio de sesión** — llama a `pill_context` para recuperar prescriptions y pills recientes. Llama a `capsule_search` con términos relevantes para cargar convenciones personales.
-2. **Durante el trabajo** — llama a `pill_take` para guardar decisiones, bugs resueltos, descubrimientos.
-3. **Fin de sesión** — llama a `pill_take` con `compound: prescription_summary` para resumir la sesión, luego `prescription_close`.
+2. **Durante el trabajo** — llama a `pill_store` para guardar decisiones, bugs resueltos, descubrimientos.
+3. **Fin de sesión** — llama a `pill_store` con `compound: prescription_summary` para resumir la sesión, luego `prescription_close`.
 
 ## Eliminaciones
 

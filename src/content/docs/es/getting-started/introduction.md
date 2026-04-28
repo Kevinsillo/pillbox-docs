@@ -15,9 +15,9 @@ Los agentes IA olvidan todo entre sesiones. Si le pides a un agente que implemen
 
 Pillbox corre como un binario local. Proporciona un servidor MCP que expone herramientas de memoria a tu agente. El agente llama a estas herramientas durante su trabajo:
 
-- `pill_take` — guarda un fragmento de conocimiento (una decisión, un bug resuelto, una nota de arquitectura)
+- `pill_store` — guarda un fragmento de conocimiento (una decisión, un bug resuelto, una nota de arquitectura)
 - `pill_context` — recupera el historial reciente de sesiones al inicio de una nueva sesión
-- `capsule_take` — guarda conocimiento personal entre proyectos (convenciones, preferencias)
+- `capsule_store` — guarda conocimiento personal entre proyectos (convenciones, preferencias)
 
 Todos los datos se almacenan en una base de datos SQLite local. Nada sale de tu máquina.
 

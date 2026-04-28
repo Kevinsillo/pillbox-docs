@@ -80,8 +80,8 @@ Project directory
 **Typical agent workflow:**
 
 1. **Session start** — call `pill_context` to retrieve recent prescriptions and pills. Call `capsule_search` with relevant terms to load personal conventions.
-2. **During work** — call `pill_take` to save decisions, bugs fixed, discoveries.
-3. **Session end** — call `pill_take` with `compound: prescription_summary` to summarize the session, then `prescription_close`.
+2. **During work** — call `pill_store` to save decisions, bugs fixed, discoveries.
+3. **Session end** — call `pill_store` with `compound: prescription_summary` to summarize the session, then `prescription_close`.
 
 ## Deletions
 
