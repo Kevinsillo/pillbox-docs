@@ -83,6 +83,33 @@ Directorio del proyecto
 2. **Durante el trabajo** — llama a `pill_take` para guardar decisiones, bugs resueltos, descubrimientos.
 3. **Fin de sesión** — llama a `pill_take` con `compound: prescription_summary` para resumir la sesión, luego `prescription_close`.
 
-## Eliminaciones suaves
+## Eliminaciones
 
-Todas las entidades usan eliminaciones suaves. Nada se elimina permanentemente de la base de datos — los elementos descartados permanecen con `deleted_at` establecido y se excluyen de todas las consultas por defecto.
+Pillbox distingue dos niveles de eliminación: el **discard** (soft delete) y el **purge** (hard delete).
+
+### Discard
+
+Descartar una entidad establece su campo `deleted_at` en la base de datos. El registro permanece pero queda excluido de todas las consultas estándar. Los elementos descartados aparecen como "archivados" en el CLI y la web UI, diferenciados visualmente de los activos.
+
+Las prescriptions aplican cascade: descartar una prescription descarta también todas sus pills en la misma transacción.
+
+### Purge
+
+El purge elimina el registro físicamente de la base de datos. Es irreversible — no queda rastro en disco.
+
+Las prescriptions aplican cascade completo: el purge elimina en orden el dispense_log, los pill_links, todas las pills y finalmente la prescription, en una única transacción.
+
+### Qué soporta cada entidad
+
+| Entidad | Discard | Purge |
+|---|---|---|
+| Pills | ✓ | ✓ |
+| Capsules | ✓ | ✓ |
+| Prescriptions | ✓ cascade | ✓ cascade |
+| Bottles | — | ✓ vía CLI |
+
+### Qué canal expone qué
+
+El discard está disponible en los tres canales: herramientas MCP (`pill_discard`, `capsule_discard`, `prescription_discard`), HTTP API y web UI.
+
+El purge está disponible solo vía HTTP API y web UI — nunca vía MCP. Los agentes IA pueden archivar entidades, pero no pueden destruirlas permanentemente.

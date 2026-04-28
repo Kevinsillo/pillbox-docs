@@ -94,9 +94,19 @@ Closes an open prescription (sets `ended_at` to now).
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id`
 
-Soft-deletes a prescription.
+Discards a prescription (soft delete). The prescription and its pills are archived with `deleted_at` set.
 
 **Response**: `{ "discarded": true }` or `404`.
+
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/purge`
+
+Permanently deletes a prescription and all related data: dispense_log entries, pill_links, and all its pills.
+
+:::danger
+Purge cannot be undone. The prescription and all its pills are removed from the database.
+:::
+
+**Response**: `{ "purged": true }` or `404`.
 
 ---
 
@@ -151,9 +161,19 @@ Updates a pill's title, content, or compound. All fields are optional.
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id`
 
-Soft-deletes a pill.
+Discards a pill (soft delete). The record is archived with `deleted_at` set.
 
-**Response**: deleted `Pill` object or `404`.
+**Response**: archived `Pill` object or `404`.
+
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id/purge`
+
+Permanently deletes a pill.
+
+:::danger
+Purge cannot be undone.
+:::
+
+**Response**: `{ "purged": true }` or `404`.
 
 ### `GET /pills/search`
 
@@ -218,7 +238,7 @@ Creates a new capsule.
 
 ### `GET /capsules`
 
-Lists capsules.
+Lists capsules, including archived ones (with `deleted_at` set). Active capsules appear first.
 
 | Query param | Type | Description |
 |---|---|---|
@@ -229,7 +249,7 @@ Lists capsules.
 
 ### `GET /capsules/:id`
 
-Returns a capsule by integer ID.
+Returns a capsule by integer ID, including if it is archived.
 
 **Response**: `Capsule` object or `404`.
 
@@ -250,9 +270,19 @@ Updates a capsule's title or content.
 
 ### `DELETE /capsules/:id`
 
-Soft-deletes a capsule.
+Discards a capsule (soft delete). The record is archived with `deleted_at` set.
 
-**Response**: deleted `Capsule` object or `404`.
+**Response**: archived `Capsule` object or `404`.
+
+### `DELETE /capsules/:id/purge`
+
+Permanently deletes a capsule.
+
+:::danger
+Purge cannot be undone.
+:::
+
+**Response**: `{ "purged": true }` or `404`.
 
 ### `GET /capsules/search`
 

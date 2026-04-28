@@ -94,9 +94,19 @@ Cierra una prescription abierta (establece `ended_at` a ahora).
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id`
 
-Elimina suavemente una prescription.
+Descarta una prescription (soft delete). La prescription y sus pills quedan archivadas con `deleted_at` establecido.
 
 **Respuesta**: `{ "discarded": true }` o `404`.
+
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/purge`
+
+Elimina permanentemente una prescription y todos sus datos relacionados: entradas de dispense_log, pill_links y todas sus pills.
+
+:::danger
+El purge no se puede deshacer. La prescription y todas sus pills desaparecen de la base de datos.
+:::
+
+**Respuesta**: `{ "purged": true }` o `404`.
 
 ---
 
@@ -151,9 +161,19 @@ Actualiza el título, contenido o compound de una pill. Todos los campos son opc
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id`
 
-Elimina suavemente una pill.
+Descarta una pill (soft delete). El registro queda archivado con `deleted_at` establecido.
 
-**Respuesta**: objeto `Pill` eliminado o `404`.
+**Respuesta**: objeto `Pill` archivado o `404`.
+
+### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/pills/:pill_id/purge`
+
+Elimina permanentemente una pill.
+
+:::danger
+El purge no se puede deshacer.
+:::
+
+**Respuesta**: `{ "purged": true }` o `404`.
 
 ### `GET /pills/search`
 
@@ -218,7 +238,7 @@ Crea una nueva capsule.
 
 ### `GET /capsules`
 
-Lista capsules.
+Lista capsules, incluyendo las archivadas (con `deleted_at` establecido). Las activas aparecen primero.
 
 | Query param | Tipo | Descripción |
 |---|---|---|
@@ -229,7 +249,7 @@ Lista capsules.
 
 ### `GET /capsules/:id`
 
-Devuelve una capsule por ID entero.
+Devuelve una capsule por ID entero, incluyendo si está archivada.
 
 **Respuesta**: objeto `Capsule` o `404`.
 
@@ -250,9 +270,19 @@ Actualiza el título o contenido de una capsule.
 
 ### `DELETE /capsules/:id`
 
-Elimina suavemente una capsule.
+Descarta una capsule (soft delete). El registro queda archivado con `deleted_at` establecido.
 
-**Respuesta**: objeto `Capsule` eliminado o `404`.
+**Respuesta**: objeto `Capsule` archivado o `404`.
+
+### `DELETE /capsules/:id/purge`
+
+Elimina permanentemente una capsule.
+
+:::danger
+El purge no se puede deshacer.
+:::
+
+**Respuesta**: `{ "purged": true }` o `404`.
 
 ### `GET /capsules/search`
 

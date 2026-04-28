@@ -111,6 +111,25 @@ Cierra la prescription abierta del bottle actual.
 
 Lista todas las pills del bottle actual, ordenadas por fecha de creación (más recientes primero).
 
+## Comandos capsule
+
+### `pillbox capsule list [-l N]`
+
+Lista las capsules globales — activas primero, archivadas (soft-deleted) en una sección separada al final.
+
+```bash
+pillbox capsule list
+pillbox capsule list -l 100
+```
+
+### `pillbox capsule show <id>`
+
+Muestra el detalle completo de una capsule por ID numérico, incluyendo si está archivada.
+
+```bash
+pillbox capsule show 7
+```
+
 ## Comandos MCP
 
 ### `pillbox mcp install`

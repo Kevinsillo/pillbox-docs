@@ -27,8 +27,8 @@ The UI gives you read and write access to everything Pillbox stores:
 
 - **Bottles** — see all registered projects and their scope (local/global)
 - **Prescriptions** — browse work sessions by project, see their pills
-- **Pills** — read full pill content, edit title or content, discard entries
-- **Capsules** — review personal cross-project knowledge, correct or remove entries
+- **Pills** — read full pill content, edit title or content, discard (archive) or permanently delete (purge) archived entries
+- **Capsules** — review personal cross-project knowledge, correct, discard, or permanently delete archived entries
 
 ## When to use it
 

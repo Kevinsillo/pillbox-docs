@@ -83,6 +83,33 @@ Project directory
 2. **During work** — call `pill_take` to save decisions, bugs fixed, discoveries.
 3. **Session end** — call `pill_take` with `compound: prescription_summary` to summarize the session, then `prescription_close`.
 
-## Soft deletes
+## Deletions
 
-All entities use soft deletes. Nothing is permanently removed from the database — discarded items remain with `deleted_at` set and are excluded from all queries by default.
+Pillbox has two levels of deletion: **discard** (soft delete) and **purge** (hard delete).
+
+### Discard
+
+Discarding an entity sets its `deleted_at` field in the database. The record remains but is excluded from all standard queries. Discarded items appear as "archived" in the CLI and web UI, visually distinct from active ones.
+
+Prescriptions apply a cascade: discarding a prescription also discards all its pills in the same transaction.
+
+### Purge
+
+Purging removes the record physically from the database. It is irreversible — no trace remains on disk.
+
+Prescriptions apply a full cascade: a purge deletes the dispense_log entries, pill_links, all pills, and finally the prescription itself, in a single transaction.
+
+### What each entity supports
+
+| Entity | Discard | Purge |
+|---|---|---|
+| Pills | ✓ | ✓ |
+| Capsules | ✓ | ✓ |
+| Prescriptions | ✓ cascade | ✓ cascade |
+| Bottles | — | ✓ via CLI |
+
+### Which channel exposes what
+
+Discard is available across all three channels: MCP tools (`pill_discard`, `capsule_discard`, `prescription_discard`), HTTP API, and web UI.
+
+Purge is available only via HTTP API and web UI — never via MCP. AI agents can archive entities, but cannot permanently destroy memory.
