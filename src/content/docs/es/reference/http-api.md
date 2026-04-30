@@ -130,8 +130,7 @@ Crea una nueva pill.
 {
   "title": "Migrado a autenticación JWT",
   "content": "Reemplazado express-session con jsonwebtoken...",
-  "compound": "decision",
-  "dispenser": "claude-sonnet-4-6"
+  "compound": "decision"
 }
 ```
 

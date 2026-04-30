@@ -33,7 +33,6 @@ Creates a new pill.
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the pill |
 | `compound` | string | yes | Category — see [pill compounds](#pill_compounds) |
-| `dispenser` | string | no | Tool or agent that created the pill |
 | `author_name` | string | no | Author name |
 | `author_email` | string | no | Author email |
 

@@ -130,8 +130,7 @@ Creates a new pill.
 {
   "title": "Switched to JWT auth",
   "content": "Replaced express-session with jsonwebtoken...",
-  "compound": "decision",
-  "dispenser": "claude-sonnet-4-6"
+  "compound": "decision"
 }
 ```
 

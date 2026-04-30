@@ -33,7 +33,6 @@ Crea una nueva pill.
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la pill |
 | `compound` | string | sí | Categoría — ver [compuestos de pill](#pill_compounds) |
-| `dispenser` | string | no | Herramienta o agente que creó la pill |
 | `author_name` | string | no | Nombre del autor |
 | `author_email` | string | no | Email del autor |
 
