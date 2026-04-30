@@ -51,13 +51,17 @@ Estado del bottle en el directorio actual.
 
 Lista todos los bottles registrados en la base de datos global.
 
-### `pillbox bottle migrate [--reverse] [--capsules]`
+### `pillbox bottle migrate <global|local>`
 
-Migra un bottle entre las bases de datos local y global usando upsert por `sync_id`.
+Mueve las prescripciones y pills de un bottle entre las bases de datos local y global. Pide confirmación y actualiza el scope del bottle automáticamente.
+
+**`global`:** mueve el bottle del directorio actual a la base de datos global y elimina el archivo de base de datos local (`.pillbox/pillbox.db`).
+
+**`local`:** muestra un listado interactivo de bottles globales; mueve el seleccionado a la base de datos local y lo elimina del global. Falla si el directorio ya tiene un bottle local.
 
 ```bash
-pillbox bottle migrate              # local → global
-pillbox bottle migrate --reverse    # global → local
+pillbox bottle migrate global    # local → global (elimina el archivo de BD local)
+pillbox bottle migrate local     # global → local (elimina el bottle del global)
 ```
 
 ### `pillbox bottle delete <slug>`
