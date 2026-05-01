@@ -33,8 +33,8 @@ Crea una nueva pill.
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la pill |
 | `compound` | string | sí | Categoría — ver [compuestos de pill](#pill_compounds) |
-| `author_name` | string | no | Nombre del autor |
-| `author_email` | string | no | Email del autor |
+| `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
 ```
 Pill created
@@ -272,6 +272,8 @@ Abre una nueva prescription para un bottle.
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | sí | Bottle en el que abrir la prescription |
 | `title` | string (1–255) | sí | Título descriptivo para la sesión |
+| `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
 ```
 Prescription opened

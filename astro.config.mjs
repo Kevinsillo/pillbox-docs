@@ -56,6 +56,7 @@ export default defineConfig({
 						{ slug: 'getting-started/introduction' },
 						{ slug: 'getting-started/installation' },
 						{ slug: 'getting-started/quick-start' },
+						{ slug: 'getting-started/configuration' },
 					],
 				},
 				{
@@ -83,6 +84,7 @@ export default defineConfig({
 							],
 						},
 						{ slug: 'guides/web-interface' },
+						{ slug: 'guides/author-identity' },
 					],
 				},
 				{
