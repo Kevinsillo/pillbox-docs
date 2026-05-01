@@ -47,9 +47,14 @@ Asistente interactivo para inicializar un bottle en el directorio actual.
 
 Estado del bottle en el directorio actual.
 
-### `pillbox bottle list`
+### `pillbox bottle list [-l N]`
 
-Lista todos los bottles registrados en la base de datos global.
+Lista todos los bottles registrados en la base de datos global. Por defecto: 20.
+
+```bash
+pillbox bottle list
+pillbox bottle list -l 50
+```
 
 ### `pillbox bottle migrate <global|local>`
 
@@ -98,28 +103,41 @@ Falla si ya hay una prescription abierta — ciérrala primero con `pillbox pres
 
 ### `pillbox prescription list [-l N]`
 
-Lista las prescriptions más recientes del bottle actual.
+Lista las prescriptions más recientes del bottle actual. Por defecto: 10.
 
 ```bash
 pillbox prescription list
 pillbox prescription list -l 25
 ```
 
+### `pillbox prescription show <id> [-l N]`
+
+Muestra el detalle completo de una prescription y todas sus pills. Acepta el ID completo o un prefijo corto. Por defecto muestra 20 pills; usa `-l` para cambiar el límite.
+
+```bash
+pillbox prescription show abc123
+pillbox prescription show abc123 -l 50
+```
+
 ### `pillbox prescription close`
 
 Cierra la prescription abierta del bottle actual.
 
-## Comandos pills
+## Comandos pill
 
-### `pillbox pills list`
+### `pillbox pill show <id>`
 
-Lista todas las pills del bottle actual, ordenadas por fecha de creación (más recientes primero).
+Muestra el detalle completo de una pill por su ID numérico. Funciona aunque la pill esté archivada.
+
+```bash
+pillbox pill show 42
+```
 
 ## Comandos capsule
 
 ### `pillbox capsule list [-l N]`
 
-Lista las capsules globales — activas primero, archivadas (soft-deleted) en una sección separada al final.
+Lista las capsules globales — activas primero, archivadas (soft-deleted) en una sección separada al final. Por defecto: 50.
 
 ```bash
 pillbox capsule list
