@@ -20,6 +20,16 @@ El **scope** determina en qué base de datos vive el bottle:
 - `local` — `.pillbox/pillbox.db` dentro del directorio del proyecto. Ideal para trabajo específico del proyecto que no debe mezclarse con otros.
 - `global` — `~/.pillbox/pillbox.db`. Ideal para proyectos donde quieres que todo el conocimiento sea accesible en un solo lugar, o para compartir entre máquinas.
 
+### Cómo se resuelve el bottle activo
+
+El CLI y la web UI resuelven el bottle activo de forma diferente.
+
+**CLI** — el bottle activo es aquel cuyo `directory` coincide con (o es un padre de) el directorio de trabajo actual. Esto funciona igual para ambos scopes: un bottle con scope global sigue teniendo un `directory`, así que hacer `cd` al directorio del proyecto es suficiente. No se necesita ninguna selección explícita.
+
+**Web UI** — el bottle activo es una selección explícita guardada en el navegador. Esto es necesario porque la web UI no tiene noción de directorio actual. Puedes cambiar entre cualquier bottle registrado independientemente de dónde esté en disco.
+
+La consecuencia práctica: si inicializas un bottle con scope `global`, lo usas desde el CLI exactamente igual que uno `local` — simplemente haz `cd` al directorio del proyecto y todos los comandos funcionan como se espera.
+
 ## Prescriptions
 
 Una **prescription** es una sesión de trabajo dentro de un bottle. Tiene un título que describe en qué está trabajando el agente.

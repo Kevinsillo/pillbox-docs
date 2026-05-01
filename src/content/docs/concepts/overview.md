@@ -20,6 +20,16 @@ A **bottle** represents a project. It maps a directory on disk to a Pillbox data
 - `local` — `.pillbox/pillbox.db` inside the project directory. Good for project-specific work that shouldn't mix with other projects.
 - `global` — `~/.pillbox/pillbox.db`. Good for projects where you want all knowledge accessible in one place, or to share across machines.
 
+### How the active bottle is resolved
+
+The CLI and the web UI resolve the active bottle differently.
+
+**CLI** — the active bottle is the one whose `directory` matches (or is a parent of) the current working directory. This works the same for both scopes: a global-scope bottle still has a `directory`, so `cd`-ing into the project is enough. No explicit selection is needed.
+
+**Web UI** — the active bottle is an explicit selection stored in the browser. This is necessary because the web UI has no notion of a current directory. You can switch between any registered bottle regardless of where it lives on disk.
+
+The practical consequence: if you initialize a bottle with `global` scope, you interact with it from the CLI exactly like a `local` one — just `cd` to the project directory and all commands work as expected.
+
 ## Prescriptions
 
 A **prescription** is a work session within a bottle. It has a title that describes what the agent is working on.
