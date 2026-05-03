@@ -89,6 +89,25 @@ pillbox bottle repair my-project
 
 Prompts for the new absolute path to the `pillbox.db` file. The path must exist and be a file; if it does not, the command exits with an error and makes no changes.
 
+### `pillbox bottle vinculate [directory]`
+
+Registers an existing local bottle database into the calling user's global registry. Use this when a second OS user needs access to a bottle created by another user on the same machine — for example, when two users share a project directory.
+
+`directory` is optional and defaults to the current working directory.
+
+```bash
+pillbox bottle vinculate                        # links bottle in cwd
+pillbox bottle vinculate /home/alice/my-project # links bottle at explicit path
+```
+
+The command reads the bottle from `<directory>/.pillbox/pillbox.db` and adds it to `~/.pillbox/pillbox.db`. The operation is idempotent — running it twice reports "already linked" without error.
+
+Error conditions:
+
+- `.pillbox/pillbox.db` not found at the resolved path — exits 1
+- The resolved path is the global database itself (circular link) — exits 1
+- The local database contains no bottle — exits 1
+
 ## Prescription commands
 
 ### `pillbox prescription open "<title>"`

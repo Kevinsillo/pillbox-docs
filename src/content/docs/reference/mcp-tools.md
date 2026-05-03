@@ -389,6 +389,22 @@ Bottles (2)
 
 `●` means the bottle's database is accessible. `○` with `[unlinked]` means the database file no longer exists on disk.
 
+### `bottle_vinculate`
+
+Registers an existing local bottle database into the calling user's global registry. Use this when a second OS user needs to access a bottle created by another user on the same machine.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `directory` | string | no | Absolute path to the directory containing `.pillbox/pillbox.db`. Defaults to the process cwd. |
+
+Returns `status: "linked"` on success or `status: "already_linked"` if the bottle was already registered. Both are exit-0 conditions.
+
+```json
+{ "status": "linked", "name": "my-project", "slug": "my-project", "db_path": "/home/bob/my-project/.pillbox/pillbox.db" }
+```
+
+Error codes specific to this tool: `db_not_found`, `circular_link`, `no_bottle_in_db`.
+
 ---
 
 ## Error codes
