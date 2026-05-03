@@ -9,16 +9,20 @@ La interfaz web de Pillbox es una interfaz local para revisar el conocimiento qu
 
 ## Iniciar el servidor
 
+El servidor se gestiona como un servicio del sistema (systemd en Linux, launchd en macOS). Instálalo una vez y luego usa `start` y `stop` cuando necesites.
+
 ```bash
-pillbox serve start
+pillbox serve install        # instala el servicio (primera vez)
+pillbox serve start          # arranca el servidor
 ```
 
-Inicia el servidor HTTP como proceso en segundo plano en el puerto 4242. Abre `http://localhost:4242` en tu navegador.
+Abre `http://pillbox.local:4242` en tu navegador. Si la instalación no tuvo permisos para modificar el fichero hosts, usa `http://localhost:4242`.
 
 ```bash
-pillbox serve start --port 8080   # puerto personalizado
-pillbox serve status               # verificar si está corriendo
-pillbox serve stop                 # detener el servidor
+pillbox serve install --port 8080   # puerto personalizado
+pillbox serve status                 # verificar estado
+pillbox serve stop                   # detener el servidor
+pillbox serve uninstall              # eliminar el servicio del sistema
 ```
 
 ## Qué puedes hacer

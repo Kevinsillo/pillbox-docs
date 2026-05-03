@@ -13,24 +13,36 @@ Muestra el estado global: ruta del binario, bases de datos global y local, bottl
 
 ## Comandos serve
 
-### `pillbox serve start [--port N]`
+### `pillbox serve`
 
-Inicia el servidor HTTP como proceso en segundo plano. Puerto por defecto: 4242.
+Muestra el estado del servicio si está instalado. Si no está instalado, muestra un aviso con el comando para instalarlo.
+
+### `pillbox serve install [--port N]`
+
+Registra el servidor HTTP como servicio del sistema y habilita el arranque automático al iniciar el equipo. Puerto por defecto: 4242.
 
 ```bash
-pillbox serve start
-pillbox serve start --port 8080
+pillbox serve install
+pillbox serve install --port 8080
 ```
 
-La interfaz web está disponible en `http://localhost:<puerto>`.
+También añade `pillbox.local` al fichero hosts del sistema para acceder por nombre en lugar de `localhost`. Requiere permisos de escritura en el fichero hosts (sudo en Linux/macOS, administrador en Windows); si no los tiene, el servicio se instala igualmente y el acceso queda disponible en `http://localhost:<puerto>`.
+
+### `pillbox serve uninstall`
+
+Elimina el servicio del sistema y la entrada `pillbox.local` del fichero hosts.
+
+### `pillbox serve start`
+
+Arranca el servicio. El servicio debe estar instalado previamente con `pillbox serve install`.
 
 ### `pillbox serve stop`
 
-Detiene el servidor en segundo plano.
+Detiene el servicio.
 
 ### `pillbox serve status`
 
-Muestra si el servidor está corriendo y en qué puerto.
+Muestra si el servidor está corriendo y la URL de acceso.
 
 ## Comandos bottle
 

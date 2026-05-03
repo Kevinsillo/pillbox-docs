@@ -9,16 +9,20 @@ The Pillbox web UI is a local interface for reviewing the knowledge your agents 
 
 ## Starting the server
 
+The server runs as a system service (systemd on Linux, launchd on macOS). Install it once, then use `start` and `stop` as needed.
+
 ```bash
-pillbox serve start
+pillbox serve install        # install the service (first time)
+pillbox serve start          # start the server
 ```
 
-This starts the HTTP server as a background process on port 4242. Open `http://localhost:4242` in your browser.
+Open `http://pillbox.local:4242` in your browser. If the install did not have permission to modify the hosts file, use `http://localhost:4242` instead.
 
 ```bash
-pillbox serve start --port 8080   # custom port
-pillbox serve status               # check if running
-pillbox serve stop                 # stop the server
+pillbox serve install --port 8080   # custom port
+pillbox serve status                 # check status
+pillbox serve stop                   # stop the server
+pillbox serve uninstall              # remove the system service
 ```
 
 ## What you can do

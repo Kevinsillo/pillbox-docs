@@ -13,24 +13,36 @@ Shows global status: binary path, global and local databases, active bottle, HTT
 
 ## Serve commands
 
-### `pillbox serve start [--port N]`
+### `pillbox serve`
 
-Starts the HTTP server as a background process. Default port: 4242.
+Shows the service status if installed. If not installed, displays a hint with the install command.
+
+### `pillbox serve install [--port N]`
+
+Registers the HTTP server as a system service and enables autostart on boot. Default port: 4242.
 
 ```bash
-pillbox serve start
-pillbox serve start --port 8080
+pillbox serve install
+pillbox serve install --port 8080
 ```
 
-The web UI is available at `http://localhost:<port>`.
+Also adds `pillbox.local` to the system hosts file for named access instead of `localhost`. Requires write permission on the hosts file (sudo on Linux/macOS, Administrator on Windows); if unavailable, the service installs anyway and the UI remains accessible at `http://localhost:<port>`.
+
+### `pillbox serve uninstall`
+
+Removes the system service and the `pillbox.local` entry from the hosts file.
+
+### `pillbox serve start`
+
+Starts the service. The service must be installed first with `pillbox serve install`.
 
 ### `pillbox serve stop`
 
-Stops the background server.
+Stops the service.
 
 ### `pillbox serve status`
 
-Shows whether the server is running and on which port.
+Shows whether the server is running and the access URL.
 
 ## Bottle commands
 
