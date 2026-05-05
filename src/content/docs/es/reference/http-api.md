@@ -100,7 +100,7 @@ Descarta una prescription (soft delete). La prescription y sus pills quedan arch
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/purge`
 
-Elimina permanentemente una prescription y todos sus datos relacionados: entradas de dispense_log, pill_links y todas sus pills.
+Elimina permanentemente una prescription y todos sus datos relacionados: entradas de dispense_log y todas sus pills.
 
 :::danger
 El purge no se puede deshacer. La prescription y todas sus pills desaparecen de la base de datos.
@@ -193,12 +193,11 @@ Búsqueda de texto completo sobre pills de todos los bottles.
 
 ### `GET /bottles/:bottle_id/context`
 
-Devuelve un resumen de contexto formateado para un bottle — útil para poblar el system prompt de un agente.
+Devuelve el índice navegable de prescriptions de un bottle — útil para poblar el system prompt de un agente.
 
 | Query param | Tipo | Descripción |
 |---|---|---|
-| `prescription_limit` | integer | Máx. prescriptions a incluir (por defecto: 5) |
-| `pill_limit` | integer | Máx. pills a incluir (por defecto: 30) |
+| `limit` | integer | Máx. prescriptions a devolver (por defecto: 30) |
 
 **Respuesta**:
 
@@ -207,8 +206,7 @@ Devuelve un resumen de contexto formateado para un bottle — útil para poblar 
   "ok": true,
   "data": {
     "context": "...",
-    "prescription_count": 12,
-    "pill_count": 87
+    "prescription_count": 12
   }
 }
 ```

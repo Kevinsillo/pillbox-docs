@@ -89,7 +89,7 @@ Project directory
 
 **Typical agent workflow:**
 
-1. **Session start** — call `pill_context` to retrieve recent prescriptions and pills. Call `capsule_search` with relevant terms to load personal conventions.
+1. **Session start** — call `bottle_context` to get the prescription index, then `prescription_context` on sessions of interest to retrieve their pills. Call `capsule_search` with relevant terms to load personal conventions.
 2. **During work** — call `pill_store` to save decisions, bugs fixed, discoveries.
 3. **Session end** — call `pill_store` with `compound: prescription_summary` to summarize the session, then `prescription_close`.
 
@@ -107,7 +107,7 @@ Prescriptions apply a cascade: discarding a prescription also discards all its p
 
 Purging removes the record physically from the database. It is irreversible — no trace remains on disk.
 
-Prescriptions apply a full cascade: a purge deletes the dispense_log entries, pill_links, all pills, and finally the prescription itself, in a single transaction.
+Prescriptions apply a full cascade: a purge deletes the dispense_log entries, all pills, and finally the prescription itself, in a single transaction.
 
 ### What each entity supports
 

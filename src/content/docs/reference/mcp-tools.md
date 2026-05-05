@@ -33,8 +33,8 @@ Creates a new pill.
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the pill |
 | `compound` | string | yes | Category — see [pill compounds](#pill_compounds) |
-| `author_name` | string | no | Author name |
-| `author_email` | string | no | Author email |
+| `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
+| `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
 
 ```
 Pill created
@@ -112,30 +112,6 @@ Snippet with the matching ...text... highlighted
 ```
 
 Returns `No pills found.` when the query matches nothing.
-
-### `pill_context`
-
-Returns a Markdown summary of the most recent activity in a bottle — recent prescriptions and their pills. Use at session start to orient the agent.
-
-| Parameter | Type | Required | Description |
-|---|---|---|---|
-| `bottle_id` | string (UUID v7) | yes | Bottle to summarise |
-| `prescription_limit` | integer | no | Max prescriptions to include (default: 5) |
-| `pill_limit` | integer | no | Max pills to include (default: 30) |
-
-```
-## Recent Prescriptions
-
-- **Session title** (2026-04-22, closed) [3 pills]
-
-## Recent Pills
-
-- [decision] **Title**: content preview...
-- [bugfix] **Title**: content preview...
-
----
-prescriptions: 5 | pills: 30
-```
 
 ### `pill_compounds`
 
@@ -292,6 +268,8 @@ Opens a new prescription for a bottle.
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | yes | Bottle to open the prescription in |
 | `title` | string (1–255) | yes | Descriptive title for the session |
+| `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
+| `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
 
 ```
 Prescription opened
@@ -335,6 +313,31 @@ ended_at: 2026-04-22 23:10:00
 
 Returns a `not_found` error if the prescription does not exist.
 
+### `prescription_context`
+
+Pills of a specific prescription with id, compound, title, and a 300-char snippet. Newlines in pill content are rendered as `\n` to keep each pill on a single visual line. Use after `bottle_context` to drill into a specific work session. For the full content of an individual pill, use `pill_read`.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `prescription_id` | string (UUID v7) | yes | Prescription to inspect |
+| `limit` | integer | no | Max pills to return (default: 30) |
+
+```
+[closed] Implement auth JWT
+id: 019df503-bde1-7ff0-bb28-fa65ecf61846  started: 2026-05-03 → 2026-05-03
+
+  #42 [decision] Use stateless JWT with refresh tokens
+  chosen: stateless JWT\nrefresh stored in SQLite\nwhy: avoids server-side session state…
+
+  #41 [bugfix] Race condition in dedup
+  BEGIN IMMEDIATE prevents race conditions in concurrent writes
+
+---
+pills: 2
+```
+
+Returns an empty response if the prescription does not exist.
+
 ### `prescription_discard`
 
 Soft-deletes a prescription and all its pills in cascade.
@@ -371,6 +374,26 @@ name: my-project
 display_name: My Project
 directory: /home/user/my-project
 scope: local
+```
+
+### `bottle_context`
+
+Navigable index of a bottle's prescriptions: id, title, status, dates, and pill count. Use at session start to discover what work sessions exist. To drill into a specific prescription's pills, use `prescription_context` with its id.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `bottle_id` | string (UUID v7) | yes | Bottle to index |
+| `limit` | integer | no | Max prescriptions to return (default: 30) |
+
+```
+[open]  2026-05-04  12 pills  Implement auth JWT
+id: 019df503-bde1-7ff0-bb28-fa65ecf61846
+
+[closed] 2026-05-01 → 2026-05-01  3 pills  Fix FTS5 triggers
+id: 019de307-68db-7c91-9ee0-6de72efe647b
+
+---
+prescriptions: 2
 ```
 
 ### `bottle_list`

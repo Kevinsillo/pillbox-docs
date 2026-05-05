@@ -113,33 +113,19 @@ Fragmento con el ...texto... coincidente resaltado
 
 Devuelve `No pills found.` cuando la consulta no coincide con nada.
 
-### `pill_context`
-
-Devuelve un resumen Markdown de la actividad más reciente en un bottle — prescriptions recientes y sus pills. Usar al inicio de sesión para orientar al agente.
-
-| Parámetro | Tipo | Requerido | Descripción |
-|---|---|---|---|
-| `bottle_id` | string (UUID v7) | sí | Bottle a resumir |
-| `prescription_limit` | integer | no | Máx. prescriptions a incluir (por defecto: 5) |
-| `pill_limit` | integer | no | Máx. pills a incluir (por defecto: 30) |
-
-```
-## Recent Prescriptions
-
-- **Título de sesión** (2026-04-22, closed) [3 pills]
-
-## Recent Pills
-
-- [decision] **Título**: vista previa del contenido...
-- [bugfix] **Título**: vista previa del contenido...
-
----
-prescriptions: 5 | pills: 30
-```
-
 ### `pill_compounds`
 
 Lista todos los tipos de compound válidos para pills. Sin parámetros.
+
+```
+decision
+  Decisión de arquitectura o implementación
+  <instrucciones de formato para el prompt>
+
+bugfix
+  Bug encontrado y resuelto
+  <instrucción de prompt>
+```
 
 | id | Descripción |
 |---|---|
@@ -248,6 +234,16 @@ Devuelve `No capsules found.` cuando la consulta no coincide con nada.
 
 Lista todos los tipos de compound válidos para capsules. Sin parámetros.
 
+```
+convention
+  Convención de código o proyecto
+  <instrucción de prompt>
+
+workflow
+  Proceso o procedimiento paso a paso
+  <instrucción de prompt>
+```
+
 | id | Descripción |
 |---|---|
 | `convention` | Convención de código o proyecto |
@@ -317,6 +313,31 @@ ended_at: 2026-04-22 23:10:00
 
 Devuelve un error `not_found` si la prescription no existe.
 
+### `prescription_context`
+
+Pills de una prescription concreta con id, compound, título y snippet de 300 chars. Los saltos de línea del contenido se muestran como `\n` para mantener cada pill en una sola línea visual. Usar tras `bottle_context` para profundizar en una sesión de trabajo. Para el contenido completo de una pill individual, usar `pill_read`.
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `prescription_id` | string (UUID v7) | sí | Prescription a inspeccionar |
+| `limit` | integer | no | Máx. pills a devolver (por defecto: 30) |
+
+```
+[closed] Implementar auth JWT
+id: 019df503-bde1-7ff0-bb28-fa65ecf61846  started: 2026-05-03 → 2026-05-03
+
+  #42 [decision] Usar JWT stateless con refresh tokens
+  chosen: JWT stateless\nrefresh guardado en SQLite\nwhy: evita estado de sesión en servidor…
+
+  #41 [bugfix] Race condition en dedup
+  BEGIN IMMEDIATE previene race conditions en escrituras concurrentes
+
+---
+pills: 2
+```
+
+Devuelve una respuesta vacía si la prescription no existe.
+
 ### `prescription_discard`
 
 Elimina suavemente una prescription y todas sus pills en cascada.
@@ -355,6 +376,26 @@ directory: /home/usuario/mi-proyecto
 scope: local
 ```
 
+### `bottle_context`
+
+Índice navegable de las prescriptions de un bottle: id, título, estado, fechas y pill_count. Usar al inicio de sesión para descubrir qué sesiones de trabajo existen. Para ver las pills de una prescription concreta, usar `prescription_context` con su id.
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `bottle_id` | string (UUID v7) | sí | Bottle a indexar |
+| `limit` | integer | no | Máx. prescriptions a devolver (por defecto: 30) |
+
+```
+[open]  2026-05-04  12 pills  Implementar auth JWT
+id: 019df503-bde1-7ff0-bb28-fa65ecf61846
+
+[closed] 2026-05-01 → 2026-05-01  3 pills  Fix triggers FTS5
+id: 019de307-68db-7c91-9ee0-6de72efe647b
+
+---
+prescriptions: 2
+```
+
 ### `bottle_list`
 
 Lista todos los bottles registrados. Sin parámetros.
@@ -370,6 +411,22 @@ Bottles (2)
 ```
 
 `●` significa que la base de datos del bottle es accesible. `○` con `[unlinked]` significa que el archivo de base de datos ya no existe en disco.
+
+### `bottle_vinculate`
+
+Registra una base de datos de bottle local existente en el registro global del usuario que realiza la llamada. Usar cuando un segundo usuario del sistema operativo necesita acceder a un bottle creado por otro usuario en la misma máquina.
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `directory` | string | no | Ruta absoluta al directorio que contiene `.pillbox/pillbox.db`. Por defecto, el cwd del proceso pillbox. |
+
+Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el bottle ya estaba registrado. Ambos son condiciones de exit-0.
+
+```json
+{ "status": "linked", "name": "mi-proyecto", "slug": "mi-proyecto", "db_path": "/home/bob/mi-proyecto/.pillbox/pillbox.db" }
+```
+
+Códigos de error específicos de esta herramienta: `db_not_found`, `circular_link`, `no_bottle_in_db`.
 
 ---
 

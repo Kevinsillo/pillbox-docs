@@ -11,16 +11,7 @@ sidebar:
 pillbox mcp install
 ```
 
-Restart Claude Code after installing. Run `/mcp` to verify the server is connected:
-
-```
-pillbox (connected)
-  Tools: prescription_open, prescription_close, prescription_read,
-         prescription_discard, bottle_list, pill_store, pill_find,
-         pill_context, pill_read, pill_revise, pill_discard,
-         capsule_store, capsule_find, capsule_read, capsule_revise,
-         capsule_discard, stats
-```
+Restart Claude Code after installing. Run `/mcp` to verify the server is connected — you should see `pillbox (connected)` with the full list of tools. See the [MCP tools reference](/reference/mcp-tools/) for what each tool does.
 
 ## Manual configuration
 

@@ -100,7 +100,7 @@ Discards a prescription (soft delete). The prescription and its pills are archiv
 
 ### `DELETE /bottles/:bottle_id/prescriptions/:rx_id/purge`
 
-Permanently deletes a prescription and all related data: dispense_log entries, pill_links, and all its pills.
+Permanently deletes a prescription and all related data: dispense_log entries and all its pills.
 
 :::danger
 Purge cannot be undone. The prescription and all its pills are removed from the database.
@@ -193,12 +193,11 @@ Full-text search over pills across all bottles.
 
 ### `GET /bottles/:bottle_id/context`
 
-Returns a formatted context summary for a bottle — useful for populating an agent's system prompt.
+Returns a navigable prescription index for a bottle — useful for populating an agent's system prompt.
 
 | Query param | Type | Description |
 |---|---|---|
-| `prescription_limit` | integer | Max prescriptions to include (default: 5) |
-| `pill_limit` | integer | Max pills to include (default: 30) |
+| `limit` | integer | Max prescriptions to return (default: 30) |
 
 **Response**:
 
@@ -207,8 +206,7 @@ Returns a formatted context summary for a bottle — useful for populating an ag
   "ok": true,
   "data": {
     "context": "...",
-    "prescription_count": 12,
-    "pill_count": 87
+    "prescription_count": 12
   }
 }
 ```

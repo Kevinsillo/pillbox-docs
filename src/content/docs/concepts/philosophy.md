@@ -53,12 +53,12 @@ The intended workflow is asymmetric by design: agents write, humans review and p
 
 Pillbox does not prescribe a specific workflow. The minimum viable pattern is:
 
-1. At the start of a session, call `pill_context` and `capsule_search` with terms relevant to the current task.
+1. At the start of a session, call `bottle_context` and `capsule_search` with terms relevant to the current task.
 2. During the session, call `pill_store` when something worth remembering happens — a non-obvious decision, a bug found and fixed, a constraint discovered.
 3. At the end of the session, save a `prescription_summary` and call `prescription_close`.
 
 Beyond this minimum, teams build on Pillbox in different ways. Some integrate it into structured development workflows where every design decision, spec, and implementation task is tracked as pills. Others use it as a lightweight journal that runs alongside any coding session. Both approaches work — the data model supports either.
 
 :::tip
-If you work with an AI agent on recurring projects, the single highest-value habit is closing every session with a `prescription_summary`. Future sessions that call `pill_context` will surface these summaries first, giving the agent an immediate understanding of what was done and why.
+If you work with an AI agent on recurring projects, the single highest-value habit is closing every session with a `prescription_summary`. Future sessions that call `bottle_context` will surface these summaries first, giving the agent an immediate understanding of what was done and why.
 :::

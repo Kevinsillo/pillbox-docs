@@ -89,7 +89,7 @@ Directorio del proyecto
 
 **Flujo de trabajo típico del agente:**
 
-1. **Inicio de sesión** — llama a `pill_context` para recuperar prescriptions y pills recientes. Llama a `capsule_search` con términos relevantes para cargar convenciones personales.
+1. **Inicio de sesión** — llama a `bottle_context` para obtener el índice de prescriptions, luego `prescription_context` en las sesiones de interés para recuperar sus pills. Llama a `capsule_search` con términos relevantes para cargar convenciones personales.
 2. **Durante el trabajo** — llama a `pill_store` para guardar decisiones, bugs resueltos, descubrimientos.
 3. **Fin de sesión** — llama a `pill_store` con `compound: prescription_summary` para resumir la sesión, luego `prescription_close`.
 
@@ -107,7 +107,7 @@ Las prescriptions aplican cascade: descartar una prescription descarta también 
 
 El purge elimina el registro físicamente de la base de datos. Es irreversible — no queda rastro en disco.
 
-Las prescriptions aplican cascade completo: el purge elimina en orden el dispense_log, los pill_links, todas las pills y finalmente la prescription, en una única transacción.
+Las prescriptions aplican cascade completo: el purge elimina en orden el dispense_log, todas las pills y finalmente la prescription, en una única transacción.
 
 ### Qué soporta cada entidad
 
