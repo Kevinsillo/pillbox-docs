@@ -57,7 +57,7 @@ This page takes you from a fresh install to a working Pillbox setup — binary i
 
 ## Your first session
 
-Once setup is complete, Claude uses Pillbox automatically. At the start of a new session it calls `pill_context` to restore recent history. As it works, it saves pills for decisions and discoveries. At the end, it saves a session summary.
+Once setup is complete, Claude uses Pillbox automatically. At the start of a new session it retrieves recent context via `bottle_context` and `prescription_context`. As it works, it saves pills for decisions and discoveries. At the end, it saves a session summary.
 
 You don't need to do anything — the skill handles the workflow.
 

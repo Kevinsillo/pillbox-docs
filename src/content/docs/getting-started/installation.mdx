@@ -68,11 +68,21 @@ Then follow these steps:
 
    Requires Node.js ≥ 18.
 
-3. Install the Claude Code skill:
+3. Install the Pillbox skill:
 
    ```bash
    pillbox skill install
    ```
+
+   Installs the Pillbox skill to the global configuration folder of your AI provider (e.g. `~/.claude/skills/pillbox/` for Claude Code).
+
+4. (Optional) Install SDD skill and agents:
+
+   ```bash
+   ./skills/build-agents.sh
+   ```
+
+   Installs the Spec-Driven Development skill and sub-agents to the global configuration folder of each detected provider (Claude Code, OpenCode). The script detects which providers are installed and lets you choose.
 
 </Steps>
 

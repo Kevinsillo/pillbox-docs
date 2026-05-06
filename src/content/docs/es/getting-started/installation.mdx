@@ -68,11 +68,21 @@ Luego sigue estos pasos:
 
    Requiere Node.js ≥ 18.
 
-3. Instala la skill de Claude Code:
+3. Instala la skill de Pillbox:
 
    ```bash
    pillbox skill install
    ```
+
+   Instala la skill de Pillbox en la carpeta de configuración global de tu proveedor agentico (p. ej. `~/.claude/skills/pillbox/` para Claude Code).
+
+4. (Opcional) Instala la skill y agentes SDD:
+
+   ```bash
+   ./skills/build-agents.sh
+   ```
+
+   Instala la skill de Spec-Driven Development y los sub-agentes en la carpeta de configuración global de cada proveedor detectado (Claude Code, OpenCode). El script detecta los providers instalados y te permite elegir.
 
 </Steps>
 
