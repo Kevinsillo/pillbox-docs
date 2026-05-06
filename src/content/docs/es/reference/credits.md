@@ -62,4 +62,4 @@ Creado y mantenido por [Kevin Illanas](https://github.com/Kevinsillo).
 
 ## Licencia
 
-PolyForm Noncommercial 1.0.0
+[PolyForm Noncommercial 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0) — uso no comercial gratuito.
