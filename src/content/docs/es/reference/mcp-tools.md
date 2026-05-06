@@ -132,12 +132,12 @@ bugfix
 | `decision` | Decisión de arquitectura o implementación |
 | `architecture` | Diseño del sistema u observación estructural |
 | `bugfix` | Bug encontrado y resuelto |
-| `pattern` | Patrón o convención repetida |
+| `specification` | Specs de comportamiento y contratos por dominio |
 | `discovery` | Hallazgo no obvio o particularidad |
 | `learning` | Concepto aprendido durante la sesión |
 | `feedback` | Preferencia del usuario o corrección |
 | `prescription_summary` | Resumen de fin de sesión |
-| `manual` | Nota de forma libre |
+| `task` | Lista de tareas de implementación o entrada de forma libre |
 
 ---
 

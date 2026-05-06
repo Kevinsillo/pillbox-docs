@@ -52,12 +52,12 @@ The `compound` field classifies the type of knowledge:
 | `decision` | Architecture, design, or approach decisions with rationale |
 | `architecture` | System structure, module layout, data flow |
 | `bugfix` | Bug description, root cause, and fix |
-| `pattern` | Reusable patterns or conventions found in this project |
+| `specification` | Behavioral specs and contracts per domain |
 | `discovery` | Non-obvious findings about the codebase, dependencies, or environment |
 | `learning` | Something that failed and what was learned from it |
 | `feedback` | Feedback on agent behavior or approach |
 | `prescription_summary` | End-of-session summary (one per prescription, saved on close) |
-| `manual` | Anything that doesn't fit the above |
+| `task` | Implementation task list or free-form entry |
 
 Pills are searchable via FTS5 full-text search across title and content. The search engine supports prefix matching (`hex` finds `hexagonal`) and fuzzy matching using Jaro-Winkler similarity.
 

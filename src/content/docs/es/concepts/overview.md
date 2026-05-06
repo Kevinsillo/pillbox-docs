@@ -52,12 +52,12 @@ El campo `compound` clasifica el tipo de conocimiento:
 | `decision` | Decisiones de arquitectura, diseño o enfoque con justificación |
 | `architecture` | Estructura del sistema, organización de módulos, flujo de datos |
 | `bugfix` | Descripción del bug, causa raíz y solución |
-| `pattern` | Patrones o convenciones reutilizables encontrados en este proyecto |
+| `specification` | Specs de comportamiento y contratos por dominio |
 | `discovery` | Hallazgos no obvios sobre el código, dependencias o entorno |
 | `learning` | Algo que falló y lo que se aprendió de ello |
 | `feedback` | Retroalimentación sobre el comportamiento o enfoque del agente |
 | `prescription_summary` | Resumen de fin de sesión (uno por prescription, guardado al cerrar) |
-| `manual` | Cualquier cosa que no encaje en lo anterior |
+| `task` | Lista de tareas de implementación o entrada de forma libre |
 
 Las pills son buscables mediante búsqueda de texto completo FTS5 en título y contenido. El motor de búsqueda soporta coincidencia por prefijo (`hex` encuentra `hexagonal`) y matching difuso usando la similitud de Jaro-Winkler.
 

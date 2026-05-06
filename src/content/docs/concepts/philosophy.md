@@ -39,9 +39,9 @@ This design means that the value of Pillbox grows with use. A bottle with a hund
 
 ## Compounds give structure without enforcing it
 
-Every pill and capsule has a compound — a type that classifies what kind of knowledge it contains. `decision`, `architecture`, `bugfix`, `discovery`, `pattern`, `learning`, and `feedback` are the named ones. `manual` is always available as a fallback.
+Every pill and capsule has a compound — a type that classifies what kind of knowledge it contains. `decision`, `architecture`, `bugfix`, `discovery`, `specification`, `learning`, and `feedback` are the named ones. `task` is always available as a fallback.
 
-Compounds are not enforced strictly. An agent that saves everything as `manual` will still benefit from search. But compounds enable targeted retrieval — searching for `bugfix` pills only, or filtering `prescription_summary` pills to reconstruct a timeline of past sessions. The structure pays off at scale.
+Compounds are not enforced strictly. An agent that saves everything as `task` will still benefit from search. But compounds enable targeted retrieval — searching for `bugfix` pills only, or filtering `prescription_summary` pills to reconstruct a timeline of past sessions. The structure pays off at scale.
 
 ## Designed for agents, readable by humans
 

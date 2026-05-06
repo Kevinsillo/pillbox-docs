@@ -132,12 +132,12 @@ bugfix
 | `decision` | Architectural or implementation decision |
 | `architecture` | System design or structural observation |
 | `bugfix` | Bug found and fixed |
-| `pattern` | Repeating pattern or convention |
+| `specification` | Behavioral specs and contracts per domain |
 | `discovery` | Non-obvious finding or gotcha |
 | `learning` | Concept learned during the session |
 | `feedback` | User preference or correction |
 | `prescription_summary` | End-of-session summary |
-| `manual` | Free-form note |
+| `task` | Implementation task list or free-form entry |
 
 ---
 
