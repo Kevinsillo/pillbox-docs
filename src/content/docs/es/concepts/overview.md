@@ -56,7 +56,7 @@ El campo `compound` clasifica el tipo de conocimiento:
 | `discovery` | Hallazgos no obvios sobre el código, dependencias o entorno |
 | `learning` | Algo que falló y lo que se aprendió de ello |
 | `feedback` | Retroalimentación sobre el comportamiento o enfoque del agente |
-| `prescription_summary` | Resumen de fin de sesión (uno por prescription, guardado al cerrar) |
+| `summary` | Resumen de fin de sesión (uno por prescription, guardado al cerrar) |
 | `task` | Lista de tareas de implementación o entrada de forma libre |
 
 Las pills son buscables mediante búsqueda de texto completo FTS5 en título y contenido. El motor de búsqueda soporta coincidencia por prefijo (`hex` encuentra `hexagonal`) y matching difuso usando la similitud de Jaro-Winkler.
@@ -91,7 +91,7 @@ Directorio del proyecto
 
 1. **Inicio de sesión** — llama a `bottle_context` para obtener el índice de prescriptions, luego `prescription_context` en las sesiones de interés para recuperar sus pills. Llama a `capsule_search` con términos relevantes para cargar convenciones personales.
 2. **Durante el trabajo** — llama a `pill_store` para guardar decisiones, bugs resueltos, descubrimientos.
-3. **Fin de sesión** — llama a `pill_store` con `compound: prescription_summary` para resumir la sesión, luego `prescription_close`.
+3. **Fin de sesión** — llama a `pill_store` con `compound: summary` para resumir la sesión, luego `prescription_close`.
 
 ## Eliminaciones
 

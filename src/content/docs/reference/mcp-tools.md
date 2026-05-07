@@ -136,7 +136,7 @@ bugfix
 | `discovery` | Non-obvious finding or gotcha |
 | `learning` | Concept learned during the session |
 | `feedback` | User preference or correction |
-| `prescription_summary` | End-of-session summary |
+| `summary` | End-of-session summary |
 | `task` | Implementation task list or free-form entry |
 
 ---

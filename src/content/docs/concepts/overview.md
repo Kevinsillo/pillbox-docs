@@ -56,7 +56,7 @@ The `compound` field classifies the type of knowledge:
 | `discovery` | Non-obvious findings about the codebase, dependencies, or environment |
 | `learning` | Something that failed and what was learned from it |
 | `feedback` | Feedback on agent behavior or approach |
-| `prescription_summary` | End-of-session summary (one per prescription, saved on close) |
+| `summary` | End-of-session summary (one per prescription, saved on close) |
 | `task` | Implementation task list or free-form entry |
 
 Pills are searchable via FTS5 full-text search across title and content. The search engine supports prefix matching (`hex` finds `hexagonal`) and fuzzy matching using Jaro-Winkler similarity.
@@ -91,7 +91,7 @@ Project directory
 
 1. **Session start** — call `bottle_context` to get the prescription index, then `prescription_context` on sessions of interest to retrieve their pills. Call `capsule_search` with relevant terms to load personal conventions.
 2. **During work** — call `pill_store` to save decisions, bugs fixed, discoveries.
-3. **Session end** — call `pill_store` with `compound: prescription_summary` to summarize the session, then `prescription_close`.
+3. **Session end** — call `pill_store` with `compound: summary` to summarize the session, then `prescription_close`.
 
 ## Deletions
 

@@ -136,7 +136,7 @@ bugfix
 | `discovery` | Hallazgo no obvio o particularidad |
 | `learning` | Concepto aprendido durante la sesión |
 | `feedback` | Preferencia del usuario o corrección |
-| `prescription_summary` | Resumen de fin de sesión |
+| `summary` | Resumen de fin de sesión |
 | `task` | Lista de tareas de implementación o entrada de forma libre |
 
 ---

@@ -41,7 +41,7 @@ This design means that the value of Pillbox grows with use. A bottle with a hund
 
 Every pill and capsule has a compound — a type that classifies what kind of knowledge it contains. `decision`, `architecture`, `bugfix`, `discovery`, `specification`, `learning`, and `feedback` are the named ones. `task` is always available as a fallback.
 
-Compounds are not enforced strictly. An agent that saves everything as `task` will still benefit from search. But compounds enable targeted retrieval — searching for `bugfix` pills only, or filtering `prescription_summary` pills to reconstruct a timeline of past sessions. The structure pays off at scale.
+Compounds are not enforced strictly. An agent that saves everything as `task` will still benefit from search. But compounds enable targeted retrieval — searching for `bugfix` pills only, or filtering `summary` pills to reconstruct a timeline of past sessions. The structure pays off at scale.
 
 ## Designed for agents, readable by humans
 
@@ -55,10 +55,10 @@ Pillbox does not prescribe a specific workflow. The minimum viable pattern is:
 
 1. At the start of a session, call `bottle_context` and `capsule_search` with terms relevant to the current task.
 2. During the session, call `pill_store` when something worth remembering happens — a non-obvious decision, a bug found and fixed, a constraint discovered.
-3. At the end of the session, save a `prescription_summary` and call `prescription_close`.
+3. At the end of the session, save a `summary` and call `prescription_close`.
 
 Beyond this minimum, teams build on Pillbox in different ways. Some integrate it into structured development workflows where every design decision, spec, and implementation task is tracked as pills. Others use it as a lightweight journal that runs alongside any coding session. Both approaches work — the data model supports either.
 
 :::tip
-If you work with an AI agent on recurring projects, the single highest-value habit is closing every session with a `prescription_summary`. Future sessions that call `bottle_context` will surface these summaries first, giving the agent an immediate understanding of what was done and why.
+If you work with an AI agent on recurring projects, the single highest-value habit is closing every session with a `summary`. Future sessions that call `bottle_context` will surface these summaries first, giving the agent an immediate understanding of what was done and why.
 :::
