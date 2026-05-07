@@ -32,7 +32,7 @@ Crea una nueva pill.
 | `prescription_id` | string (UUID v7) | sí | Prescription abierta a la que adjuntar esta pill |
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la pill |
-| `compound` | string | sí | Categoría — ver [compuestos de pill](#pill_compounds) |
+| `compound` | string | sí | Categoría — texto libre |
 | `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
 | `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
@@ -113,32 +113,6 @@ Fragmento con el ...texto... coincidente resaltado
 
 Devuelve `No pills found.` cuando la consulta no coincide con nada.
 
-### `pill_compounds`
-
-Lista todos los tipos de compound válidos para pills. Sin parámetros.
-
-```
-decision
-  Decisión de arquitectura o implementación
-  <instrucciones de formato para el prompt>
-
-bugfix
-  Bug encontrado y resuelto
-  <instrucción de prompt>
-```
-
-| id | Descripción |
-|---|---|
-| `decision` | Decisión de arquitectura o implementación |
-| `architecture` | Diseño del sistema u observación estructural |
-| `bugfix` | Bug encontrado y resuelto |
-| `specification` | Specs de comportamiento y contratos por dominio |
-| `discovery` | Hallazgo no obvio o particularidad |
-| `learning` | Concepto aprendido durante la sesión |
-| `feedback` | Preferencia del usuario o corrección |
-| `summary` | Resumen de fin de sesión |
-| `task` | Lista de tareas de implementación o entrada de forma libre |
-
 ---
 
 ## Herramientas de capsules
@@ -153,7 +127,7 @@ Crea una nueva capsule en la base de datos global.
 |---|---|---|---|
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la capsule |
-| `compound` | string | sí | Categoría — ver [compuestos de capsule](#capsule_compounds) |
+| `compound` | string | sí | Categoría — texto libre |
 
 ```
 Capsule created
@@ -229,30 +203,6 @@ Fragmento con el ...texto... coincidente resaltado
 ```
 
 Devuelve `No capsules found.` cuando la consulta no coincide con nada.
-
-### `capsule_compounds`
-
-Lista todos los tipos de compound válidos para capsules. Sin parámetros.
-
-```
-convention
-  Convención de código o proyecto
-  <instrucción de prompt>
-
-workflow
-  Proceso o procedimiento paso a paso
-  <instrucción de prompt>
-```
-
-| id | Descripción |
-|---|---|
-| `convention` | Convención de código o proyecto |
-| `workflow` | Proceso o procedimiento paso a paso |
-| `environment` | Configuración del entorno |
-| `context` | Contexto de fondo para un dominio |
-| `goal` | Objetivo o meta del proyecto |
-| `feedback` | Preferencia del usuario o corrección repetida |
-| `manual` | Nota de forma libre |
 
 ---
 

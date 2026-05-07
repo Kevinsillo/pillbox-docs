@@ -39,9 +39,9 @@ Este diseño significa que el valor de Pillbox crece con el uso. Un bottle con c
 
 ## Los compounds dan estructura sin imponerla
 
-Cada pill y capsule tiene un compound — un tipo que clasifica qué tipo de conocimiento contiene. `decision`, `architecture`, `bugfix`, `discovery`, `specification`, `learning` y `feedback` son los nombrados. `task` siempre está disponible como fallback.
+Cada pill y capsule tiene un compound — un campo de texto libre que clasifica qué tipo de conocimiento contiene. No hay lista cerrada: cualquier string es válido. Los valores concretos los define el flujo de trabajo activo (por ejemplo, el SDD del proyecto).
 
-Los compounds no se imponen de forma estricta. Un agente que guarda todo como `task` seguirá beneficiándose de la búsqueda. Pero los compounds permiten recuperación dirigida — buscar solo pills de tipo `bugfix`, o filtrar pills `summary` para reconstruir una línea de tiempo de sesiones pasadas. La estructura se rentabiliza a escala.
+Los compounds no se imponen de forma estricta. Un agente que guarda todo con el mismo compound seguirá beneficiándose de la búsqueda. Pero los compounds permiten recuperación dirigida — buscar solo pills de un tipo concreto, o filtrar por `summary` para reconstruir una línea de tiempo de sesiones pasadas. La estructura se rentabiliza a escala.
 
 ## Diseñado para agentes, legible por humanos
 

@@ -32,7 +32,7 @@ Creates a new pill.
 | `prescription_id` | string (UUID v7) | yes | Open prescription to attach this pill to |
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the pill |
-| `compound` | string | yes | Category — see [pill compounds](#pill_compounds) |
+| `compound` | string | yes | Category — free-text string |
 | `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
 | `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
 
@@ -113,32 +113,6 @@ Snippet with the matching ...text... highlighted
 
 Returns `No pills found.` when the query matches nothing.
 
-### `pill_compounds`
-
-Lists all valid compound types for pills. No parameters.
-
-```
-decision
-  Architectural or implementation decision
-  <prompt hint with formatting instructions>
-
-bugfix
-  Bug found and fixed
-  <prompt hint>
-```
-
-| id | Description |
-|---|---|
-| `decision` | Architectural or implementation decision |
-| `architecture` | System design or structural observation |
-| `bugfix` | Bug found and fixed |
-| `specification` | Behavioral specs and contracts per domain |
-| `discovery` | Non-obvious finding or gotcha |
-| `learning` | Concept learned during the session |
-| `feedback` | User preference or correction |
-| `summary` | End-of-session summary |
-| `task` | Implementation task list or free-form entry |
-
 ---
 
 ## Capsule tools
@@ -153,7 +127,7 @@ Creates a new capsule in the global database.
 |---|---|---|---|
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the capsule |
-| `compound` | string | yes | Category — see [capsule compounds](#capsule_compounds) |
+| `compound` | string | yes | Category — free-text string |
 
 ```
 Capsule created
@@ -229,30 +203,6 @@ Snippet with the matching ...text... highlighted
 ```
 
 Returns `No capsules found.` when the query matches nothing.
-
-### `capsule_compounds`
-
-Lists all valid compound types for capsules. No parameters.
-
-```
-convention
-  Coding or project convention
-  <prompt hint>
-
-workflow
-  Step-by-step process or procedure
-  <prompt hint>
-```
-
-| id | Description |
-|---|---|
-| `convention` | Coding or project convention |
-| `workflow` | Step-by-step process or procedure |
-| `environment` | Environment setup or configuration |
-| `context` | Background context for a domain |
-| `goal` | Project goal or objective |
-| `feedback` | User preference or repeated correction |
-| `manual` | Free-form note |
 
 ---
 
