@@ -223,7 +223,7 @@ Abre una nueva prescription para un bottle.
 
 ```
 Prescription opened
-id: 019db730-46ad-7a71-aa30-cf4111989cad
+id: 019db730
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ```
@@ -240,7 +240,7 @@ Cierra una prescription abierta (establece `ended_at`).
 
 ```
 Prescription closed
-id: 019db730-46ad-7a71-aa30-cf4111989cad
+id: 019db730
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -255,7 +255,7 @@ Recupera una prescription por ID.
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
 ```
-id: 019db730-46ad-7a71-aa30-cf4111989cad
+id: 019db730
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -274,7 +274,7 @@ Pills de una prescription concreta con id, compound, título y snippet de 300 ch
 
 ```
 [closed] Implementar auth JWT
-id: 019df503-bde1-7ff0-bb28-fa65ecf61846  started: 2026-05-03 → 2026-05-03
+id: 019df503  started: 2026-05-03 → 2026-05-03
 
   #42 [decision] Usar JWT stateless con refresh tokens
   chosen: JWT stateless\nrefresh guardado en SQLite\nwhy: evita estado de sesión en servidor…
@@ -319,7 +319,7 @@ Registra un nuevo bottle.
 
 ```
 Bottle created
-id: 019db257-47b6-7473-a8b7-77c66bae09c6
+id: 019db257
 name: mi-proyecto
 display_name: Mi Proyecto
 directory: /home/usuario/mi-proyecto
@@ -337,10 +337,10 @@ scope: local
 
 ```
 [open]  2026-05-04  12 pills  Implementar auth JWT
-id: 019df503-bde1-7ff0-bb28-fa65ecf61846
+id: 019df503
 
 [closed] 2026-05-01 → 2026-05-01  3 pills  Fix triggers FTS5
-id: 019de307-68db-7c91-9ee0-6de72efe647b
+id: 019de307
 
 ---
 prescriptions: 2
@@ -353,10 +353,10 @@ Lista todos los bottles registrados. Sin parámetros.
 ```
 Bottles (2)
 
-● Mi Proyecto [local] 019db257-47b6-7473-a8b7-77c66bae09c6
+● Mi Proyecto [local] 019db257
   /home/usuario/mi-proyecto
 
-○ Proyecto Antiguo [global] 019da000-0000-7000-0000-000000000000 [unlinked]
+○ Proyecto Antiguo [global] 019da000 [unlinked]
   /home/usuario/proyecto-antiguo
 ```
 
