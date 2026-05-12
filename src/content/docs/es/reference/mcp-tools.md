@@ -51,7 +51,7 @@ Recupera una pill por ID entero.
 
 ```
 # Título [compound]
-id: 42 | prescription: 019d... | created: 2026-04-22
+id: 42 | prescription: 019db730a4f2... | created: 2026-04-22
 
 Contenido completo de la pill...
 ```
@@ -104,10 +104,10 @@ Búsqueda de texto completo sobre pills usando coincidencia por prefijo FTS5 y p
 ```
 Found 3 pills
 
-[decision] Título del resultado (id: 5, rx: 019db730...)
+[decision] Título del resultado (id: 5, rx: 019db730a4f2...)
 Fragmento con el ...texto... coincidente resaltado
 
-[bugfix] Otro resultado (id: 8, rx: 019db730...)
+[bugfix] Otro resultado (id: 8, rx: 019db730a4f2...)
 Fragmento con el ...texto... coincidente resaltado
 ```
 
@@ -223,7 +223,7 @@ Abre una nueva prescription para un bottle.
 
 ```
 Prescription opened
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ```
@@ -240,7 +240,7 @@ Cierra una prescription abierta (establece `ended_at`).
 
 ```
 Prescription closed
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -255,7 +255,7 @@ Recupera una prescription por ID.
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
 ```
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -274,7 +274,7 @@ Pills de una prescription concreta con id, compound, título y snippet de 300 ch
 
 ```
 [closed] Implementar auth JWT
-id: 019df503  started: 2026-05-03 → 2026-05-03
+id: 019df5031c8e  started: 2026-05-03 → 2026-05-03
 
   #42 [decision] Usar JWT stateless con refresh tokens
   chosen: JWT stateless\nrefresh guardado en SQLite\nwhy: evita estado de sesión en servidor…
@@ -319,7 +319,7 @@ Registra un nuevo bottle.
 
 ```
 Bottle created
-id: 019db257
+id: 019db2571a3d
 name: mi-proyecto
 display_name: Mi Proyecto
 directory: /home/usuario/mi-proyecto
@@ -337,10 +337,10 @@ scope: local
 
 ```
 [open]  2026-05-04  12 pills  Implementar auth JWT
-id: 019df503
+id: 019df5031c8e
 
 [closed] 2026-05-01 → 2026-05-01  3 pills  Fix triggers FTS5
-id: 019de307
+id: 019de307b5c1
 
 ---
 prescriptions: 2
@@ -353,10 +353,10 @@ Lista todos los bottles registrados. Sin parámetros.
 ```
 Bottles (2)
 
-● Mi Proyecto [local] 019db257
+● Mi Proyecto [local] 019db2571a3d
   /home/usuario/mi-proyecto
 
-○ Proyecto Antiguo [global] 019da000 [unlinked]
+○ Proyecto Antiguo [global] 019da000f3e8 [unlinked]
   /home/usuario/proyecto-antiguo
 ```
 

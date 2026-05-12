@@ -51,7 +51,7 @@ Retrieves a pill by integer ID.
 
 ```
 # Title [compound]
-id: 42 | prescription: 019d... | created: 2026-04-22
+id: 42 | prescription: 019db730a4f2... | created: 2026-04-22
 
 Full content of the pill...
 ```
@@ -104,10 +104,10 @@ Full-text search over pills using FTS5 prefix matching and Jaro-Winkler fuzzy sc
 ```
 Found 3 pills
 
-[decision] Title of result (id: 5, rx: 019db730...)
+[decision] Title of result (id: 5, rx: 019db730a4f2...)
 Snippet with the matching ...text... highlighted
 
-[bugfix] Another result (id: 8, rx: 019db730...)
+[bugfix] Another result (id: 8, rx: 019db730a4f2...)
 Snippet with the matching ...text... highlighted
 ```
 
@@ -223,7 +223,7 @@ Opens a new prescription for a bottle.
 
 ```
 Prescription opened
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ```
@@ -240,7 +240,7 @@ Closes an open prescription (sets `ended_at`).
 
 ```
 Prescription closed
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -255,7 +255,7 @@ Retrieves a prescription by ID.
 | `id` | string (UUID v7) | yes | Prescription ID |
 
 ```
-id: 019db730
+id: 019db730a4f2
 title: Refactor auth middleware
 started_at: 2026-04-22 21:54:47
 ended_at: 2026-04-22 23:10:00
@@ -274,7 +274,7 @@ Pills of a specific prescription with id, compound, title, and a 300-char snippe
 
 ```
 [closed] Implement auth JWT
-id: 019df503  started: 2026-05-03 → 2026-05-03
+id: 019df5031c8e  started: 2026-05-03 → 2026-05-03
 
   #42 [decision] Use stateless JWT with refresh tokens
   chosen: stateless JWT\nrefresh stored in SQLite\nwhy: avoids server-side session state…
@@ -319,7 +319,7 @@ Registers a new bottle.
 
 ```
 Bottle created
-id: 019db257
+id: 019db2571a3d
 name: my-project
 display_name: My Project
 directory: /home/user/my-project
@@ -337,10 +337,10 @@ Navigable index of a bottle's prescriptions: id, title, status, dates, and pill 
 
 ```
 [open]  2026-05-04  12 pills  Implement auth JWT
-id: 019df503
+id: 019df5031c8e
 
 [closed] 2026-05-01 → 2026-05-01  3 pills  Fix FTS5 triggers
-id: 019de307
+id: 019de307b5c1
 
 ---
 prescriptions: 2
@@ -353,10 +353,10 @@ Lists all registered bottles. No parameters.
 ```
 Bottles (2)
 
-● My Project [local] 019db257
+● My Project [local] 019db2571a3d
   /home/user/my-project
 
-○ Old Project [global] 019da000 [unlinked]
+○ Old Project [global] 019da000f3e8 [unlinked]
   /home/user/old-project
 ```
 
