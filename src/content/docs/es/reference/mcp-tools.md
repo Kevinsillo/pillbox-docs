@@ -7,13 +7,7 @@ sidebar:
 
 Todas las herramientas MCP son servidas por el servidor MCP de Pillbox y consumidas por agentes IA (Claude, Cursor, etc.). Las respuestas son texto estructurado plano — no JSON — para que el LLM pueda leerlas directamente sin parsear.
 
-Las respuestas exitosas son texto específico de cada herramienta (ver cada herramienta más abajo). Los errores siguen un formato uniforme:
-
-```
-error: <código>
-message: <descripción legible por humanos>
-<campo>: <valor>     ← campos adicionales cuando son relevantes
-```
+Los errores siguen un formato uniforme: `error: <código>`, `message: <descripción>`, más campos adicionales cuando son relevantes.
 
 Las pills y prescriptions pertenecen a un **bottle** (base de datos local del proyecto). Las capsules se almacenan en la **base de datos global** (`~/.pillbox/pillbox.db`).
 
@@ -36,10 +30,7 @@ Crea una nueva pill.
 | `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
 | `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
-```
-Pill created
-id: 42
-```
+Devuelve el `id` de la nueva pill.
 
 ### `pill_read`
 
@@ -49,14 +40,7 @@ Recupera una pill por ID entero.
 |---|---|---|---|
 | `id` | integer | sí | ID de la pill |
 
-```
-# Título [compound]
-id: 42 | prescription: 019db730a4f2... | created: 2026-04-22
-
-Contenido completo de la pill...
-```
-
-Devuelve un error `not_found` si la pill no existe.
+Devuelve `id`, `prescription`, `created`, `compound`, `title` y `content` completo. Devuelve un error `not_found` si la pill no existe.
 
 ### `pill_revise`
 
@@ -69,12 +53,7 @@ Actualiza el título, contenido o compound de una pill.
 | `content` | string (1–5000) | no | Nuevo contenido |
 | `compound` | string | no | Nuevo compound |
 
-```
-Pill updated
-id: 42
-compound: decision
-title: Título actualizado
-```
+Devuelve `id`, `compound` y `title` actualizado.
 
 ### `pill_discard`
 
@@ -84,11 +63,7 @@ Elimina suavemente una pill (el registro se marca como eliminado, no se borra).
 |---|---|---|---|
 | `id` | integer | sí | ID de la pill |
 
-```
-Pill discarded
-id: 42
-deleted_at: 2026-04-22 21:00:00
-```
+Devuelve `id` y timestamp `deleted_at`.
 
 ### `pill_search`
 
@@ -101,17 +76,7 @@ Búsqueda de texto completo sobre pills usando coincidencia por prefijo FTS5 y p
 | `compound` | string | no | Filtrar por tipo de compound |
 | `limit` | integer | no | Máximo de resultados (por defecto: 20) |
 
-```
-Found 3 pills
-
-[decision] Título del resultado (id: 5, rx: 019db730a4f2...)
-Fragmento con el ...texto... coincidente resaltado
-
-[bugfix] Otro resultado (id: 8, rx: 019db730a4f2...)
-Fragmento con el ...texto... coincidente resaltado
-```
-
-Devuelve `No pills found.` cuando la consulta no coincide con nada.
+Devuelve las pills encontradas con `id`, `compound`, `title` y un snippet del contenido. Devuelve `No pills found.` cuando la consulta no coincide con nada.
 
 ---
 
@@ -129,10 +94,7 @@ Crea una nueva capsule en la base de datos global.
 | `content` | string (1–5000) | sí | Contenido completo de la capsule |
 | `compound` | string | sí | Categoría — texto libre |
 
-```
-Capsule created
-id: 7
-```
+Devuelve el `id` de la nueva capsule.
 
 ### `capsule_read`
 
@@ -142,14 +104,7 @@ Recupera una capsule por ID entero.
 |---|---|---|---|
 | `id` | integer | sí | ID de la capsule |
 
-```
-# Título [convention]
-id: 7 | created: 2026-04-22
-
-Contenido completo de la capsule...
-```
-
-Devuelve un error `not_found` si la capsule no existe.
+Devuelve `id`, `created`, `compound`, `title` y `content` completo. Devuelve un error `not_found` si la capsule no existe.
 
 ### `capsule_revise`
 
@@ -161,12 +116,7 @@ Actualiza el título o contenido de una capsule.
 | `title` | string (1–255) | no | Nuevo título |
 | `content` | string (1–5000) | no | Nuevo contenido |
 
-```
-Capsule updated
-id: 7
-compound: convention
-title: Título actualizado
-```
+Devuelve `id`, `compound` y `title` actualizado.
 
 ### `capsule_discard`
 
@@ -176,11 +126,7 @@ Elimina suavemente una capsule.
 |---|---|---|---|
 | `id` | integer | sí | ID de la capsule |
 
-```
-Capsule discarded
-id: 7
-deleted_at: 2026-04-22 21:00:00
-```
+Devuelve `id` y timestamp `deleted_at`.
 
 ### `capsule_search`
 
@@ -192,17 +138,7 @@ Búsqueda de texto completo sobre capsules.
 | `compound` | string | no | Filtrar por tipo de compound |
 | `limit` | integer | no | Máximo de resultados (por defecto: 20) |
 
-```
-Found 2 capsules
-
-[convention] Título (id: 3)
-Fragmento con el ...texto... coincidente resaltado
-
-[feedback] Otro título (id: 7)
-Fragmento con el ...texto... coincidente resaltado
-```
-
-Devuelve `No capsules found.` cuando la consulta no coincide con nada.
+Devuelve las capsules encontradas con `id`, `compound`, `title` y un snippet del contenido. Devuelve `No capsules found.` cuando la consulta no coincide con nada.
 
 ---
 
@@ -221,14 +157,7 @@ Abre una nueva prescription para un bottle.
 | `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
 | `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
-```
-Prescription opened
-id: 019db730a4f2
-title: Refactor auth middleware
-started_at: 2026-04-22 21:54:47
-```
-
-Devuelve un error `prescription_already_open` si el bottle ya tiene una prescription abierta. El error incluye el `id`, `title`, `started_at` y `pill_count` de la prescription existente — usa ese `id` directamente en lugar de abrir uno nuevo.
+Devuelve `id`, `title` y `started_at`. Devuelve un error `prescription_already_open` si el bottle ya tiene una prescription abierta — el error incluye el `id`, `title`, `started_at` y `pill_count` de la prescription existente.
 
 ### `prescription_close`
 
@@ -238,13 +167,7 @@ Cierra una prescription abierta (establece `ended_at`).
 |---|---|---|---|
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
-```
-Prescription closed
-id: 019db730a4f2
-title: Refactor auth middleware
-started_at: 2026-04-22 21:54:47
-ended_at: 2026-04-22 23:10:00
-```
+Devuelve `id`, `title`, `started_at` y `ended_at`.
 
 ### `prescription_read`
 
@@ -254,14 +177,7 @@ Recupera una prescription por ID.
 |---|---|---|---|
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
-```
-id: 019db730a4f2
-title: Refactor auth middleware
-started_at: 2026-04-22 21:54:47
-ended_at: 2026-04-22 23:10:00
-```
-
-Devuelve un error `not_found` si la prescription no existe.
+Devuelve `id`, `title`, `started_at` y `ended_at`. Devuelve un error `not_found` si la prescription no existe.
 
 ### `prescription_context`
 
@@ -271,20 +187,6 @@ Pills de una prescription concreta con id, compound, título y snippet de 300 ch
 |---|---|---|---|
 | `prescription_id` | string (UUID v7) | sí | Prescription a inspeccionar |
 | `limit` | integer | no | Máx. pills a devolver (por defecto: 30) |
-
-```
-[closed] Implementar auth JWT
-id: 019df5031c8e  started: 2026-05-03 → 2026-05-03
-
-  #42 [decision] Usar JWT stateless con refresh tokens
-  chosen: JWT stateless\nrefresh guardado en SQLite\nwhy: evita estado de sesión en servidor…
-
-  #41 [bugfix] Race condition en dedup
-  BEGIN IMMEDIATE previene race conditions en escrituras concurrentes
-
----
-pills: 2
-```
 
 Devuelve una respuesta vacía si la prescription no existe.
 
@@ -296,9 +198,7 @@ Elimina suavemente una prescription y todas sus pills en cascada.
 |---|---|---|---|
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
-```
-Prescription discarded.
-```
+Devuelve un mensaje de confirmación.
 
 ---
 
@@ -317,14 +217,7 @@ Registra un nuevo bottle.
 | `directory` | string | sí | Ruta absoluta al directorio del proyecto |
 | `scope` | `local` \| `global` | sí | Si usar base de datos local o global |
 
-```
-Bottle created
-id: 019db2571a3d
-name: mi-proyecto
-display_name: Mi Proyecto
-directory: /home/usuario/mi-proyecto
-scope: local
-```
+Devuelve `id`, `name`, `display_name`, `directory` y `scope`.
 
 ### `bottle_context`
 
@@ -335,32 +228,11 @@ scope: local
 | `bottle_id` | string (UUID v7) | sí | Bottle a indexar |
 | `limit` | integer | no | Máx. prescriptions a devolver (por defecto: 30) |
 
-```
-[open]  2026-05-04  12 pills  Implementar auth JWT
-id: 019df5031c8e
-
-[closed] 2026-05-01 → 2026-05-01  3 pills  Fix triggers FTS5
-id: 019de307b5c1
-
----
-prescriptions: 2
-```
-
 ### `bottle_list`
 
 Lista todos los bottles registrados. Sin parámetros.
 
-```
-Bottles (2)
-
-● Mi Proyecto [local] 019db2571a3d
-  /home/usuario/mi-proyecto
-
-○ Proyecto Antiguo [global] 019da000f3e8 [unlinked]
-  /home/usuario/proyecto-antiguo
-```
-
-`●` significa que la base de datos del bottle es accesible. `○` con `[unlinked]` significa que el archivo de base de datos ya no existe en disco.
+Devuelve una entrada por bottle con nombre, scope, id y ruta de la base de datos. `●` significa que la base de datos del bottle es accesible; `○` con `[unlinked]` significa que el archivo de base de datos ya no existe en disco.
 
 ### `bottle_vinculate`
 
@@ -370,13 +242,7 @@ Registra una base de datos de bottle local existente en el registro global del u
 |---|---|---|---|
 | `directory` | string | no | Ruta absoluta al directorio que contiene `.pillbox/pillbox.db`. Por defecto, el cwd del proceso pillbox. |
 
-Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el bottle ya estaba registrado. Ambos son condiciones de exit-0.
-
-```json
-{ "status": "linked", "name": "mi-proyecto", "slug": "mi-proyecto", "db_path": "/home/bob/mi-proyecto/.pillbox/pillbox.db" }
-```
-
-Códigos de error específicos de esta herramienta: `db_not_found`, `circular_link`, `no_bottle_in_db`.
+Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el bottle ya estaba registrado. Ambos son condiciones de exit-0. Códigos de error específicos: `db_not_found`, `circular_link`, `no_bottle_in_db`.
 
 ---
 

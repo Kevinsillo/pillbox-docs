@@ -101,6 +101,25 @@ pillbox bottle repair mi-proyecto
 
 Pide la nueva ruta absoluta al archivo `pillbox.db`. La ruta debe existir y ser un archivo; si no existe, el comando termina con error sin hacer cambios.
 
+### `pillbox bottle vinculate [directorio]`
+
+Registra una base de datos local existente en el registro global del usuario actual. Útil cuando un segundo usuario del sistema necesita acceder a un bottle creado por otro usuario en la misma máquina — por ejemplo, cuando dos usuarios comparten un directorio de proyecto.
+
+`directorio` es opcional y usa el directorio de trabajo actual por defecto.
+
+```bash
+pillbox bottle vinculate                           # vincula el bottle del directorio actual
+pillbox bottle vinculate /home/alice/mi-proyecto   # vincula el bottle en la ruta indicada
+```
+
+El comando lee el bottle de `<directorio>/.pillbox/pillbox.db` y lo añade a `~/.pillbox/pillbox.db`. La operación es idempotente — ejecutarla dos veces reporta "ya vinculado" sin error.
+
+Condiciones de error:
+
+- `.pillbox/pillbox.db` no encontrado en la ruta resuelta — sale con código 1
+- La ruta resuelta es la propia base de datos global (enlace circular) — sale con código 1
+- La base de datos local no contiene ningún bottle — sale con código 1
+
 ## Comandos prescription
 
 ### `pillbox prescription open "<título>"`
@@ -189,17 +208,6 @@ Elimina el directorio de la skill.
 ### `pillbox lang`
 
 Muestra el idioma actual y las opciones disponibles.
-
-```
-Current language: Español (es)
-
-es    Español  ● activo
-en    English
-de    Deutsch
-it    Italiano
-pt    Português
-fr    Français
-```
 
 ### `pillbox lang set <código>`
 

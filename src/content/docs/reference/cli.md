@@ -209,17 +209,6 @@ Removes the skill directory.
 
 Shows the current language and available options.
 
-```
-Current language: English (en)
-
-es    Español
-en    English  ● active
-de    Deutsch
-it    Italiano
-pt    Português
-fr    Français
-```
-
 ### `pillbox lang set <code>`
 
 Sets the CLI language. Persisted to `~/.pillbox/lang`.
