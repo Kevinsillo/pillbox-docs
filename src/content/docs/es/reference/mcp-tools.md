@@ -144,7 +144,7 @@ Devuelve las capsules encontradas con `id`, `compound`, `title` y un snippet del
 
 ## Herramientas de prescriptions
 
-Una **prescription** es una sesión de trabajo abierta dentro de un bottle. Las pills deben estar vinculadas a una prescription. Solo puede haber una prescription abierta por bottle a la vez.
+Una **prescription** es una sesión de trabajo abierta dentro de un bottle. Las pills deben estar vinculadas a una prescription. Puede haber varias prescriptions abiertas por bottle al mismo tiempo.
 
 ### `prescription_open`
 
@@ -157,7 +157,7 @@ Abre una nueva prescription para un bottle.
 | `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
 | `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
-Devuelve `id`, `title` y `started_at`. Devuelve un error `prescription_already_open` si el bottle ya tiene una prescription abierta — el error incluye el `id`, `title`, `started_at` y `pill_count` de la prescription existente.
+Devuelve `id`, `title` y `started_at`. Siempre abre una prescription nueva; si quieres reutilizar una ya abierta, lístalas con `bottle_context` y pasa su `id` directamente.
 
 ### `prescription_close`
 
@@ -251,7 +251,6 @@ Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el b
 | Código | Significado |
 |---|---|
 | `not_found` | El recurso solicitado no existe |
-| `prescription_already_open` | Ya hay una prescription abierta para este bottle |
 | `prescription_required` | El `prescription_id` proporcionado no existe o ya está cerrado |
 | `validation_error` | Uno o más campos de entrada fallaron la validación |
 | `invalid_input` | El input no pudo ser parseado |

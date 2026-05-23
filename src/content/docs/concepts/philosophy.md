@@ -27,7 +27,7 @@ This separation keeps project knowledge and personal knowledge from polluting ea
 
 A prescription is more than a session container. It is a commitment: before saving any knowledge, the agent must declare what it is working on. This title becomes the anchor for everything saved during that session.
 
-The constraint that only one prescription can be open per bottle at a time is intentional. It prevents agents from operating in an undefined state where knowledge could be attributed to the wrong context.
+Multiple prescriptions can be open in a bottle at the same time, so parallel streams of work — a feature, a refactor, a hotfix — can each accumulate knowledge under their own anchor without serializing. The discipline stays the same: every pill is attributed to a prescription, and the agent decides which session a piece of knowledge belongs to. How many prescriptions stay open at once is the user's choice; Pillbox does not impose a singular focus, it just makes sure nothing is saved without one.
 
 ## Search as the primary interface
 

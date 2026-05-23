@@ -144,7 +144,7 @@ Returns matched capsules with `id`, `compound`, `title`, and a content snippet. 
 
 ## Prescription tools
 
-A **prescription** is an open work session inside a bottle. Pills must be attached to a prescription. Only one prescription can be open per bottle at a time.
+A **prescription** is an open work session inside a bottle. Pills must be attached to a prescription. Multiple prescriptions can be open per bottle at the same time.
 
 ### `prescription_open`
 
@@ -157,7 +157,7 @@ Opens a new prescription for a bottle.
 | `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
 | `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
 
-Returns `id`, `title`, and `started_at`. Returns a `prescription_already_open` error if the bottle already has an open prescription — the error includes the existing prescription's `id`, `title`, `started_at`, and `pill_count`.
+Returns `id`, `title`, and `started_at`. Always opens a new prescription; to reuse an existing open prescription, list open ones with `bottle_context` and pass its `id` directly.
 
 ### `prescription_close`
 
@@ -251,7 +251,6 @@ Returns `status: "linked"` on success or `status: "already_linked"` if the bottl
 | Code | Meaning |
 |---|---|
 | `not_found` | The requested resource does not exist |
-| `prescription_already_open` | A prescription is already open for this bottle |
 | `prescription_required` | The provided `prescription_id` does not exist or is already closed |
 | `validation_error` | One or more input fields failed validation |
 | `invalid_input` | The input could not be parsed |

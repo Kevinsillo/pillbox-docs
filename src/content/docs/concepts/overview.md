@@ -35,7 +35,7 @@ The practical consequence: if you initialize a bottle with `global` scope, you i
 A **prescription** is a work session within a bottle. It has a title that describes what the agent is working on.
 
 Rules:
-- There can only be one open prescription per bottle at a time.
+- Multiple prescriptions can be open per bottle at the same time.
 - The title must be set when opening — it describes the task before starting.
 - Pills cannot be saved without an open prescription.
 - Closing a prescription marks it as ended; pills are preserved.
