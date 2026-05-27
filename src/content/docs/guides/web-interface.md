@@ -9,7 +9,7 @@ The Pillbox web UI is a local interface for reviewing the knowledge your agents 
 
 ## Starting the server
 
-The server runs as a system service (systemd on Linux, launchd on macOS). Install it once, then use `start` and `stop` as needed.
+The server runs as a system service (systemd on Linux, launchd on macOS, the Windows service manager on Windows). Install it once, then use `start` and `stop` as needed.
 
 ```bash
 pillbox serve install        # install the service (first time)
@@ -17,6 +17,10 @@ pillbox serve start          # start the server
 ```
 
 Open `http://pillbox.local:4242` in your browser. If the install did not have permission to modify the hosts file, use `http://localhost:4242` instead.
+
+:::caution
+On Windows, run `pillbox serve install` and `pillbox serve uninstall` from an elevated (Administrator) PowerShell. Registering the service and writing the `pillbox.local` hosts entry both require elevation; without it the command exits with an error.
+:::
 
 ```bash
 pillbox serve install --port 8080   # custom port

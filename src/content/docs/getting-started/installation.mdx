@@ -1,42 +1,80 @@
 ---
 title: Installation
-description: Install the Pillbox binary on Linux or macOS.
+description: Install the Pillbox binary on Linux, macOS, or Windows.
 sidebar:
   order: 2
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-Pillbox runs as a single binary on Linux and macOS. The installer sets up the binary, MCP server, and Claude Code skill in one step.
+Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets up the binary, MCP server, and Claude Code skill in one step.
 
 ## One-line install
 
-```bash
-curl -fsSL https://get.pillbox.dev | bash
-```
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    curl -fsSL https://get.pillbox.dev | bash
+    ```
 
-The installer:
+    The installer:
 
-1. Detects your platform (Linux/macOS, x86_64/aarch64)
-2. Downloads the `pillbox` binary from GitHub Releases
-3. Installs it to `~/.local/bin` (Linux) or `/usr/local/bin` (macOS)
-4. Installs the MCP server to `~/.pillbox/mcp/`
-5. Installs the Claude Code skill to `~/.claude/skills/pillbox/`
-6. Creates the global database at `~/.pillbox/pillbox.db`
+    1. Detects your platform (Linux/macOS, x86_64/aarch64)
+    2. Downloads the `pillbox` binary from GitHub Releases
+    3. Installs it to `~/.local/bin` (Linux) or `/usr/local/bin` (macOS)
+    4. Installs the MCP server to `~/.pillbox/mcp/`
+    5. Installs the Claude Code skill to `~/.claude/skills/pillbox/`
+    6. Creates the global database at `~/.pillbox/pillbox.db`
+  </TabItem>
+  <TabItem label="Windows">
+    Run in PowerShell:
+
+    ```powershell
+    irm https://get.pillbox.dev/install.ps1 | iex
+    ```
+
+    The installer:
+
+    1. Detects your architecture (x86_64/aarch64)
+    2. Downloads the `pillbox` binary from GitHub Releases
+    3. Installs it to `%LOCALAPPDATA%\Programs\pillbox`
+    4. Adds the install directory to your user `PATH` (no Administrator needed)
+    5. Creates the global database at `~/.pillbox/pillbox.db`
+
+    You may need to open a new terminal for the updated `PATH` to take effect.
+
+    <Aside type="caution">
+      The installer itself runs without elevation, but `pillbox serve install` and `pillbox serve uninstall` require an elevated (Administrator) PowerShell. They register a Windows service and edit the hosts file.
+    </Aside>
+  </TabItem>
+</Tabs>
 
 ### Options
 
-Install a specific version:
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    Install a specific version:
 
-```bash
-curl -fsSL https://get.pillbox.dev | bash -s -- --version 0.4.0
-```
+    ```bash
+    curl -fsSL https://get.pillbox.dev | bash -s -- --version 0.4.0
+    ```
 
-Custom install directory:
+    Custom install directory:
 
-```bash
-curl -fsSL https://get.pillbox.dev | bash -s -- --install-dir /usr/local/bin
-```
+    ```bash
+    curl -fsSL https://get.pillbox.dev | bash -s -- --install-dir /usr/local/bin
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    Install a specific version or use a custom directory with environment variables:
+
+    ```powershell
+    $env:PILLBOX_VERSION = '0.4.0'
+    $env:PILLBOX_INSTALL_DIR = 'C:\Tools\pillbox'
+    irm https://get.pillbox.dev/install.ps1 | iex
+    ```
+  </TabItem>
+</Tabs>
 
 ## Manual installation
 
@@ -48,6 +86,8 @@ Download the binary for your platform from [GitHub Releases](https://github.com/
 | Linux aarch64 | `pillbox-linux-aarch64` |
 | macOS arm64 | `pillbox-darwin-aarch64` |
 | macOS x86_64 | `pillbox-darwin-x86_64` |
+| Windows x86_64 | `pillbox-windows-x86_64.exe` |
+| Windows aarch64 | `pillbox-windows-aarch64.exe` |
 
 Then follow these steps:
 
@@ -114,4 +154,5 @@ make build-full
 | Linux aarch64 | Supported |
 | macOS arm64 (Apple Silicon) | Supported |
 | macOS x86_64 | Supported |
-| Windows | Not supported |
+| Windows x86_64 | Supported |
+| Windows aarch64 | Supported |

@@ -9,7 +9,7 @@ La interfaz web de Pillbox es una interfaz local para revisar el conocimiento qu
 
 ## Iniciar el servidor
 
-El servidor se gestiona como un servicio del sistema (systemd en Linux, launchd en macOS). Instálalo una vez y luego usa `start` y `stop` cuando necesites.
+El servidor se gestiona como un servicio del sistema (systemd en Linux, launchd en macOS, el gestor de servicios de Windows en Windows). Instálalo una vez y luego usa `start` y `stop` cuando necesites.
 
 ```bash
 pillbox serve install        # instala el servicio (primera vez)
@@ -17,6 +17,10 @@ pillbox serve start          # arranca el servidor
 ```
 
 Abre `http://pillbox.local:4242` en tu navegador. Si la instalación no tuvo permisos para modificar el fichero hosts, usa `http://localhost:4242`.
+
+:::caution
+En Windows, ejecuta `pillbox serve install` y `pillbox serve uninstall` desde una PowerShell elevada (Administrador). Tanto registrar el servicio como escribir la entrada `pillbox.local` en el fichero hosts requieren elevación; sin ella, el comando termina con un error.
+:::
 
 ```bash
 pillbox serve install --port 8080   # puerto personalizado

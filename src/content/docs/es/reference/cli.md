@@ -28,9 +28,13 @@ pillbox serve install --port 8080
 
 También añade `pillbox.local` al fichero hosts del sistema para acceder por nombre en lugar de `localhost`. Requiere permisos de escritura en el fichero hosts (sudo en Linux/macOS, administrador en Windows); si no los tiene, el servicio se instala igualmente y el acceso queda disponible en `http://localhost:<puerto>`.
 
+:::caution
+En Windows, `pillbox serve install` y `pillbox serve uninstall` deben ejecutarse desde una PowerShell elevada (Administrador) — registran o eliminan un servicio de Windows y editan el fichero hosts. Sin elevación, el comando muestra un error y termina con código distinto de cero.
+:::
+
 ### `pillbox serve uninstall`
 
-Elimina el servicio del sistema y la entrada `pillbox.local` del fichero hosts.
+Elimina el servicio del sistema y la entrada `pillbox.local` del fichero hosts. En Windows, requiere una terminal elevada (Administrador).
 
 ### `pillbox serve start`
 
