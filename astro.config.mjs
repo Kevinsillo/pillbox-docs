@@ -7,8 +7,8 @@ import rehypeExternalLinks from 'rehype-external-links';
 const isCI = process.env.GITHUB_ACTIONS === 'true';
 
 export default defineConfig({
-	site: 'https://Kevinsillo.github.io',
-	base: isCI ? '/pillbox' : '/',
+	site: 'https://kevinsillo.github.io',
+	base: isCI ? '/pillbox-docs' : '/',
 	markdown: {
 		rehypePlugins: [
 			[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }],

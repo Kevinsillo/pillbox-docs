@@ -14,7 +14,7 @@ Pillbox corre como un binario único en Linux, macOS y Windows. El instalador co
 <Tabs syncKey="os">
   <TabItem label="Linux / macOS">
     ```bash
-    curl -fsSL https://get.pillbox.dev | bash
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash
     ```
 
     El instalador:
@@ -30,7 +30,7 @@ Pillbox corre como un binario único en Linux, macOS y Windows. El instalador co
     Ejecuta en PowerShell:
 
     ```powershell
-    irm https://get.pillbox.dev/install.ps1 | iex
+    irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
     ```
 
     El instalador:
@@ -56,13 +56,13 @@ Pillbox corre como un binario único en Linux, macOS y Windows. El instalador co
     Instalar una versión específica:
 
     ```bash
-    curl -fsSL https://get.pillbox.dev | bash -s -- --version 0.4.0
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --version 0.4.0
     ```
 
     Directorio de instalación personalizado:
 
     ```bash
-    curl -fsSL https://get.pillbox.dev | bash -s -- --install-dir /usr/local/bin
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --install-dir /usr/local/bin
     ```
   </TabItem>
   <TabItem label="Windows">
@@ -71,7 +71,7 @@ Pillbox corre como un binario único en Linux, macOS y Windows. El instalador co
     ```powershell
     $env:PILLBOX_VERSION = '0.4.0'
     $env:PILLBOX_INSTALL_DIR = 'C:\Tools\pillbox'
-    irm https://get.pillbox.dev/install.ps1 | iex
+    irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
     ```
   </TabItem>
 </Tabs>

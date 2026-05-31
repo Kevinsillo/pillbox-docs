@@ -20,7 +20,7 @@ hero:
       variant: secondary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components'
+import { Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <CardGrid stagger>
   <Card title="Persistent memory" icon="open-book">
@@ -45,9 +45,18 @@ import { Card, CardGrid } from '@astrojs/starlight/components'
 
 ## Quick install
 
-```bash
-curl -fsSL https://get.pillbox.dev | bash
-```
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    ```powershell
+    irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
+    ```
+  </TabItem>
+</Tabs>
 
 Then follow the [getting started guide](/getting-started/introduction/).
 
