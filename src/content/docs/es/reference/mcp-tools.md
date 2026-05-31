@@ -27,18 +27,18 @@ Crea una nueva pill.
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la pill |
 | `compound` | string | sí | Categoría — texto libre |
-| `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
-| `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_email` | string | sí | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
 Devuelve el `id` de la nueva pill.
 
 ### `pill_read`
 
-Recupera una pill por ID entero.
+Recupera una pill por UUID.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la pill |
+| `id` | string (UUID v7) | sí | UUID de la pill |
 
 Devuelve `id`, `prescription`, `created`, `compound`, `title` y `content` completo. Devuelve un error `not_found` si la pill no existe.
 
@@ -48,7 +48,7 @@ Actualiza el título, contenido o compound de una pill.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la pill |
+| `id` | string (UUID v7) | sí | UUID de la pill |
 | `title` | string (1–255) | no | Nuevo título |
 | `content` | string (1–5000) | no | Nuevo contenido |
 | `compound` | string | no | Nuevo compound |
@@ -61,7 +61,7 @@ Elimina suavemente una pill (el registro se marca como eliminado, no se borra).
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la pill |
+| `id` | string (UUID v7) | sí | UUID de la pill |
 
 Devuelve `id` y timestamp `deleted_at`.
 
@@ -69,14 +69,28 @@ Devuelve `id` y timestamp `deleted_at`.
 
 Búsqueda de texto completo sobre pills usando coincidencia por prefijo FTS5 y puntuación difusa Jaro-Winkler.
 
+Se requiere al menos uno de `query` o `compound`. Si solo se pasa `compound`, lista las pills de ese compound sin filtrado FTS. Si el paso estricto devuelve cero resultados, el servidor reintenta automáticamente con fuzzy (Jaro-Winkler) — la respuesta incluye `used_fuzzy: true` cuando esto ocurre.
+
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `query` | string | sí | Consulta de búsqueda |
+| `query` | string | no | Consulta FTS — términos separados por espacios y `-_/.:`, unidos con OR |
 | `bottle_id` | string (UUID v7) | no | Restringir a un bottle específico |
 | `compound` | string | no | Filtrar por tipo de compound |
 | `limit` | integer | no | Máximo de resultados (por defecto: 20) |
+| `fuzzy` | boolean | no | Forzar coincidencia difusa (Jaro-Winkler) desde el inicio, saltando el paso estricto. Por defecto: false |
 
 Devuelve las pills encontradas con `id`, `compound`, `title` y un snippet del contenido. Devuelve `No pills found.` cuando la consulta no coincide con nada.
+
+### `pill_compounds`
+
+Lista los compounds distintos de pills con su frecuencia, ordenados por count descendente. Útil para descubrir las categorías disponibles antes de buscar.
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `bottle_id` | string (UUID v7) | no | Restringir a un bottle específico |
+| `limit` | integer | no | Máximo de compounds a devolver |
+
+Devuelve una lista de nombres de compound con su número de pills.
 
 ---
 
@@ -98,23 +112,24 @@ Devuelve el `id` de la nueva capsule.
 
 ### `capsule_read`
 
-Recupera una capsule por ID entero.
+Recupera una capsule por UUID.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la capsule |
+| `id` | string (UUID v7) | sí | UUID de la capsule |
 
 Devuelve `id`, `created`, `compound`, `title` y `content` completo. Devuelve un error `not_found` si la capsule no existe.
 
 ### `capsule_revise`
 
-Actualiza el título o contenido de una capsule.
+Actualiza el título, contenido o compound de una capsule.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la capsule |
+| `id` | string (UUID v7) | sí | UUID de la capsule |
 | `title` | string (1–255) | no | Nuevo título |
 | `content` | string (1–5000) | no | Nuevo contenido |
+| `compound` | string | no | Nuevo compound |
 
 Devuelve `id`, `compound` y `title` actualizado.
 
@@ -124,21 +139,34 @@ Elimina suavemente una capsule.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `id` | integer | sí | ID de la capsule |
+| `id` | string (UUID v7) | sí | UUID de la capsule |
 
 Devuelve `id` y timestamp `deleted_at`.
 
 ### `capsule_search`
 
-Búsqueda de texto completo sobre capsules.
+Búsqueda de texto completo sobre capsules usando FTS5 y puntuación difusa Jaro-Winkler. Las capsules son globales — no se filtran por proyecto.
+
+Se requiere al menos uno de `query` o `compound`. Si solo se pasa `compound`, lista las capsules de ese compound sin filtrado FTS. Si el paso estricto devuelve cero resultados, el servidor reintenta automáticamente con fuzzy (Jaro-Winkler) — la respuesta incluye `used_fuzzy: true` cuando esto ocurre.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `query` | string | sí | Consulta de búsqueda |
+| `query` | string | no | Consulta FTS — términos separados por espacios y `-_/.:`, unidos con OR |
 | `compound` | string | no | Filtrar por tipo de compound |
 | `limit` | integer | no | Máximo de resultados (por defecto: 20) |
+| `fuzzy` | boolean | no | Forzar coincidencia difusa (Jaro-Winkler) desde el inicio, saltando el paso estricto. Por defecto: false |
 
 Devuelve las capsules encontradas con `id`, `compound`, `title` y un snippet del contenido. Devuelve `No capsules found.` cuando la consulta no coincide con nada.
+
+### `capsule_compounds`
+
+Lista los compounds distintos de capsules con su frecuencia, ordenados por count descendente. Scope global (todas las capsules entre proyectos).
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `limit` | integer | no | Máximo de compounds a devolver |
+
+Devuelve una lista de nombres de compound con su número de capsules.
 
 ---
 
@@ -148,14 +176,14 @@ Una **prescription** es una sesión de trabajo abierta dentro de un bottle. Las 
 
 ### `prescription_open`
 
-Abre una nueva prescription para un bottle.
+Abre una nueva prescription para un bottle. Para reabrir una prescription cerrada, usar `prescription_reopen`.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | sí | Bottle en el que abrir la prescription |
 | `title` | string (1–255) | sí | Título descriptivo para la sesión |
-| `author_name` | string | no | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
-| `author_email` | string | no | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_email` | string | sí | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
 
 Devuelve `id`, `title` y `started_at`. Siempre abre una prescription nueva; si quieres reutilizar una ya abierta, lístalas con `bottle_context` y pasa su `id` directamente.
 
@@ -168,6 +196,16 @@ Cierra una prescription abierta (establece `ended_at`).
 | `id` | string (UUID v7) | sí | ID de la prescription |
 
 Devuelve `id`, `title`, `started_at` y `ended_at`.
+
+### `prescription_reopen`
+
+Reabre una prescription cerrada para permitir editar o añadir pills. Idempotente: si la prescription ya está abierta, la devuelve sin cambios.
+
+| Parámetro | Tipo | Requerido | Descripción |
+|---|---|---|---|
+| `id` | string (UUID v7) | sí | UUID de la prescription |
+
+Devuelve la prescription con su estado actual.
 
 ### `prescription_read`
 
@@ -208,14 +246,13 @@ Un **bottle** representa un proyecto — contiene una base de datos SQLite local
 
 ### `bottle_create`
 
-Registra un nuevo bottle.
+Registra un nuevo bottle. El directorio se deriva server-side del cwd del proceso pillbox (para `scope='local'`) o del home del usuario (para `scope='global'`) — los agentes no deben pasar un parámetro `directory`.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
-| `name` | string (1–255) | sí | Slug (normalmente el nombre de la carpeta) |
+| `name` | string (1–255) | sí | Slug (normalmente el nombre de la carpeta, kebab-case) |
 | `display_name` | string (1–255) | sí | Nombre legible por humanos |
-| `directory` | string | sí | Ruta absoluta al directorio del proyecto |
-| `scope` | `local` \| `global` | sí | Si usar base de datos local o global |
+| `scope` | `local` \| `global` | no | Si usar base de datos local o global (por defecto: `local`) |
 
 Devuelve `id`, `name`, `display_name`, `directory` y `scope`.
 
@@ -255,3 +292,6 @@ Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el b
 | `validation_error` | Uno o más campos de entrada fallaron la validación |
 | `invalid_input` | El input no pudo ser parseado |
 | `internal_error` | Error inesperado del servidor |
+| `db_not_found` | No se encontró `.pillbox/pillbox.db` en el directorio indicado (`bottle_vinculate`) |
+| `circular_link` | El directorio indicado es el propio directorio de la base de datos global (`bottle_vinculate`) |
+| `no_bottle_in_db` | El archivo de base de datos existe pero no contiene ningún bottle registrado (`bottle_vinculate`) |

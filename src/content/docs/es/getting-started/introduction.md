@@ -47,7 +47,7 @@ La interfaz web existe para un propósito específico: permitirte revisar y corr
 | Entidad | Qué es |
 |---|---|
 | **Bottle** | Un proyecto. Mapea un directorio a una base de datos. |
-| **Prescription** | Una sesión de trabajo dentro de un bottle. Una abierta a la vez. |
+| **Prescription** | Una sesión de trabajo dentro de un bottle. Pueden estar abiertas varias simultáneamente. |
 | **Pill** | Un fragmento de conocimiento del proyecto guardado durante una sesión. |
 | **Capsule** | Conocimiento personal entre proyectos. Convenciones, preferencias. |
 
@@ -60,4 +60,4 @@ Consulta [Conceptos](/es/concepts/overview/) para el modelo completo.
 3. Instala el servidor MCP (`pillbox mcp install`)
 4. Instala la skill para tu agente (`pillbox skill install`)
 
-La [guía de inicio rápido](/es/getting-started/quick-start/) explica todo esto en menos de cinco minutos.
+La guía de inicio rápido explica todo esto en menos de cinco minutos.

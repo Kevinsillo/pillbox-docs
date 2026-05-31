@@ -27,13 +27,13 @@ Esta separación evita que el conocimiento del proyecto y el personal se contami
 
 Una prescription es más que un contenedor de sesión. Es un compromiso: antes de guardar cualquier conocimiento, el agente debe declarar en qué está trabajando. Este título se convierte en el ancla de todo lo guardado durante esa sesión.
 
-La restricción de que solo puede haber una prescription abierta por bottle a la vez es intencional. Evita que los agentes operen en un estado indefinido donde el conocimiento podría atribuirse al contexto equivocado.
+Pueden estar abiertas varias prescriptions en un bottle al mismo tiempo, de modo que flujos de trabajo paralelos — una funcionalidad, un refactor, un hotfix — pueden acumular conocimiento cada uno bajo su propio ancla sin serializarse. La disciplina es la misma: cada pill se atribuye a una prescription, y el agente decide a qué sesión pertenece cada pieza de conocimiento. Cuántas prescriptions permanecen abiertas a la vez es decisión del usuario; Pillbox no impone un foco singular, solo garantiza que nada se guarda sin uno.
 
 ## La búsqueda como interfaz principal
 
 Pillbox no es un almacén clave-valor. No hay claves con nombre, rutas jerárquicas ni recuperación por ID como flujo principal. La interfaz principal es la búsqueda.
 
-Todo lo guardado se indexa con búsqueda de texto completo FTS5 en título y contenido. La coincidencia por prefijo y el matching difuso de Jaro-Winkler garantizan que búsquedas de `hex` encuentren `hexagonal`, y `authn` encuentre `authentication`. Las prescriptions cerradas siguen siendo completamente buscables — el conocimiento acumulado en sesiones pasadas siempre está disponible para las futuras.
+Todo lo guardado se indexa con búsqueda de texto completo FTS5 en título y contenido. La coincidencia por prefijo y el matching difuso de Jaro-Winkler garantizan que búsquedas de `hex` encuentren `hexagonal`, y `authn` encuentre `authentication`. Cuando una consulta contiene múltiples términos, Pillbox primero ejecuta una búsqueda OR entre todos ellos via FTS5; si eso devuelve cero resultados, reintenta automáticamente con Jaro-Winkler para ampliar la coincidencia. Las prescriptions cerradas siguen siendo completamente buscables — el conocimiento acumulado en sesiones pasadas siempre está disponible para las futuras.
 
 Este diseño significa que el valor de Pillbox crece con el uso. Un bottle con cien pills de veinte sesiones pasadas da a un agente significativamente más contexto que uno recién creado.
 

@@ -47,7 +47,7 @@ The web UI exists for a specific purpose: letting you review and correct what yo
 | Entity | What it is |
 |---|---|
 | **Bottle** | A project. Maps a directory to a database. |
-| **Prescription** | A work session within a bottle. One open at a time. |
+| **Prescription** | A work session within a bottle. Multiple can be open simultaneously. |
 | **Pill** | A piece of project knowledge saved during a session. |
 | **Capsule** | Personal, cross-project knowledge. Conventions, preferences. |
 
@@ -60,4 +60,4 @@ See [Concepts](/concepts/overview/) for the full model.
 3. Install the MCP server (`pillbox mcp install`)
 4. Install the skill for your agent (`pillbox skill install`)
 
-The [quick start](/getting-started/quick-start/) walks through all of this in under five minutes.
+The quick start walks through all of this in under five minutes.

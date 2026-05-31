@@ -27,18 +27,18 @@ Creates a new pill.
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the pill |
 | `compound` | string | yes | Category — free-text string |
-| `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
-| `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
+| `author_name` | string | yes | Author name — see [author identity](/guides/author-identity/) |
+| `author_email` | string | yes | Author email — see [author identity](/guides/author-identity/) |
 
 Returns the `id` of the new pill.
 
 ### `pill_read`
 
-Retrieves a pill by integer ID.
+Retrieves a pill by UUID.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Pill ID |
+| `id` | string (UUID v7) | yes | Pill UUID |
 
 Returns `id`, `prescription`, `created`, `compound`, `title`, and full `content`. Returns a `not_found` error if the pill does not exist.
 
@@ -48,7 +48,7 @@ Updates a pill's title, content, or compound.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Pill ID |
+| `id` | string (UUID v7) | yes | Pill UUID |
 | `title` | string (1–255) | no | New title |
 | `content` | string (1–5000) | no | New content |
 | `compound` | string | no | New compound |
@@ -61,7 +61,7 @@ Soft-deletes a pill (the record is marked deleted, not removed).
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Pill ID |
+| `id` | string (UUID v7) | yes | Pill UUID |
 
 Returns `id` and `deleted_at` timestamp.
 
@@ -69,14 +69,28 @@ Returns `id` and `deleted_at` timestamp.
 
 Full-text search over pills using FTS5 prefix matching and Jaro-Winkler fuzzy scoring.
 
+At least one of `query` or `compound` must be provided. If only `compound` is passed, lists pills of that compound without FTS filtering. If the strict pass returns zero results, the server automatically retries with fuzzy (Jaro-Winkler) expansion — the response includes `used_fuzzy: true` when that happened.
+
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `query` | string | yes | Search query |
+| `query` | string | no | FTS search query — terms split on whitespace and `-_/.:`, joined with OR |
 | `bottle_id` | string (UUID v7) | no | Restrict to a specific bottle |
 | `compound` | string | no | Filter by compound type |
 | `limit` | integer | no | Max results (default: 20) |
+| `fuzzy` | boolean | no | Force fuzzy (Jaro-Winkler) match from the start, skipping the strict pass. Default: false |
 
 Returns matched pills with `id`, `compound`, `title`, and a content snippet. Returns `No pills found.` when the query matches nothing.
+
+### `pill_compounds`
+
+Lists distinct pill compounds with their frequency, ordered by count descending. Useful to discover available categories before searching.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `bottle_id` | string (UUID v7) | no | Restrict to a specific bottle |
+| `limit` | integer | no | Max compounds to return |
+
+Returns a list of compound names with their pill count.
 
 ---
 
@@ -98,23 +112,24 @@ Returns the `id` of the new capsule.
 
 ### `capsule_read`
 
-Retrieves a capsule by integer ID.
+Retrieves a capsule by UUID.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Capsule ID |
+| `id` | string (UUID v7) | yes | Capsule UUID |
 
 Returns `id`, `created`, `compound`, `title`, and full `content`. Returns a `not_found` error if the capsule does not exist.
 
 ### `capsule_revise`
 
-Updates a capsule's title or content.
+Updates a capsule's title, content, or compound.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Capsule ID |
+| `id` | string (UUID v7) | yes | Capsule UUID |
 | `title` | string (1–255) | no | New title |
 | `content` | string (1–5000) | no | New content |
+| `compound` | string | no | New compound |
 
 Returns `id`, `compound`, and updated `title`.
 
@@ -124,21 +139,34 @@ Soft-deletes a capsule.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `id` | integer | yes | Capsule ID |
+| `id` | string (UUID v7) | yes | Capsule UUID |
 
 Returns `id` and `deleted_at` timestamp.
 
 ### `capsule_search`
 
-Full-text search over capsules.
+Full-text search over capsules using FTS5 prefix matching and Jaro-Winkler fuzzy scoring. Capsules are global — not filtered by project.
+
+At least one of `query` or `compound` must be provided. If only `compound` is passed, lists capsules of that compound without FTS filtering. If the strict pass returns zero results, the server automatically retries with fuzzy (Jaro-Winkler) expansion — the response includes `used_fuzzy: true` when that happened.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `query` | string | yes | Search query |
+| `query` | string | no | FTS search query — terms split on whitespace and `-_/.:`, joined with OR |
 | `compound` | string | no | Filter by compound type |
 | `limit` | integer | no | Max results (default: 20) |
+| `fuzzy` | boolean | no | Force fuzzy (Jaro-Winkler) match from the start, skipping the strict pass. Default: false |
 
 Returns matched capsules with `id`, `compound`, `title`, and a content snippet. Returns `No capsules found.` when the query matches nothing.
+
+### `capsule_compounds`
+
+Lists distinct capsule compounds with their frequency, ordered by count descending. Scope is global (all capsules across projects).
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `limit` | integer | no | Max compounds to return |
+
+Returns a list of compound names with their capsule count.
 
 ---
 
@@ -148,14 +176,14 @@ A **prescription** is an open work session inside a bottle. Pills must be attach
 
 ### `prescription_open`
 
-Opens a new prescription for a bottle.
+Opens a new prescription for a bottle. To reopen a previously closed prescription, use `prescription_reopen` instead.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | yes | Bottle to open the prescription in |
 | `title` | string (1–255) | yes | Descriptive title for the session |
-| `author_name` | string | no | Author name — see [author identity](/guides/author-identity/) |
-| `author_email` | string | no | Author email — see [author identity](/guides/author-identity/) |
+| `author_name` | string | yes | Author name — see [author identity](/guides/author-identity/) |
+| `author_email` | string | yes | Author email — see [author identity](/guides/author-identity/) |
 
 Returns `id`, `title`, and `started_at`. Always opens a new prescription; to reuse an existing open prescription, list open ones with `bottle_context` and pass its `id` directly.
 
@@ -168,6 +196,16 @@ Closes an open prescription (sets `ended_at`).
 | `id` | string (UUID v7) | yes | Prescription ID |
 
 Returns `id`, `title`, `started_at`, and `ended_at`.
+
+### `prescription_reopen`
+
+Reopens a closed prescription to allow editing or adding pills. Idempotent: if the prescription is already open, returns it unchanged.
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `id` | string (UUID v7) | yes | Prescription UUID |
+
+Returns the prescription with its current state.
 
 ### `prescription_read`
 
@@ -208,14 +246,13 @@ A **bottle** represents a project — it holds a local SQLite database with all 
 
 ### `bottle_create`
 
-Registers a new bottle.
+Registers a new bottle. The directory is derived server-side from the cwd of the pillbox process (for `scope='local'`) or from the user home (for `scope='global'`) — agents must not pass a `directory` parameter.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `name` | string (1–255) | yes | Slug (usually the folder name) |
+| `name` | string (1–255) | yes | Slug (usually the folder name, kebab-case) |
 | `display_name` | string (1–255) | yes | Human-readable name |
-| `directory` | string | yes | Absolute path to the project directory |
-| `scope` | `local` \| `global` | yes | Whether to use a local or global database |
+| `scope` | `local` \| `global` | no | Whether to use a local or global database (default: `local`) |
 
 Returns `id`, `name`, `display_name`, `directory`, and `scope`.
 
@@ -255,3 +292,6 @@ Returns `status: "linked"` on success or `status: "already_linked"` if the bottl
 | `validation_error` | One or more input fields failed validation |
 | `invalid_input` | The input could not be parsed |
 | `internal_error` | Unexpected server error |
+| `db_not_found` | No `.pillbox/pillbox.db` found at the target directory (`bottle_vinculate`) |
+| `circular_link` | The target directory is the global database directory itself (`bottle_vinculate`) |
+| `no_bottle_in_db` | The database file exists but contains no registered bottle (`bottle_vinculate`) |

@@ -33,7 +33,7 @@ Multiple prescriptions can be open in a bottle at the same time, so parallel str
 
 Pillbox is not a key-value store. There are no named keys, no hierarchical paths, no retrieval by ID as the primary flow. The primary interface is search.
 
-Everything saved is indexed with FTS5 full-text search across title and content. Prefix matching and Jaro-Winkler fuzzy matching ensure that searches for `hex` find `hexagonal`, and `authn` finds `authentication`. Closed prescriptions remain fully searchable — the knowledge accumulated in past sessions is always available to future ones.
+Everything saved is indexed with FTS5 full-text search across title and content. Prefix matching and Jaro-Winkler fuzzy matching ensure that searches for `hex` find `hexagonal`, and `authn` finds `authentication`. When a query contains multiple terms, Pillbox first runs an OR search across all of them via FTS5; if that yields zero results, it automatically retries using Jaro-Winkler to broaden the match. Closed prescriptions remain fully searchable — the knowledge accumulated in past sessions is always available to future ones.
 
 This design means that the value of Pillbox grows with use. A bottle with a hundred pills from twenty past sessions gives an agent significantly more context than a fresh one.
 

@@ -134,78 +134,119 @@ Opens a new prescription (work session) for the current bottle.
 pillbox prescription open "Implement OAuth login"
 ```
 
-Fails if there is already an open prescription — close it first with `pillbox prescription close`.
+Multiple prescriptions can be open simultaneously in the same bottle.
 
-### `pillbox prescription list [-l N]`
+### `pillbox prescription list [-l N] [--archived-limit N]`
 
 Lists the most recent prescriptions for the current bottle. Default: 10.
+
+| Flag | Description |
+|---|---|
+| `-l`, `--limit N` | Maximum active prescriptions to show (default: 10) |
+| `--archived-limit N` | Maximum archived prescriptions to show; `0` hides the section |
 
 ```bash
 pillbox prescription list
 pillbox prescription list -l 25
+pillbox prescription list --archived-limit 0
 ```
 
-### `pillbox prescription show <id> [-l N]`
+### `pillbox prescription show <id> [-l N] [--archived-limit N]`
 
-Shows the full detail of a prescription and all its pills. Accepts a full ID or a short prefix. Default: 20 pills shown; use `-l` to change the limit.
+Shows the full detail of a prescription and all its pills. Accepts a full UUID or a short prefix (≥ 8 characters). Default: 20 pills shown; use `-l` to change the limit.
+
+| Flag | Description |
+|---|---|
+| `-l`, `--limit N` | Maximum pills to show (default: 20) |
+| `--archived-limit N` | Maximum archived pills to show; `0` hides the section |
 
 ```bash
-pillbox prescription show abc123
-pillbox prescription show abc123 -l 50
+pillbox prescription show abc123ef
+pillbox prescription show abc123ef -l 50
 ```
 
 ### `pillbox prescription close`
 
 Closes the open prescription for the current bottle.
 
+### `pillbox prescription reopen <id>`
+
+Reopens a closed prescription (clears `ended_at`). Accepts a full UUID or a short prefix (≥ 8 characters). Idempotent — if the prescription is already open, succeeds without changes.
+
+```bash
+pillbox prescription reopen abc123ef
+```
+
 ## Pill commands
 
 ### `pillbox pill show <id>`
 
-Shows the full detail of a pill by its integer ID. Works even if the pill is archived.
+Shows the full detail of a pill by its UUID. Accepts a full UUID or a short prefix. Works even if the pill is archived.
 
 ```bash
-pillbox pill show 42
+pillbox pill show abc123ef
 ```
 
 ## Capsule commands
 
-### `pillbox capsule list [-l N]`
+### `pillbox capsule list [-l N] [--archived-limit N]`
 
 Lists global capsules — active ones first, archived (soft-deleted) ones in a separate section at the end. Default: 50.
+
+| Flag | Description |
+|---|---|
+| `-l`, `--limit N` | Maximum active capsules to show (default: 50) |
+| `--archived-limit N` | Maximum archived capsules to show; `0` hides the section |
 
 ```bash
 pillbox capsule list
 pillbox capsule list -l 100
+pillbox capsule list --archived-limit 0
 ```
 
 ### `pillbox capsule show <id>`
 
-Shows the full detail of a capsule by integer ID, including if it is archived.
+Shows the full detail of a capsule by UUID, including if it is archived. Accepts a full UUID or a short prefix.
 
 ```bash
-pillbox capsule show 7
+pillbox capsule show abc123ef
 ```
 
 ## MCP commands
 
 ### `pillbox mcp install`
 
-Downloads the MCP server from the latest GitHub release and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18. Automatically registers the entry in `~/.claude.json`.
+Downloads the MCP server from the latest GitHub release and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18. Detects all installed providers (claude, opencode) and registers the MCP entry in each one.
 
-### `pillbox mcp uninstall`
+### `pillbox mcp uninstall [--provider <name>]`
 
-Removes the MCP server directory and its entry from `~/.claude.json`.
+Removes the MCP server directory and its entry from all detected providers. Use `--provider` to target a specific provider.
+
+| Flag | Description |
+|---|---|
+| `--provider <name>` | Provider to uninstall from (`claude` or `opencode`). If omitted, prompts interactively. |
+
+### `pillbox mcp status`
+
+Shows the MCP server installation status and usage help.
 
 ## Skill commands
 
 ### `pillbox skill install`
 
-Downloads the Claude Code skill from the latest GitHub release and installs it to `~/.claude/skills/pillbox/`.
+Downloads the Claude Code skill from the latest GitHub release. Detects all installed providers and installs the skill for each one.
 
-### `pillbox skill uninstall`
+### `pillbox skill uninstall [--provider <name>]`
 
-Removes the skill directory.
+Removes the skill directory for the target provider. Use `--provider` to target a specific provider.
+
+| Flag | Description |
+|---|---|
+| `--provider <name>` | Provider to uninstall from (`claude` or `opencode`). If omitted, prompts interactively. |
+
+### `pillbox skill status`
+
+Shows the skill installation status and usage help.
 
 ## Language commands
 
@@ -225,6 +266,14 @@ pillbox lang set de
 Supported codes: `es`, `en`, `de`, `it`, `pt`, `fr`.
 
 Language detection order: `~/.pillbox/lang` → `PILLBOX_LANG` env var → system locale → fallback `es`.
+
+## `pillbox update`
+
+Auto-updates the Pillbox binary from the latest GitHub release. Checks the current version against the latest release, then prompts for confirmation before downloading and replacing the binary in place.
+
+```bash
+pillbox update
+```
 
 ## `pillbox uninstall`
 

@@ -304,7 +304,7 @@ Returns the running server version.
 **Response**:
 
 ```json
-{ "ok": true, "data": { "version": "0.4.0" } }
+{ "ok": true, "data": { "version": "0.15.2" } }
 ```
 
 ---

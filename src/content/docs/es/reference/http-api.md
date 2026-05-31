@@ -304,7 +304,7 @@ Devuelve la versión del servidor en ejecución.
 **Respuesta**:
 
 ```json
-{ "ok": true, "data": { "version": "0.4.0" } }
+{ "ok": true, "data": { "version": "0.15.2" } }
 ```
 
 ---
