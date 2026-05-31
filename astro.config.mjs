@@ -54,7 +54,14 @@ export default defineConfig({
 					translations: { es: 'Primeros pasos' },
 					items: [
 						{ slug: 'getting-started/introduction' },
-						{ slug: 'getting-started/installation' },
+						{
+							label: 'Installation',
+							translations: { es: 'Instalación' },
+							items: [
+								{ slug: 'getting-started/installation/quick' },
+								{ slug: 'getting-started/installation/manual' },
+							],
+						},
 						{ slug: 'getting-started/quick-start' },
 						{ slug: 'getting-started/configuration' },
 					],

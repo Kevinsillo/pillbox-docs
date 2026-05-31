@@ -1,0 +1,93 @@
+---
+title: Quick install
+description: Install Pillbox in seconds with the one-line installer.
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The one-line installer downloads and places the `pillbox` binary on your `PATH`. The MCP server and agent skill must be installed afterwards — they are not included in the one-liner.
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash
+    ```
+
+    The installer:
+
+    1. Detects your platform (Linux/macOS, x86_64/aarch64)
+    2. Downloads the `pillbox` binary from GitHub Releases
+    3. Installs it to `~/.local/bin` (Linux) or `/usr/local/bin` (macOS)
+  </TabItem>
+  <TabItem label="Windows">
+    Run in PowerShell:
+
+    ```powershell
+    irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
+    ```
+
+    The installer:
+
+    1. Detects your architecture (x86_64/aarch64)
+    2. Downloads the `pillbox` binary from GitHub Releases
+    3. Installs it to `%LOCALAPPDATA%\Programs\pillbox`
+    4. Adds the install directory to your user `PATH` (no Administrator needed)
+
+    You may need to open a new terminal for the updated `PATH` to take effect.
+
+    <Aside type="caution">
+      The installer itself runs without elevation, but `pillbox serve install` and `pillbox serve uninstall` require an elevated (Administrator) PowerShell. They register a Windows service and edit the hosts file.
+    </Aside>
+  </TabItem>
+</Tabs>
+
+## After installing the binary
+
+<Steps>
+
+1. Install the MCP server:
+
+   ```bash
+   pillbox mcp install
+   ```
+
+   Requires Node.js ≥ 18. Downloads the server bundle and registers it with your AI provider.
+
+2. Install the Pillbox skill:
+
+   ```bash
+   pillbox skill install
+   ```
+
+   Installs the Pillbox skill to your provider's global config folder (`~/.claude/skills/pillbox/` for Claude Code, `~/.config/opencode/skill/pillbox/` for OpenCode). The installer will also ask whether you want to install the SDD skill, agents, and commands.
+
+</Steps>
+
+## Options
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    Install a specific version:
+
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --version 0.15.3
+    ```
+
+    Custom install directory:
+
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --install-dir /usr/local/bin
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    Install a specific version or use a custom directory with environment variables:
+
+    ```powershell
+    $env:PILLBOX_VERSION = '0.15.3'
+    $env:PILLBOX_INSTALL_DIR = 'C:\Tools\pillbox'
+    irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
+    ```
+  </TabItem>
+</Tabs>

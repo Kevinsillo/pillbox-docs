@@ -1,0 +1,135 @@
+---
+title: Instalación manual
+description: Descarga el binario de Pillbox e instala cada componente paso a paso.
+sidebar:
+  order: 2
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Descarga el binario para tu plataforma desde [GitHub Releases](https://github.com/Kevinsillo/pillbox/releases):
+
+| Plataforma | Binario |
+|---|---|
+| Linux x86_64 | `pillbox-linux-x86_64` |
+| Linux aarch64 | `pillbox-linux-aarch64` |
+| macOS arm64 | `pillbox-darwin-aarch64` |
+| macOS x86_64 | `pillbox-darwin-x86_64` |
+| Windows x86_64 | `pillbox-windows-x86_64.exe` |
+| Windows aarch64 | `pillbox-windows-aarch64.exe` |
+
+<Steps>
+
+1. Coloca el binario en tu `PATH`.
+
+   <Tabs syncKey="os">
+     <TabItem label="Linux / macOS">
+       ```bash
+       chmod +x pillbox
+       mv pillbox ~/.local/bin/
+       ```
+     </TabItem>
+     <TabItem label="Windows">
+       ```powershell
+       New-Item -ItemType Directory -Force "$env:LOCALAPPDATA\Programs\pillbox" | Out-Null
+       Move-Item .\pillbox-windows-x86_64.exe "$env:LOCALAPPDATA\Programs\pillbox\pillbox.exe"
+       ```
+     </TabItem>
+   </Tabs>
+
+2. Instala el servidor MCP:
+
+   ```bash
+   pillbox mcp install
+   ```
+
+   Requiere Node.js ≥ 18. Descarga el bundle del servidor y lo registra con tu proveedor de IA.
+
+3. Instala la skill de Pillbox:
+
+   ```bash
+   pillbox skill install
+   ```
+
+   Instala la skill de Pillbox en la carpeta de configuración global de tu proveedor (`~/.claude/skills/pillbox/` para Claude Code, `~/.config/opencode/skill/pillbox/` para OpenCode). El instalador también preguntará si quieres instalar la skill, agentes y commands de SDD.
+
+</Steps>
+
+## Verificar la instalación
+
+```bash
+pillbox status
+```
+
+Muestra la ruta del binario, base de datos global, servidor MCP y estado de la skill.
+
+## Compilar desde el código fuente
+
+Cada componente vive en su propio repositorio. Puedes compilar cualquiera desde el código fuente.
+
+### Binario
+
+Requiere Rust 1.75+ y Node.js 20+ — la web UI se embebe en tiempo de compilación.
+
+```bash
+git clone https://github.com/Kevinsillo/pillbox
+cd pillbox
+make build-full
+./core/target/release/pillbox mcp install
+./core/target/release/pillbox skill install
+```
+
+En Windows, compila la web UI con `pnpm build` en `webui/` y luego ejecuta `cargo build --release` en `core/`.
+
+### Servidor MCP
+
+Compila el bundle de Node y lo instala en `~/.pillbox/mcp/`. Requiere Node.js ≥ 18 y pnpm, bun o npm.
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    git clone https://github.com/Kevinsillo/pillbox-mcp
+    cd pillbox-mcp
+    ./install.sh
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    ```powershell
+    git clone https://github.com/Kevinsillo/pillbox-mcp
+    cd pillbox-mcp
+    .\install.ps1
+    ```
+  </TabItem>
+</Tabs>
+
+Luego ejecuta `pillbox mcp install` para registrarlo con tus proveedores de IA.
+
+### Skills, agentes y commands
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    git clone https://github.com/Kevinsillo/pillbox-skills
+    cd pillbox-skills
+    ./install.sh
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    ```powershell
+    git clone https://github.com/Kevinsillo/pillbox-skills
+    cd pillbox-skills
+    .\install.ps1
+    ```
+  </TabItem>
+</Tabs>
+
+## Plataformas soportadas
+
+| Plataforma | Estado |
+|---|---|
+| Linux x86_64 | Soportado |
+| Linux aarch64 | Soportado |
+| macOS arm64 (Apple Silicon) | Soportado |
+| macOS x86_64 | Soportado |
+| Windows x86_64 | Soportado |
+| Windows aarch64 | Soportado |
