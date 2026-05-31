@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Windsurf
 description: Connect Pillbox to Windsurf via MCP configuration.
 sidebar:

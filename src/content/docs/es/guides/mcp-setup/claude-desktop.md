@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Claude Desktop
 description: Conecta Pillbox a Claude Desktop mediante configuración MCP manual.
 sidebar:

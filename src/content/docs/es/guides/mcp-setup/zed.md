@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Zed
 description: Conecta Pillbox a Zed mediante configuración MCP.
 sidebar:

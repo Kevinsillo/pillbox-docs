@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Cursor
 description: Connect Pillbox to Cursor via MCP configuration.
 sidebar:
