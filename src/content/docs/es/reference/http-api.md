@@ -7,7 +7,7 @@ sidebar:
 
 El servidor HTTP de Pillbox expone una API REST para la interfaz web e integraciones personalizadas. Inicia el servidor con `pillbox serve start` (puerto por defecto: 4242).
 
-**URL base**: `http://localhost:4242/api`
+**URL base**: `http://pillbox.local:4242/api`
 
 Todas las respuestas usan un sobre JSON uniforme:
 

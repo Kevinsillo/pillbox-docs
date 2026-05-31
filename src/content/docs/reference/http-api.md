@@ -7,7 +7,7 @@ sidebar:
 
 The Pillbox HTTP server exposes a REST API for the web UI and custom integrations. Start the server with `pillbox serve start` (default port: 4242).
 
-**Base URL**: `http://localhost:4242/api`
+**Base URL**: `http://pillbox.local:4242/api`
 
 All responses use a uniform JSON envelope:
 
