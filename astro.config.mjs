@@ -76,11 +76,7 @@ export default defineConfig({
 							items: [
 								{ slug: 'guides/mcp-setup' },
 								{ slug: 'guides/mcp-setup/claude-code' },
-								{ slug: 'guides/mcp-setup/claude-desktop' },
 								{ slug: 'guides/mcp-setup/opencode' },
-								{ slug: 'guides/mcp-setup/cursor' },
-								{ slug: 'guides/mcp-setup/windsurf' },
-								{ slug: 'guides/mcp-setup/zed' },
 							],
 						},
 						{ slug: 'guides/web-interface' },
