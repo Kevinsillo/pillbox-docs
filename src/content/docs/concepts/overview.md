@@ -45,19 +45,9 @@ Rules:
 
 A **pill** is a piece of project-specific knowledge saved within a prescription.
 
-The `compound` field classifies the type of knowledge:
+The `compound` field classifies the type of knowledge. It is a free-text string — Pillbox does not impose or validate any specific values. The agent (or the skill it runs with) decides which compounds to use and what they mean.
 
-| Compound | Use for |
-|---|---|
-| `decision` | Architecture, design, or approach decisions with rationale |
-| `architecture` | System structure, module layout, data flow |
-| `bugfix` | Bug description, root cause, and fix |
-| `specification` | Behavioral specs and contracts per domain |
-| `discovery` | Non-obvious findings about the codebase, dependencies, or environment |
-| `learning` | Something that failed and what was learned from it |
-| `feedback` | Feedback on agent behavior or approach |
-| `summary` | End-of-session summary (one per prescription, saved on close) |
-| `task` | Implementation task list or free-form entry |
+For example, a structured workflow skill might use compounds like `decision`, `architecture`, `bugfix`, `discovery`, `summary`, or `feedback` — but these are choices made by the skill, not requirements of Pillbox. Any string is valid.
 
 Pills are searchable via FTS5 full-text search across title and content. The search engine supports prefix matching (`hex` finds `hexagonal`) and fuzzy matching using Jaro-Winkler similarity.
 
@@ -65,15 +55,7 @@ Pills are searchable via FTS5 full-text search across title and content. The sea
 
 A **capsule** is personal, cross-project knowledge. It belongs to the user, not to any project — there is no `bottle_id`.
 
-| Compound | Use for |
-|---|---|
-| `convention` | Code style, naming, formatting preferences |
-| `workflow` | How you like to work: PR process, review style, task breakdown |
-| `environment` | Machine setup, installed tools, shell config |
-| `context` | Personal context: current role, focus area, constraints |
-| `goal` | Long-term objectives, priorities, or targets |
-| `feedback` | Feedback on agent behavior that should persist across all projects |
-| `manual` | Anything else |
+Like pills, capsules have a `compound` field — a free-text string chosen by the agent or skill. Typical examples include `convention`, `workflow`, `environment`, or `context`, but Pillbox does not restrict or validate what values are used.
 
 ## How they fit together
 
@@ -91,7 +73,7 @@ Project directory
 
 1. **Session start** — call `bottle_context` to get the prescription index, then `prescription_context` on sessions of interest to retrieve their pills. Call `capsule_search` with relevant terms to load personal conventions.
 2. **During work** — call `pill_store` to save decisions, bugs fixed, discoveries.
-3. **Session end** — call `pill_store` with `compound: summary` to summarize the session, then `prescription_close`.
+3. **Session end** — call `pill_store` to save a session summary, then `prescription_close`.
 
 ## Deletions
 

@@ -55,10 +55,10 @@ Pillbox no prescribe un flujo de trabajo específico. El patrón mínimo viable 
 
 1. Al inicio de una sesión, llama a `bottle_context` y `capsule_search` con términos relevantes para la tarea actual.
 2. Durante la sesión, llama a `pill_store` cuando ocurra algo que valga la pena recordar — una decisión no obvia, un bug encontrado y resuelto, una limitación descubierta.
-3. Al final de la sesión, guarda un `summary` y llama a `prescription_close`.
+3. Al final de la sesión, guarda una pill de resumen y llama a `prescription_close`.
 
 Más allá de este mínimo, los equipos construyen sobre Pillbox de diferentes formas. Algunos lo integran en flujos de desarrollo estructurados donde cada decisión de diseño, especificación y tarea de implementación se rastrea como pills. Otros lo usan como un diario ligero que corre junto a cualquier sesión de codificación. Ambos enfoques funcionan — el modelo de datos soporta cualquiera de ellos.
 
 :::tip
-Si trabajas con un agente IA en proyectos recurrentes, el hábito de mayor valor es cerrar cada sesión con un `summary`. Las sesiones futuras que llamen a `bottle_context` mostrarán estos resúmenes primero, dando al agente una comprensión inmediata de qué se hizo y por qué.
+Si trabajas con un agente IA en proyectos recurrentes, el hábito de mayor valor es cerrar cada sesión guardando una pill de resumen antes de llamar a `prescription_close`. Las sesiones futuras que llamen a `bottle_context` mostrarán estas pills primero, dando al agente una comprensión inmediata de qué se hizo y por qué.
 :::

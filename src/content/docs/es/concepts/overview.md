@@ -45,19 +45,7 @@ Reglas:
 
 Una **pill** es un fragmento de conocimiento específico del proyecto guardado dentro de una prescription.
 
-El campo `compound` clasifica el tipo de conocimiento:
-
-| Compound | Usar para |
-|---|---|
-| `decision` | Decisiones de arquitectura, diseño o enfoque con justificación |
-| `architecture` | Estructura del sistema, organización de módulos, flujo de datos |
-| `bugfix` | Descripción del bug, causa raíz y solución |
-| `specification` | Specs de comportamiento y contratos por dominio |
-| `discovery` | Hallazgos no obvios sobre el código, dependencias o entorno |
-| `learning` | Algo que falló y lo que se aprendió de ello |
-| `feedback` | Retroalimentación sobre el comportamiento o enfoque del agente |
-| `summary` | Resumen de fin de sesión (uno por prescription, guardado al cerrar) |
-| `task` | Lista de tareas de implementación o entrada de forma libre |
+El campo `compound` clasifica el tipo de conocimiento. Es un string libre — Pillbox no impone ni valida valores concretos. Los compounds que usa el agente los define el flujo de trabajo activo (por ejemplo, la skill SDD instalada).
 
 Las pills son buscables mediante búsqueda de texto completo FTS5 en título y contenido. El motor de búsqueda soporta coincidencia por prefijo (`hex` encuentra `hexagonal`) y matching difuso usando la similitud de Jaro-Winkler.
 
@@ -65,15 +53,7 @@ Las pills son buscables mediante búsqueda de texto completo FTS5 en título y c
 
 Una **capsule** es conocimiento personal entre proyectos. Pertenece al usuario, no a ningún proyecto — no tiene `bottle_id`.
 
-| Compound | Usar para |
-|---|---|
-| `convention` | Estilo de código, nomenclatura, preferencias de formato |
-| `workflow` | Cómo te gusta trabajar: proceso de PRs, estilo de revisión, desglose de tareas |
-| `environment` | Configuración de máquina, herramientas instaladas, configuración de shell |
-| `context` | Contexto personal: rol actual, área de enfoque, limitaciones |
-| `goal` | Objetivos a largo plazo, prioridades o metas |
-| `feedback` | Retroalimentación sobre el comportamiento del agente que debe persistir entre todos los proyectos |
-| `manual` | Cualquier otra cosa |
+El campo `compound` es un string libre — igual que en las pills, Pillbox no impone valores concretos. El agente o la skill activa decide qué compounds usar.
 
 ## Cómo encajan
 
@@ -91,7 +71,7 @@ Directorio del proyecto
 
 1. **Inicio de sesión** — llama a `bottle_context` para obtener el índice de prescriptions, luego `prescription_context` en las sesiones de interés para recuperar sus pills. Llama a `capsule_search` con términos relevantes para cargar convenciones personales.
 2. **Durante el trabajo** — llama a `pill_store` para guardar decisiones, bugs resueltos, descubrimientos.
-3. **Fin de sesión** — llama a `pill_store` con `compound: summary` para resumir la sesión, luego `prescription_close`.
+3. **Fin de sesión** — llama a `pill_store` para guardar un resumen de sesión (el compound lo define la skill activa), luego `prescription_close`.
 
 ## Eliminaciones
 
