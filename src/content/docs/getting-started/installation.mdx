@@ -7,7 +7,7 @@ sidebar:
 
 import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets up the binary, MCP server, and agent skill in one step. The skill installs to whichever AI provider you have configured — Claude Code or OpenCode.
+Pillbox runs as a single binary on Linux, macOS, and Windows. The one-line installer places the binary on your `PATH`. Then two more commands set up the MCP server and the agent skill.
 
 ## One-line install
 
@@ -22,9 +22,6 @@ Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets
     1. Detects your platform (Linux/macOS, x86_64/aarch64)
     2. Downloads the `pillbox` binary from GitHub Releases
     3. Installs it to `~/.local/bin` (Linux) or `/usr/local/bin` (macOS)
-    4. Installs the MCP server to `~/.pillbox/mcp/`
-    5. Installs the agent skill to your provider's config folder (`~/.claude/skills/pillbox/` for Claude Code, `~/.config/opencode/skill/pillbox/` for OpenCode)
-    6. Creates the global database at `~/.pillbox/pillbox.db`
   </TabItem>
   <TabItem label="Windows">
     Run in PowerShell:
@@ -39,7 +36,6 @@ Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets
     2. Downloads the `pillbox` binary from GitHub Releases
     3. Installs it to `%LOCALAPPDATA%\Programs\pillbox`
     4. Adds the install directory to your user `PATH` (no Administrator needed)
-    5. Creates the global database at `~/.pillbox/pillbox.db`
 
     You may need to open a new terminal for the updated `PATH` to take effect.
 
@@ -56,7 +52,7 @@ Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets
     Install a specific version:
 
     ```bash
-    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --version 0.4.0
+    curl -fsSL https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.sh | bash -s -- --version 0.15.3
     ```
 
     Custom install directory:
@@ -69,7 +65,7 @@ Pillbox runs as a single binary on Linux, macOS, and Windows. The installer sets
     Install a specific version or use a custom directory with environment variables:
 
     ```powershell
-    $env:PILLBOX_VERSION = '0.4.0'
+    $env:PILLBOX_VERSION = '0.15.3'
     $env:PILLBOX_INSTALL_DIR = 'C:\Tools\pillbox'
     irm https://raw.githubusercontent.com/Kevinsillo/pillbox/main/install.ps1 | iex
     ```
