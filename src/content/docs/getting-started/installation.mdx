@@ -93,11 +93,20 @@ Then follow these steps:
 
 <Steps>
 
-1. Place it on your `$PATH` and make it executable:
+1. Place the binary on your `PATH`.
+
+   Linux / macOS:
 
    ```bash
    chmod +x pillbox
    mv pillbox ~/.local/bin/
+   ```
+
+   Windows — move the `.exe` into a folder on your `PATH`:
+
+   ```powershell
+   New-Item -ItemType Directory -Force "$env:LOCALAPPDATA\Programs\pillbox" | Out-Null
+   Move-Item .\pillbox-windows-x86_64.exe "$env:LOCALAPPDATA\Programs\pillbox\pillbox.exe"
    ```
 
 2. Install the MCP server:
@@ -106,7 +115,7 @@ Then follow these steps:
    pillbox mcp install
    ```
 
-   Requires Node.js ≥ 18.
+   Requires Node.js ≥ 18. Downloads the server bundle and registers it with your AI provider.
 
 3. Install the Pillbox skill:
 
@@ -114,15 +123,23 @@ Then follow these steps:
    pillbox skill install
    ```
 
-   Installs the Pillbox skill to the global configuration folder of your AI provider (e.g. `~/.claude/skills/pillbox/` for Claude Code).
+   Installs the Pillbox skill to your provider's global config folder (`~/.claude/skills/pillbox/` for Claude Code, `~/.config/opencode/skill/pillbox/` for OpenCode).
 
-4. (Optional) Install SDD skill and agents:
+4. (Optional) Install the SDD skill, agents, and commands.
+
+   Linux / macOS:
 
    ```bash
    ./skills/install.sh
    ```
 
-   Installs the Spec-Driven Development skill, sub-agents, and commands to the global configuration folder of each detected provider (Claude Code, OpenCode). The script detects which providers are installed and lets you choose.
+   Windows:
+
+   ```powershell
+   .\skills\install.ps1
+   ```
+
+   Installs the Spec-Driven Development skill, sub-agents, and commands to each detected provider (Claude Code, OpenCode). The script detects which providers are installed and lets you choose.
 
 </Steps>
 
@@ -136,7 +153,11 @@ Shows binary path, global database, MCP server, and skill status.
 
 ## Building from source
 
-Requires Rust 1.75+ and Node.js 20+.
+Each component lives in its own repository. Build any of them directly from source.
+
+### Binary
+
+Requires Rust 1.75+ and Node.js 20+ — the web UI is embedded at build time.
 
 ```bash
 git clone https://github.com/Kevinsillo/pillbox
@@ -145,6 +166,50 @@ make build-full
 ./core/target/release/pillbox mcp install
 ./core/target/release/pillbox skill install
 ```
+
+On Windows, build the web UI with `pnpm build` in `webui/`, then run `cargo build --release` in `core/`.
+
+### MCP server
+
+Builds the Node bundle and installs it to `~/.pillbox/mcp/`. Requires Node.js ≥ 18 and pnpm, bun, or npm.
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    git clone https://github.com/Kevinsillo/pillbox-mcp
+    cd pillbox-mcp
+    ./install.sh
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    ```powershell
+    git clone https://github.com/Kevinsillo/pillbox-mcp
+    cd pillbox-mcp
+    .\install.ps1
+    ```
+  </TabItem>
+</Tabs>
+
+Then run `pillbox mcp install` to register it with your AI providers.
+
+### Skills, agents, and commands
+
+<Tabs syncKey="os">
+  <TabItem label="Linux / macOS">
+    ```bash
+    git clone https://github.com/Kevinsillo/pillbox-skills
+    cd pillbox-skills
+    ./install.sh
+    ```
+  </TabItem>
+  <TabItem label="Windows">
+    ```powershell
+    git clone https://github.com/Kevinsillo/pillbox-skills
+    cd pillbox-skills
+    .\install.ps1
+    ```
+  </TabItem>
+</Tabs>
 
 ## Supported platforms
 
