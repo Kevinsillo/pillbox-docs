@@ -32,7 +32,7 @@ Esta página te lleva de una instalación nueva a una configuración de Pillbox 
    pillbox mcp install
    ```
 
-   Instala el servidor MCP de Node.js en `~/.pillbox/mcp/` y configura Claude Code automáticamente.
+   Instala el servidor MCP de Node.js en `~/.pillbox/mcp/` y lo registra con tu agente de IA. El comando pregunta qué proveedor configurar (Claude Code u OpenCode) — o pasa `--provider claude|opencode`.
 
 3. Instala la skill del agente
 
@@ -40,9 +40,9 @@ Esta página te lleva de una instalación nueva a una configuración de Pillbox 
    pillbox skill install
    ```
 
-   Instala la skill de Pillbox en `~/.claude/skills/pillbox/`, que guía a Claude para usar las herramientas de Pillbox correctamente.
+   Instala la skill de Pillbox en la carpeta de configuración global de tu proveedor de IA (`~/.claude/skills/pillbox/` para Claude Code, `~/.config/opencode/skill/pillbox/` para OpenCode), que guía al agente para usar las herramientas de Pillbox correctamente. Con más de un proveedor instalado, el comando pregunta a cuál apuntar — o pasa `--provider claude|opencode`.
 
-4. Reinicia Claude Code
+4. Reinicia tu agente de IA (Claude Code u OpenCode)
 
    Ejecuta `/mcp` para confirmar que `pillbox` está conectado y sus herramientas aparecen en la lista.
 

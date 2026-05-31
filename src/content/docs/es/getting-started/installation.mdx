@@ -7,7 +7,7 @@ sidebar:
 
 import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-Pillbox corre como un binario único en Linux, macOS y Windows. El instalador configura el binario, el servidor MCP y la skill de Claude Code en un solo paso.
+Pillbox corre como un binario único en Linux, macOS y Windows. El instalador configura el binario, el servidor MCP y la skill del agente en un solo paso. La skill se instala en el proveedor de IA que tengas configurado — Claude Code u OpenCode.
 
 ## Instalación en una línea
 
@@ -23,7 +23,7 @@ Pillbox corre como un binario único en Linux, macOS y Windows. El instalador co
     2. Descarga el binario `pillbox` desde GitHub Releases
     3. Lo instala en `~/.local/bin` (Linux) o `/usr/local/bin` (macOS)
     4. Instala el servidor MCP en `~/.pillbox/mcp/`
-    5. Instala la skill de Claude Code en `~/.claude/skills/pillbox/`
+    5. Instala la skill del agente en la carpeta de tu proveedor (`~/.claude/skills/pillbox/` para Claude Code, `~/.config/opencode/skill/pillbox/` para OpenCode)
     6. Crea la base de datos global en `~/.pillbox/pillbox.db`
   </TabItem>
   <TabItem label="Windows">
