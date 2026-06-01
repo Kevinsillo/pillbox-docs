@@ -1,0 +1,61 @@
+---
+title: Usage
+description: How to work with Pillbox day-to-day — the agent skill, guided SDD workflows, and reviewing what your agent saved.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Pillbox works through two layers: the **agent skill**, which runs automatically in every session, and **SDD commands**, which let you drive structured development workflows from the chat.
+
+## Prerequisites
+
+- `pillbox` binary installed — [quick install](/getting-started/installation/quick/)
+- MCP server connected to your AI agent — [MCP setup](/guides/mcp-setup/)
+- Skills, agents and commands installed (recommended) — [skills guide](/guides/skills/)
+
+## How the agent uses Pillbox
+
+Once the MCP server is connected and the Pillbox skill is installed, the agent handles memory automatically:
+
+- At the start of a session it reads recent context via `bottle_context` and `prescription_context`.
+- While working, it saves pills for decisions, discoveries, and any non-obvious choices.
+- At the end of a session it saves a summary capsule.
+
+You do not need to prompt the agent to save anything — the skill defines the workflow.
+
+## SDD commands
+
+The SDD skill and its commands let you drive full development cycles from chat. Each command triggers a multi-phase workflow coordinated by the `sdd` skill and its sub-agents.
+
+| Command | What it does |
+|---|---|
+| `/sdd:new <change name>` | Starts a new SDD cycle: explore → propose → spec → design → plan → implement → verify → archive |
+| `/sdd:continue [name]` | Resumes an in-progress cycle |
+| `/sdd:status [name]` | Shows the current phase and open prescriptions |
+| `/sdd:explore <topic>` | Runs an exploration pass without starting a full cycle |
+| `/sdd:fix <bug description>` | Runs a focused fix cycle (exploration + proposal only) |
+| `/sdd:init` | Initializes Pillbox in a new project — bottle, MCP, and skills in one step |
+
+<Aside type="tip">
+The SDD commands require the `sdd` skill and its agents to be installed. See the [skills guide](/guides/skills/) for installation instructions.
+</Aside>
+
+## Review what your agent saved
+
+Start the web UI to browse pills, capsules, and prescriptions:
+
+```bash
+pillbox serve start
+```
+
+Then open `http://pillbox.local:4242` in your browser.
+
+Use it to spot entries that are redundant, wrong, or poorly written and correct them. The agent handles all writes during normal work.
+
+## Next steps
+
+- [Concepts](/concepts/overview/) — understand bottles, prescriptions, pills, and capsules
+- [Skills, agents and commands](/guides/skills/) — what's installed and how to update it
+- [CLI reference](/reference/cli/) — all commands explained

@@ -1,0 +1,61 @@
+---
+title: Uso
+description: Cómo trabajar con Pillbox día a día — la skill del agente, flujos SDD guiados y revisión de lo que guardó el agente.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Pillbox funciona en dos capas: la **skill del agente**, que se ejecuta automáticamente en cada sesión, y los **comandos SDD**, que permiten dirigir flujos de desarrollo estructurado desde el chat.
+
+## Prerequisitos
+
+- Binario `pillbox` instalado — [instalación rápida](/es/getting-started/installation/quick/)
+- Servidor MCP conectado a tu agente de IA — [configuración MCP](/es/guides/mcp-setup/)
+- Skills, agentes y comandos instalados (recomendado) — [guía de skills](/es/guides/skills/)
+
+## Cómo usa Pillbox el agente
+
+Una vez conectado el servidor MCP e instalada la skill de Pillbox, el agente gestiona la memoria de forma automática:
+
+- Al inicio de cada sesión lee el contexto reciente vía `bottle_context` y `prescription_context`.
+- Mientras trabaja, guarda pills con decisiones, descubrimientos y cualquier elección no obvia.
+- Al final de la sesión guarda una cápsula de resumen.
+
+No es necesario indicarle al agente que guarde nada — la skill define el flujo de trabajo.
+
+## Comandos SDD
+
+La skill SDD y sus comandos permiten dirigir ciclos de desarrollo completos desde el chat. Cada comando activa un flujo multifase coordinado por la skill `sdd` y sus sub-agentes.
+
+| Comando | Qué hace |
+|---|---|
+| `/sdd:new <nombre del cambio>` | Inicia un ciclo SDD completo: exploración → propuesta → spec → diseño → plan → implementación → verificación → archivo |
+| `/sdd:continue [nombre]` | Retoma un ciclo en curso |
+| `/sdd:status [nombre]` | Muestra la fase actual y las prescriptions abiertas |
+| `/sdd:explore <tema>` | Ejecuta una pasada de exploración sin iniciar un ciclo completo |
+| `/sdd:fix <descripción del bug>` | Ejecuta un ciclo de corrección focalizado (solo exploración y propuesta) |
+| `/sdd:init` | Inicializa Pillbox en un nuevo proyecto — bottle, MCP y skills en un solo paso |
+
+<Aside type="tip">
+Los comandos SDD requieren que la skill `sdd` y sus agentes estén instalados. Consulta la [guía de skills](/es/guides/skills/) para las instrucciones de instalación.
+</Aside>
+
+## Revisa lo que guardó tu agente
+
+Inicia la interfaz web para explorar pills, cápsulas y prescriptions:
+
+```bash
+pillbox serve start
+```
+
+Luego abre `http://pillbox.local:4242` en tu navegador.
+
+Úsala para detectar entradas redundantes, incorrectas o mal redactadas y corregirlas. El agente gestiona todas las escrituras durante el trabajo normal.
+
+## Próximos pasos
+
+- [Conceptos](/es/concepts/overview/) — entiende bottles, prescriptions, pills y capsules
+- [Skills, agentes y comandos](/es/guides/skills/) — qué está instalado y cómo actualizarlo
+- [Referencia CLI](/es/reference/cli/) — todos los comandos explicados

@@ -63,6 +63,17 @@ El instalador en una línea descarga y coloca el binario `pillbox` en tu `PATH`.
 
    Instala la skill de Pillbox en la carpeta de configuración global de tu proveedor (`~/.claude/skills/pillbox/` para Claude Code, `~/.config/opencode/skill/pillbox/` para OpenCode). El instalador también preguntará si quieres instalar la skill, agentes y commands de SDD.
 
+3. Instala e inicia la interfaz web:
+
+   ```bash
+   pillbox serve install
+   pillbox serve start
+   ```
+
+   `pillbox serve install` registra el servidor HTTP como servicio del sistema y activa el arranque automático en el inicio. Ejecuta `pillbox serve start` una vez para iniciarlo de inmediato — en arranques posteriores se inicia automáticamente. La UI queda disponible en `http://pillbox.local:4242`.
+
+   Consulta [Interfaz web](/es/guides/web-interface/) para más información.
+
 </Steps>
 
 ## Opciones
