@@ -1,6 +1,6 @@
 ---
 title: Skills, agentes y comandos
-description: El repositorio pillbox-skills — qué incluye, qué hace cada pieza y cómo instalarlo.
+description: La skill de agente de Pillbox — instala la skill que guía a tu agente IA para guardar y recuperar memoria persistente automáticamente en cada sesión.
 sidebar:
   order: 22
 ---

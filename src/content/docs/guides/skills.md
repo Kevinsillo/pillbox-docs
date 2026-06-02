@@ -1,6 +1,6 @@
 ---
 title: Skills, agents and commands
-description: The pillbox-skills repository — what's included, what each piece does, and how to install it.
+description: The Pillbox agent skill — install the AI coding assistant skill that guides your agent to save and retrieve persistent memory automatically across sessions.
 sidebar:
   order: 22
 ---

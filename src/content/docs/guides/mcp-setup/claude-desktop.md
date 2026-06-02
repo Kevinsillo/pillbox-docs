@@ -1,7 +1,7 @@
 ---
 draft: true
 title: Claude Desktop
-description: Connect Pillbox to Claude Desktop via manual MCP configuration.
+description: Add persistent AI agent memory to Claude Desktop with the Pillbox MCP server — manual MCP JSON configuration.
 sidebar:
   order: 22
   badge:

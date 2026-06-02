@@ -1,6 +1,6 @@
 ---
 title: Claude Code
-description: Connect Pillbox to Claude Code via automatic or manual MCP configuration.
+description: Add persistent AI agent memory to Claude Code with the Pillbox MCP server — automatic setup in one command or manual JSON configuration.
 sidebar:
   order: 21
 ---

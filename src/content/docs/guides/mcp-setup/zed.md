@@ -1,7 +1,7 @@
 ---
 draft: true
 title: Zed
-description: Connect Pillbox to Zed via MCP configuration.
+description: Add persistent AI agent memory to Zed with the Pillbox MCP server — step-by-step MCP configuration guide.
 sidebar:
   order: 26
   badge:

@@ -42,8 +42,30 @@ export default defineConfig({
 			head: [
 				{
 					tag: 'meta',
+					attrs: { property: 'og:type', content: 'website' },
+				},
+				{
+					tag: 'meta',
+					attrs: { property: 'og:site_name', content: 'Pillbox' },
+				},
+				{
+					tag: 'meta',
 					attrs: {
 						property: 'og:image',
+						content: 'https://kevinsillo.github.io/pillbox-docs/og-image.png',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'twitter:card',
+						content: 'summary_large_image',
+					},
+				},
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'twitter:image',
 						content: 'https://kevinsillo.github.io/pillbox-docs/og-image.png',
 					},
 				},

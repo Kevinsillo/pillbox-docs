@@ -1,7 +1,7 @@
 ---
 draft: true
 title: Windsurf
-description: Conecta Pillbox a Windsurf mediante configuración MCP.
+description: Añade memoria persistente para agentes IA a Windsurf con el servidor MCP de Pillbox — guía de configuración MCP paso a paso.
 sidebar:
   order: 25
   badge:

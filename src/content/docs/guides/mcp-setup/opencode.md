@@ -1,6 +1,6 @@
 ---
 title: OpenCode
-description: Connect Pillbox to OpenCode via automatic or manual MCP configuration.
+description: Add persistent AI agent memory to OpenCode with the Pillbox MCP server — automatic setup in one command or manual configuration.
 sidebar:
   order: 23
 ---

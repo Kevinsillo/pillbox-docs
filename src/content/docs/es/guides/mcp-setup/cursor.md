@@ -1,7 +1,7 @@
 ---
 draft: true
 title: Cursor
-description: Conecta Pillbox a Cursor mediante configuración MCP.
+description: Añade memoria persistente para agentes IA a Cursor con el servidor MCP de Pillbox — guía de configuración MCP paso a paso.
 sidebar:
   order: 24
   badge:
