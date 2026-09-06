@@ -51,7 +51,7 @@ La interfaz web existe para un propósito específico: permitirte revisar y corr
 | **Pill** | Un fragmento de conocimiento del proyecto guardado durante una sesión. |
 | **Capsule** | Conocimiento personal entre proyectos. Convenciones, preferencias. |
 
-Consulta [Conceptos](/es/concepts/overview/) para el modelo completo.
+Consulta [Conceptos](../../concepts/overview/) para el modelo completo.
 
 ## Lo que necesitas para configurarlo
 

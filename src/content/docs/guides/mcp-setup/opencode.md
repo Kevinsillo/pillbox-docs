@@ -11,7 +11,7 @@ sidebar:
 pillbox mcp install --provider opencode
 ```
 
-Restart OpenCode after installing. The `pillbox` MCP server and its tools should now be available. See the [MCP tools reference](/reference/mcp-tools/) for what each tool does.
+Restart OpenCode after installing. The `pillbox` MCP server and its tools should now be available. See the [MCP tools reference](../../../reference/mcp-tools/) for what each tool does.
 
 ## Manual configuration
 

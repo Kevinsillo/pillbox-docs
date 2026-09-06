@@ -51,7 +51,7 @@ The web UI exists for a specific purpose: letting you review and correct what yo
 | **Pill** | A piece of project knowledge saved during a session. |
 | **Capsule** | Personal, cross-project knowledge. Conventions, preferences. |
 
-See [Concepts](/concepts/overview/) for the full model.
+See [Concepts](../../concepts/overview/) for the full model.
 
 ## What you need to set it up
 

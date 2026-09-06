@@ -17,4 +17,4 @@ When an agent calls `pill_store` or `prescription_open`, it resolves your identi
 
 In most cases you do not need to do anything — if you have git configured with a name and email, Pillbox will use them automatically.
 
-See the [author identity guide](/guides/author-identity/) for the file format and how to configure it manually.
+See the [author identity guide](../../guides/author-identity/) for the file format and how to configure it manually.

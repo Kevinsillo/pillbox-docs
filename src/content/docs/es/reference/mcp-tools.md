@@ -27,8 +27,8 @@ Crea una nueva pill.
 | `title` | string (1–255) | sí | Título descriptivo corto |
 | `content` | string (1–5000) | sí | Contenido completo de la pill |
 | `compound` | string | sí | Categoría — texto libre |
-| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
-| `author_email` | string | sí | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](../../guides/author-identity/) |
+| `author_email` | string | sí | Email del autor — ver [identidad del autor](../../guides/author-identity/) |
 
 Devuelve el `id` de la nueva pill.
 
@@ -182,8 +182,8 @@ Abre una nueva prescription para un bottle. Para reabrir una prescription cerrad
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | sí | Bottle en el que abrir la prescription |
 | `title` | string (1–255) | sí | Título descriptivo para la sesión |
-| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](/es/guides/author-identity/) |
-| `author_email` | string | sí | Email del autor — ver [identidad del autor](/es/guides/author-identity/) |
+| `author_name` | string | sí | Nombre del autor — ver [identidad del autor](../../guides/author-identity/) |
+| `author_email` | string | sí | Email del autor — ver [identidad del autor](../../guides/author-identity/) |
 
 Devuelve `id`, `title` y `started_at`. Siempre abre una prescription nueva; si quieres reutilizar una ya abierta, lístalas con `bottle_context` y pasa su `id` directamente.
 

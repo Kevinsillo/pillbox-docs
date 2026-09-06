@@ -27,8 +27,8 @@ Creates a new pill.
 | `title` | string (1–255) | yes | Short descriptive title |
 | `content` | string (1–5000) | yes | Full content of the pill |
 | `compound` | string | yes | Category — free-text string |
-| `author_name` | string | yes | Author name — see [author identity](/guides/author-identity/) |
-| `author_email` | string | yes | Author email — see [author identity](/guides/author-identity/) |
+| `author_name` | string | yes | Author name — see [author identity](../../guides/author-identity/) |
+| `author_email` | string | yes | Author email — see [author identity](../../guides/author-identity/) |
 
 Returns the `id` of the new pill.
 
@@ -182,8 +182,8 @@ Opens a new prescription for a bottle. To reopen a previously closed prescriptio
 |---|---|---|---|
 | `bottle_id` | string (UUID v7) | yes | Bottle to open the prescription in |
 | `title` | string (1–255) | yes | Descriptive title for the session |
-| `author_name` | string | yes | Author name — see [author identity](/guides/author-identity/) |
-| `author_email` | string | yes | Author email — see [author identity](/guides/author-identity/) |
+| `author_name` | string | yes | Author name — see [author identity](../../guides/author-identity/) |
+| `author_email` | string | yes | Author email — see [author identity](../../guides/author-identity/) |
 
 Returns `id`, `title`, and `started_at`. Always opens a new prescription; to reuse an existing open prescription, list open ones with `bottle_context` and pass its `id` directly.
 
