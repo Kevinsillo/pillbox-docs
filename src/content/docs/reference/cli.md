@@ -15,7 +15,7 @@ Shows global status: binary path, global and local databases, active bottle, HTT
 
 ### `pillbox serve`
 
-Shows the service status if installed. If not installed, displays a hint with the install command.
+Prints a status line for the service — running (with its URL), stopped, or not installed — followed by the list of available `serve` subcommands. It is informational only and never exits with an error, even when the service is not installed.
 
 ### `pillbox serve install [--port N]`
 
@@ -43,6 +43,14 @@ Starts the service. The service must be installed first with `pillbox serve inst
 ### `pillbox serve stop`
 
 Stops the service.
+
+### `pillbox serve restart`
+
+Restarts the service. The service must be installed first with `pillbox serve install`.
+
+If the service is running, it is stopped, then Pillbox waits up to 10 seconds for the port to be released, starts it again, and waits up to 10 seconds until it is listening. If the service is stopped, it is simply started. On success, the command prints the access URL.
+
+If the port is not released in time, the service is not started again and the command exits with an error. If the service does not start listening in time, the command also exits with an error.
 
 ### `pillbox serve status`
 
@@ -274,6 +282,11 @@ Auto-updates the Pillbox binary from the latest GitHub release. Checks the curre
 ```bash
 pillbox update
 ```
+
+If the web service is installed and running, it is restarted automatically after a successful update so it serves the new version:
+
+- **Linux/macOS**: the service is restarted right away. If the restart fails, a warning suggests running `pillbox serve restart`; the update itself still succeeds. A warning is also shown if the installed service points to a different binary than the one being updated, since restarting it would not load the new version.
+- **Windows**: the running binary cannot be replaced in place, so once the update process exits the service is stopped, the binary is replaced, and the service is started again. Controlling the service may require a terminal run as Administrator; if the service does not come back, run `pillbox serve restart` from an elevated terminal.
 
 ## `pillbox uninstall`
 

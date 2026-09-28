@@ -15,7 +15,7 @@ Muestra el estado global: ruta del binario, bases de datos global y local, bottl
 
 ### `pillbox serve`
 
-Muestra el estado del servicio si está instalado. Si no está instalado, muestra un aviso con el comando para instalarlo.
+Muestra una línea con el estado del servicio — en ejecución (con su URL), detenido o no instalado — seguida de la lista de subcomandos `serve` disponibles. Es solo informativo y nunca termina con error, aunque el servicio no esté instalado.
 
 ### `pillbox serve install [--port N]`
 
@@ -43,6 +43,14 @@ Arranca el servicio. El servicio debe estar instalado previamente con `pillbox s
 ### `pillbox serve stop`
 
 Detiene el servicio.
+
+### `pillbox serve restart`
+
+Reinicia el servicio. El servicio debe estar instalado previamente con `pillbox serve install`.
+
+Si el servicio está en ejecución, lo detiene, espera hasta 10 segundos a que se libere el puerto, lo vuelve a arrancar y espera hasta 10 segundos a que empiece a escuchar. Si el servicio está detenido, simplemente lo arranca. Si todo va bien, el comando muestra la URL de acceso.
+
+Si el puerto no se libera a tiempo, el servicio no se vuelve a arrancar y el comando termina con error. Si el servicio no empieza a escuchar a tiempo, el comando también termina con error.
 
 ### `pillbox serve status`
 
@@ -274,6 +282,11 @@ Auto-actualiza el binario de Pillbox desde la última release de GitHub. Compara
 ```bash
 pillbox update
 ```
+
+Si el servicio web está instalado y en ejecución, se reinicia automáticamente tras una actualización correcta para que sirva la nueva versión:
+
+- **Linux/macOS**: el servicio se reinicia en el momento. Si el reinicio falla, un aviso sugiere ejecutar `pillbox serve restart`; la actualización se da igualmente por completada. También se muestra un aviso si el servicio instalado apunta a un binario distinto del que se está actualizando, ya que reiniciarlo no cargaría la nueva versión.
+- **Windows**: el binario en uso no se puede reemplazar directamente, así que cuando termina el proceso de actualización se detiene el servicio, se reemplaza el binario y se vuelve a arrancar el servicio. Controlar el servicio puede requerir una terminal ejecutada como Administrador; si el servicio no vuelve a arrancar, ejecuta `pillbox serve restart` desde una terminal elevada.
 
 ## `pillbox uninstall`
 
