@@ -53,11 +53,11 @@ Updates a pill's title, content, or compound.
 | `content` | string (1–5000) | no | New content |
 | `compound` | string | no | New compound |
 
-Returns `id`, `compound`, and updated `title`.
+Returns `id`, `compound`, and updated `title`. Returns `prescription_closed` if the pill's prescription is closed — reopen it with `prescription_reopen` first.
 
 ### `pill_discard`
 
-Soft-deletes a pill (the record is marked deleted, not removed).
+Soft-deletes a pill (the record is marked deleted, not removed). Like `pill_revise`, it requires the pill's prescription to be open.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -288,7 +288,8 @@ Returns `status: "linked"` on success or `status: "already_linked"` if the bottl
 | Code | Meaning |
 |---|---|
 | `not_found` | The requested resource does not exist |
-| `prescription_required` | The provided `prescription_id` does not exist or is already closed |
+| `prescription_required` | The provided `prescription_id` does not exist |
+| `prescription_closed` | The prescription is closed — storing, revising or discarding its pills requires `prescription_reopen` first |
 | `validation_error` | One or more input fields failed validation |
 | `invalid_input` | The input could not be parsed |
 | `internal_error` | Unexpected server error |

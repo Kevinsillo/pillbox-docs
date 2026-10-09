@@ -242,7 +242,7 @@ Muestra el estado de instalación del servidor MCP y la ayuda de uso.
 
 ### `pillbox skill install`
 
-Descarga la skill de Claude Code desde la última release de GitHub. Detecta todos los providers instalados e instala la skill en cada uno de ellos.
+Descarga el repositorio [pillbox-skills](https://github.com/Kevinsillo/pillbox-skills) desde su rama `main` y ejecuta su instalador, que detecta los providers instalados y pregunta qué instalar en cada uno. Vuelve a ejecutarlo para actualizar: siempre obtiene el `main` actual, así que no hay versión que fijar.
 
 ### `pillbox skill uninstall [--provider <nombre>]`
 

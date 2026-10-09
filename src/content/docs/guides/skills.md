@@ -13,7 +13,8 @@ The [pillbox-skills](https://github.com/Kevinsillo/pillbox-skills) repository co
 |---|---|---|
 | `pillbox` skill | Skill | Teaches the agent how to use Pillbox MCP tools correctly |
 | `sdd` skill | Skill | SDD orchestrator — coordinates the full spec-driven development cycle |
-| `sdd-*` agents | Agents | Sub-agents for exploration, specs, design, implementation, verification, and archiving |
+| `code-quality` skill | Skill | Quality bar for all code — hexagonal architecture, clean code, KISS, idiomatic conventions, no hacks |
+| `sdd-*` agents | Agents | Five sub-agents for project setup, exploration, design, implementation and verification |
 | `sdd` commands | Commands | `/sdd:new`, `/sdd:continue`, `/sdd:fix`, `/sdd:explore`, `/sdd:init`, `/sdd:status` |
 
 ### Skills
@@ -24,20 +25,39 @@ The **SDD skill** is an orchestrator. When you invoke an `/sdd:*` command, the s
 
 ### Agents
 
-SDD sub-agents are specialized Claude agents with narrow responsibilities. The orchestrator launches them in sequence — each one reads the pills from the previous phase and adds its own.
+SDD sub-agents are specialized agents with narrow responsibilities. The orchestrator hands them **pill IDs**, not pasted content: each agent reads what it needs from Pillbox, writes its own pills and revises them in place when something changes.
 
-| Agent | Responsibility |
-|---|---|
-| `sdd-init` | Detects the project stack and saves the initial config |
-| `sdd-explorer` | Reads the codebase and saves factual discovery pills |
-| `sdd-proposer` | Drafts the change proposal with intent, scope, and risks |
-| `sdd-specifier` | Writes Given/When/Then specs per affected domain |
-| `sdd-architect` | Produces the file plan, data flow, and cutover strategy |
-| `sdd-planner` | Breaks the design into a concrete task checklist |
-| `sdd-implementer` | Writes the actual code and marks tasks complete |
-| `sdd-verifier` | Validates the implementation against specs — never fixes |
-| `sdd-archiver` | Saves the session summary as a capsule |
-| `sdd-committer` | Creates the git commit for the implemented changes |
+| Agent | Responsibility | Pills (compound) |
+|---|---|---|
+| `sdd-init` | Detects the project stack and saves the project config | `config` |
+| `sdd-explorer` | Reads the codebase; returns facts, open questions and a suggested tier | `discovery` |
+| `sdd-designer` | Writes Given/When/Then specs (only when the change has behaviour rules) and the task batches: file plan, acceptance criteria and verification commands | `specification`, `task` |
+| `sdd-implementer` | Writes the code for one batch, runs the verification commands, records the evidence in the task pill and commits when authorized | revises `task` |
+| `sdd-verifier` | Independently validates the result against specs, tasks and code quality — never fixes | `feedback` |
+
+The orchestrator itself writes two pills: `decision` (intent, scope, constraints, choices and risks) and `summary` (the session recap that closes the prescription).
+
+Each agent writes only its own compounds, but reads whatever pills it needs from the others — the designer reads the `decision` and `discovery` pills, the implementer reads the `task` and `specification` pills, and so on. Corrections revise the existing pill instead of adding a new one, and each domain keeps a single current `specification`: when a later change rewrites it, the new pill carries `Supersedes: #id` and the old one is discarded when the cycle closes.
+
+The **code-quality skill** is the single quality bar of the cycle, rather than imitation of the existing code. Claude Code preloads it into the designer, implementer and verifier; OpenCode agents load it themselves. The designer designs within its architecture, the implementer reviews its own diff against it, and the verifier reports hacks that hide a failure as critical and any other breach as a warning. When the Context7 MCP server is installed, the three of them query it for current documentation instead of guessing an idiom or an API.
+
+### How a cycle runs
+
+1. The explorer maps the code and returns the open questions.
+2. The orchestrator asks you **once** — open questions, testing preferences, tier and commit policy — and writes the `decision` pill.
+3. The designer produces the specs and the task batches. You see one consolidated plan before any code is written.
+4. The implementer runs batch after batch. The cycle only stops for a new decision, a failing check or a blocker.
+5. The result is verified according to the tier. The orchestrator commits if you chose to commit at close, saves the `summary` pill, discards the specifications this change superseded and closes the prescription.
+
+| Tier | When | What runs |
+|---|---|---|
+| `small` | Up to three files, understood, no new behaviour rules | Decision with its own short task list, implementer, summary |
+| `standard` | Two or more meaningful steps | Explorer, decision, designer, implementer, summary |
+| `large` | Phases, migrations, cutover, sensitive areas | Standard, with one task pill per batch and the independent verifier |
+
+Commits always follow the policy you chose — per batch, at close or none — whatever the tier.
+
+Every compound has a soft size target below the 5000-character limit of a pill — for example 1500 for `discovery`, 3500 for `decision`, 4000 for `specification`, and 3000 for `task` at design time, leaving room for the implementer's evidence. Long content is split by natural unit (one domain, one batch), so each pill stays searchable on its own.
 
 ### Commands
 
@@ -45,11 +65,11 @@ Slash commands are shortcuts into the SDD skill. You invoke them from the chat; 
 
 | Command | What it does |
 |---|---|
-| `/sdd:new <change name>` | Starts a full SDD cycle from scratch |
-| `/sdd:continue [name]` | Resumes an in-progress cycle |
+| `/sdd:new <change name>` | Starts a cycle: exploration, one round of questions, decision and task plan |
+| `/sdd:continue [name]` | Runs or resumes the implementation batch by batch, then verifies and closes |
 | `/sdd:status [name]` | Shows the current phase and open prescriptions |
 | `/sdd:explore <topic>` | Runs an exploration pass without starting a full cycle |
-| `/sdd:fix <bug description>` | Focused fix cycle — exploration and proposal only |
+| `/sdd:fix <bug description>` | Focused fix for a bounded bug — the `small` tier of the cycle |
 | `/sdd:init` | Initializes Pillbox in a new project |
 
 ## Installation
@@ -60,7 +80,7 @@ The `pillbox` skill is installed by the main Pillbox installer:
 pillbox skill install
 ```
 
-The full set — `pillbox` skill, `sdd` skill, all agents, and all commands — is installed by running the skills installer directly:
+The full set — `pillbox`, `sdd` and `code-quality` skills, all agents, and all commands — is installed by running the skills installer directly:
 
 ```bash
 # Linux / macOS
@@ -83,4 +103,4 @@ Re-running the installer overwrites existing files. Use it to update skills afte
 | Provider | Skills | Agents | Commands |
 |---|---|---|---|
 | Claude Code | `~/.claude/skills/` | `~/.claude/agents/` | `~/.claude/commands/` |
-| OpenCode | `~/.config/opencode/skill/` | `~/.config/opencode/agent/` | `~/.config/opencode/command/` |
+| OpenCode | `~/.config/opencode/skills/` | `~/.config/opencode/agents/` | `~/.config/opencode/commands/` |

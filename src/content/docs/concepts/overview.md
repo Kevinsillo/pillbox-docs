@@ -47,7 +47,7 @@ A **pill** is a piece of project-specific knowledge saved within a prescription.
 
 The `compound` field classifies the type of knowledge. It is a free-text string — Pillbox does not impose or validate any specific values. The agent (or the skill it runs with) decides which compounds to use and what they mean.
 
-For example, a structured workflow skill might use compounds like `decision`, `architecture`, `bugfix`, `discovery`, `summary`, or `feedback` — but these are choices made by the skill, not requirements of Pillbox. Any string is valid.
+For example, a structured workflow skill might use compounds like `decision`, `specification`, `task`, `discovery`, `summary`, or `feedback` — but these are choices made by the skill, not requirements of Pillbox. Any string is valid.
 
 Pills are searchable via FTS5 full-text search across title and content. The search engine supports prefix matching (`hex` finds `hexagonal`) and fuzzy matching using Jaro-Winkler similarity.
 

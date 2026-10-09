@@ -31,12 +31,12 @@ La skill SDD y sus comandos permiten dirigir ciclos de desarrollo completos desd
 
 | Comando | Qué hace |
 |---|---|
-| `/sdd:new <nombre del cambio>` | Inicia un ciclo SDD completo: exploración → propuesta → spec → diseño → plan → implementación → verificación → archivo |
-| `/sdd:continue [nombre]` | Retoma un ciclo en curso |
+| `/sdd:new <nombre del cambio>` | Inicia un ciclo SDD: exploración, una ronda de preguntas, decisión y plan de tareas |
+| `/sdd:continue [nombre]` | Ejecuta o retoma la implementación lote a lote, y después verifica y cierra |
 | `/sdd:status [nombre]` | Muestra la fase actual y las prescriptions abiertas |
 | `/sdd:explore <tema>` | Ejecuta una pasada de exploración sin iniciar un ciclo completo |
-| `/sdd:fix <descripción del bug>` | Ejecuta un ciclo de corrección focalizado (solo exploración y propuesta) |
-| `/sdd:init` | Inicializa Pillbox en un nuevo proyecto — bottle, MCP y skills en un solo paso |
+| `/sdd:fix <descripción del bug>` | Corrección focalizada de un bug acotado — el nivel `small` del ciclo |
+| `/sdd:init` | Prepara el proyecto para SDD — crea el bottle si no existe y guarda la configuración del proyecto |
 
 <Aside type="tip">
 Los comandos SDD requieren que la skill `sdd` y sus agentes estén instalados. Consulta la [guía de skills](../../guides/skills/) para las instrucciones de instalación.

@@ -53,11 +53,11 @@ Actualiza el título, contenido o compound de una pill.
 | `content` | string (1–5000) | no | Nuevo contenido |
 | `compound` | string | no | Nuevo compound |
 
-Devuelve `id`, `compound` y `title` actualizado.
+Devuelve `id`, `compound` y `title` actualizado. Devuelve `prescription_closed` si la prescription de la pill está cerrada — reábrela antes con `prescription_reopen`.
 
 ### `pill_discard`
 
-Elimina suavemente una pill (el registro se marca como eliminado, no se borra).
+Elimina suavemente una pill (el registro se marca como eliminado, no se borra). Igual que `pill_revise`, requiere que la prescription de la pill esté abierta.
 
 | Parámetro | Tipo | Requerido | Descripción |
 |---|---|---|---|
@@ -288,7 +288,8 @@ Devuelve `status: "linked"` si tiene éxito o `status: "already_linked"` si el b
 | Código | Significado |
 |---|---|
 | `not_found` | El recurso solicitado no existe |
-| `prescription_required` | El `prescription_id` proporcionado no existe o ya está cerrado |
+| `prescription_required` | El `prescription_id` proporcionado no existe |
+| `prescription_closed` | La prescription está cerrada — guardar, revisar o descartar sus pills requiere `prescription_reopen` antes |
 | `validation_error` | Uno o más campos de entrada fallaron la validación |
 | `invalid_input` | El input no pudo ser parseado |
 | `internal_error` | Error inesperado del servidor |

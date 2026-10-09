@@ -31,12 +31,12 @@ The SDD skill and its commands let you drive full development cycles from chat. 
 
 | Command | What it does |
 |---|---|
-| `/sdd:new <change name>` | Starts a new SDD cycle: explore → propose → spec → design → plan → implement → verify → archive |
-| `/sdd:continue [name]` | Resumes an in-progress cycle |
+| `/sdd:new <change name>` | Starts a new SDD cycle: exploration, one round of questions, decision and task plan |
+| `/sdd:continue [name]` | Runs or resumes the implementation batch by batch, then verifies and closes |
 | `/sdd:status [name]` | Shows the current phase and open prescriptions |
 | `/sdd:explore <topic>` | Runs an exploration pass without starting a full cycle |
-| `/sdd:fix <bug description>` | Runs a focused fix cycle (exploration + proposal only) |
-| `/sdd:init` | Initializes Pillbox in a new project — bottle, MCP, and skills in one step |
+| `/sdd:fix <bug description>` | Focused fix for a bounded bug — the `small` tier of the cycle |
+| `/sdd:init` | Prepares the project for SDD — creates the bottle if missing and saves the project config |
 
 <Aside type="tip">
 The SDD commands require the `sdd` skill and its agents to be installed. See the [skills guide](../../guides/skills/) for installation instructions.

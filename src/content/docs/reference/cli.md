@@ -242,7 +242,7 @@ Shows the MCP server installation status and usage help.
 
 ### `pillbox skill install`
 
-Downloads the Claude Code skill from the latest GitHub release. Detects all installed providers and installs the skill for each one.
+Downloads the [pillbox-skills](https://github.com/Kevinsillo/pillbox-skills) repository from its `main` branch and runs its installer, which detects the installed providers and asks what to install for each one. Run it again to update: it always fetches the current `main`, so there is no version to pin.
 
 ### `pillbox skill uninstall [--provider <name>]`
 
