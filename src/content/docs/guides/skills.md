@@ -46,8 +46,8 @@ The **code-quality skill** is the single quality bar of the cycle, rather than i
 1. The explorer maps the code and returns the open questions.
 2. The orchestrator asks you **once** — open questions, testing preferences, tier and commit policy — and writes the `decision` pill.
 3. The designer produces the specs and the task batches. You see one consolidated plan before any code is written.
-4. The implementer runs batch after batch. The cycle only stops for a new decision, a failing check or a blocker.
-5. The result is verified according to the tier. The orchestrator commits if you chose to commit at close, saves the `summary` pill, discards the specifications this change superseded and closes the prescription.
+4. The implementer runs batch after batch, each one closed by its **directed gate**. The cycle only stops for a new decision, a failing check or a blocker.
+5. Once every batch is done, the orchestrator orders the **full gate** once and verifies according to the tier. If you chose to commit at close, it commits, saves the `summary` pill, discards the specifications this change superseded and closes the prescription.
 
 | Tier | When | What runs |
 |---|---|---|
@@ -56,6 +56,16 @@ The **code-quality skill** is the single quality bar of the cycle, rather than i
 | `large` | Phases, migrations, cutover, sensitive areas | Standard, with one task pill per batch and the independent verifier |
 
 Commits always follow the policy you chose — per batch, at close or none — whatever the tier.
+
+#### Gate levels
+
+Every batch carries a `Gate:` line with its **directed gate** — the tests of the module it touches plus an incremental syntax/type check — and nothing else. The **full gate** — formatting, static analysis and the entire suite — runs exactly once per change, after the last batch and before verification; only a batch that touches migrations, schema, the build system or a public contract may require it per batch.
+
+Verification is proportional to the tier: `small` and `standard` reuse the gate results and spot-check a single command, while `large` or sensitive changes launch the independent verifier. The verifier still reads the code against the specs, but reuses the recorded full-gate counts and commit instead of re-running the suite — it only re-runs the gate when the change touches migration, schema, security, data loss, a public contract or shared core.
+
+#### Small context by design
+
+The explorer scans the codebase once per change and stores what it finds in `discovery` pills; the designer, implementer and verifier then work from those IDs rather than re-exploring, and each batch reads only its `decision`, the `specification` of its domain and the active `task`. Gate runners report a command, a verdict and the counts — never full logs or per-test listings — so detail stays in the pills and never floods the chat.
 
 Every compound has a soft size target below the 5000-character limit of a pill — for example 1500 for `discovery`, 3500 for `decision`, 4000 for `specification`, and 3000 for `task` at design time, leaving room for the implementer's evidence. Long content is split by natural unit (one domain, one batch), so each pill stays searchable on its own.
 

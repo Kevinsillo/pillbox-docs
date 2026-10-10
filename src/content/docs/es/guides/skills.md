@@ -46,8 +46,8 @@ La **skill code-quality** es el único listón de calidad del ciclo, en lugar de
 1. El explorer mapea el código y devuelve las preguntas abiertas.
 2. El orquestador te pregunta **una sola vez** — preguntas abiertas, preferencias de testing, nivel y política de commits — y escribe la pill `decision`.
 3. El designer produce las specs y los lotes de tareas. Ves un plan consolidado antes de que se escriba código.
-4. El implementer ejecuta lote tras lote. El ciclo solo se detiene ante una decisión nueva, una comprobación fallida o un bloqueo.
-5. El resultado se verifica según el nivel. El orquestador commitea si elegiste commit al cierre, guarda la pill `summary`, descarta las specifications que este cambio ha sustituido y cierra la prescription.
+4. El implementer ejecuta lote tras lote, cada uno cerrado por su **gate dirigido**. El ciclo solo se detiene ante una decisión nueva, una comprobación fallida o un bloqueo.
+5. Cuando todos los lotes han terminado, el orquestador ordena el **gate completo** una vez y verifica según el nivel. Si elegiste commit al cierre, commitea, guarda la pill `summary`, descarta las specifications que este cambio ha sustituido y cierra la prescription.
 
 | Nivel | Cuándo | Qué se ejecuta |
 |---|---|---|
@@ -56,6 +56,16 @@ La **skill code-quality** es el único listón de calidad del ciclo, en lugar de
 | `large` | Fases, migraciones, cutover, áreas sensibles | Lo anterior, con una pill de tareas por lote y el verifier independiente |
 
 Los commits siguen siempre la política que elegiste — por lote, al cierre o ninguno — sea cual sea el nivel.
+
+#### Niveles de gate
+
+Cada lote lleva en su línea `Gate:` su **gate dirigido** — los tests del módulo que toca más una comprobación incremental de sintaxis/tipos — y nada más. El **gate completo** — formateo, análisis estático y la suite entera — se ejecuta exactamente una vez por cambio, tras el último lote y antes de la verificación; solo un lote que toque migraciones, esquema, el sistema de build o un contrato público puede exigirlo por lote.
+
+La verificación es proporcional al nivel: `small` y `standard` reutilizan los resultados del gate y comprueban un único comando, mientras que los cambios `large` o sensibles lanzan el verifier independiente. El verifier sigue leyendo el código contra las specs, pero reutiliza los conteos y el commit del gate completo ya registrados en lugar de re-ejecutar la suite — solo re-ejecuta el gate cuando el cambio toca migración, esquema, seguridad, pérdida de datos, un contrato público o núcleo compartido.
+
+#### Contexto reducido por diseño
+
+El explorer escanea el código una vez por cambio y guarda lo que encuentra en pills `discovery`; después el designer, el implementer y el verifier trabajan desde esos IDs en lugar de reexplorar, y cada lote lee solo su `decision`, la `specification` de su dominio y la `task` activa. Los runners del gate reportan un comando, un veredicto y los conteos — nunca logs completos ni listados por test — de modo que el detalle queda en las pills y no inunda el chat.
 
 Cada compound tiene un tamaño objetivo por debajo del límite de 5000 caracteres de una pill — por ejemplo 1500 para `discovery`, 3500 para `decision`, 4000 para `specification` y 3000 para `task` al diseñarla, dejando sitio para la evidencia del implementer. El contenido largo se parte por unidad natural (un dominio, un lote), de modo que cada pill sigue siendo buscable por sí sola.
 
